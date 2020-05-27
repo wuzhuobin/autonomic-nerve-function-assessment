@@ -1,0 +1,74 @@
+
+
+<ion-content text-left no-bounce style="overflow:none;background:rgb(240, 240, 240)">
+    <div class="ext-box" style=" background:#fff;box-shadow: 0 15px 15px -15px #888; width:120%; margin-left:-10%;padding-left:7%; font-family:'Calibri' ; height:12%; z-index:99; position:relative"> 
+        <div class="int-box" style="padding-left:5%">
+            <table border="0" style="width:90%" >
+
+                <tr>
+                    <td style="width: 50%; vertical-align:middle"><B style="font-size:5em ; color:#444">Valsalva<BR>Maneuver</B> {{RRIReadng}}</td>
+                        <td style="text-align:right;width:25%;font-size:3em; vertical-align:middle">trials<BR>completed</td>
+                        <td style="text-align:right;width:25%;font-size:10em; font-weight:bold;  vertical-align:middle">{{trial}}/1</td>
+                </tr>
+            </table>
+            
+        
+        </div>
+    </div>
+
+<div style="background:rgb(240, 240, 240);text-align:center; padding-top:40px; color:rgb(46,138,212) ;  ">
+ 
+
+<div *ngIf="showDeviceConnectTable">
+    <div style="font-size:2em">
+
+        <div style="width:55%; margin:0 auto;" >
+        <canvas #lineCanvas *ngIf="trial>0"></canvas>
+    </div>
+       </div><BR>
+        <div *ngIf="heartRateDeviceConnected && breathDeviceConnected && trial>=1" (tap)="redoTest()" style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:200px ;  padding:10px">
+                Redo Trial {{trial}}
+                </div>
+                &nbsp;&nbsp;
+        <div *ngIf="heartRateDeviceConnected && breathDeviceConnected && trial ==0" (tap)="clickTestStart()" style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:150px ;  padding:10px">
+                START
+                </div>
+        <div *ngIf="heartRateDeviceConnected && breathDeviceConnected && trial >=1" (tap)="backTest1()" style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:150px ;  padding:10px">
+                End
+                </div>
+</div>    
+
+<div *ngIf="showCountdownTable"  style="font-size: 20em">
+{{CountdownSecond}}
+ 
+ </div>  
+
+<table style="width:80%; margin-left:10%; text-align:left;" id="testingTable" *ngIf="showTestingTable">
+<tr>
+    <td colspan="2">
+        <div *ngIf="!under40">
+            <span style="font-size:15em; font-weight:bold;">{{breathReading}}</span><span style="font-weight:bold;font-size:7.5em">mmHG</span>
+        </div>
+        <div *ngIf="under40">
+                <span style="font-size:15em; font-weight:bold; color:salmon">{{breathReading}}</span><span style="color:salmon;font-weight:bold;font-size:7.5em">mmHG</span>
+        </div>
+    </td>
+</tr>
+<tr>
+     <td style="width:40%; text-align:left;">
+         <span style="font-size:15em; font-weight:bold;">{{currentTime}}</span><span style="font-weight:bold;font-size:7.5em">s</span>
+    </td>
+    <td style="width:70%">
+            <progress-bar [progress]="loadProgress"></progress-bar>
+    </td>
+    </tr>
+    </table>
+
+</div>
+
+<ion-fab right bottom>
+    <button ion-fab large color="white" style=" font-size:20px;box-shadow:0 0 40px #888" (click)="backTest1()">
+      <ion-icon name="close" style="zoom:2.5"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

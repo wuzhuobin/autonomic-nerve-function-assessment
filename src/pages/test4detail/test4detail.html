@@ -1,0 +1,106 @@
+
+
+<ion-content text-left no-bounce style="overflow:none;background:rgb(240, 240, 240)">
+    <div class="ext-box" style=" background:#fff;box-shadow: 0 15px 15px -15px #888; width:120%; margin-left:-10%;padding-left:7%; font-family:'Calibri' ; height:12%; z-index:99; position:relative"> 
+        <div class="int-box" style="padding-left:5%">
+            <table border="0" style="width:90%" >
+
+                <tr>
+                    <td style="width: 50%; vertical-align:middle"><B style="font-size:5em ; color:#444">30:15 Ratio</B> {{RRIReadng}} - {{currentBeatCount}}</td>
+                        <td style="text-align:right;width:25%;font-size:3em; vertical-align:middle">trials<BR>completed</td>
+                        <td style="text-align:right;width:25%;font-size:10em; font-weight:bold;  vertical-align:middle">{{trial}}/1</td>
+                </tr>
+            </table>
+            
+        
+        </div>
+    </div>
+
+<div style="background:rgb(240, 240, 240);text-align:center; padding-top:40px; color:rgb(46,138,212) ;  ">
+ 
+
+<div *ngIf="showDeviceConnectTable">
+    <div style="font-size:2em">
+
+        <b><u>Device Status</u></b><BR>
+       Heart Rate Device : {{heartRateDeviceConnected}} <BR>
+        <div style="width:40%; margin:0 auto;" *ngIf="trial >=1">
+                <table cellspacing=0 cellpadding=0 border=0 style="width:100%;font-size:1em; color:#444">
+                        <tr>
+                        <td style="font-size:6em ;width:20%; text-align:left;color:rgb(46,138,212)" colspan="3">{{RRI30 / RRI15 | number:'1.2-2'}}</td>
+                       </tr>
+<tr>
+    <td style="padding-left:10px;font-size:1.75em ;width:5%; text-align:left;">15<sup>th</sup></td>
+    <td style="padding-left:10px;font-size:1.75em ;width:15%; text-align:left;">Beat</td>
+  <td style="padding-left:10px;font-size:1.75em ;width:55%; text-align:left;">{{RRI15}} RRI</td>
+</tr>
+<tr>
+    <td style="padding-left:10px;font-size:1.75em ;width:5%; text-align:left;">30<sup>th</sup></td>
+    <td style="padding-left:10px;font-size:1.75em ;width:15%; text-align:left;">Beat</td>
+  <td style="padding-left:10px;font-size:1.75em ;width:55%; text-align:left;">{{RRI30}} RRI</td>
+</tr>
+            </table> 
+                 </div>
+       </div><BR>
+        <div *ngIf="heartRateDeviceConnected && trial>=1" (tap)="redoTest()" style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:200px ;  padding:10px">
+                Redo Trial
+                </div>
+                &nbsp;&nbsp;
+        <div *ngIf="heartRateDeviceConnected && trial <1" (tap)="clickTestStart()" style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:150px ;  padding:10px">
+                START
+                </div>
+        <div *ngIf="heartRateDeviceConnected && trial >=1" (tap)="gotoOrthostasis()" style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:150px ;  padding:10px">
+                Continue
+                </div>
+</div>    
+
+
+<div *ngIf="showCountdownTable"  style="font-size: 20em">
+{{CountdownSecond}}
+ </div>  
+
+    <table style="width:80%; margin-left:10%; text-align:left;" id="testingTable" *ngIf="showTestingTable && !stand">
+<tr>
+    <td colspan="2">
+        <div>
+            <span style="font-size:7.5em; font-weight:bold;">Stand up <BR>after 5 second</span>
+        </div>
+    </td>
+</tr>
+<tr>
+     <td style="width:40%; text-align:left;">
+         <span style="font-size:15em; font-weight:bold;">{{currentTime}}</span><span style="font-weight:bold;font-size:7.5em">s</span>
+    </td>
+    <td style="width:70%">
+            <progress-bar [progress]="loadProgress"></progress-bar>
+    </td>
+    </tr>
+    </table>
+
+    <table style="width:80%; margin-left:10%; text-align:left;" id="testingTable" *ngIf="showTestingTable && stand ">
+        <tr>
+            <td colspan="2">
+                <div>
+                    <span style="font-size:15em; font-weight:bold;">Stand up</span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <div>
+                    <span style="font-size:3em; font-weight:bold;">{{ currentBeatCount - baseBeatCount }} th beats</span>
+                </div>
+            </td>
+        </tr>
+            </table>
+
+
+
+</div>
+
+<ion-fab right bottom>
+    <button ion-fab large color="white" style=" font-size:20px;box-shadow:0 0 40px #888" (click)="backTest4()">
+      <ion-icon name="close" style="zoom:2.5"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

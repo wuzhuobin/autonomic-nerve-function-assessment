@@ -1,0 +1,98 @@
+
+
+<ion-content text-left no-bounce style="overflow:none;background:rgb(240, 240, 240)">
+    <div class="ext-box" style=" background:#fff;box-shadow: 0 15px 15px -15px #888; width:120%; margin-left:-10%;padding-left:7%; font-family:'Calibri' ; height:12%; z-index:99; position:relative"> 
+        <div class="int-box" style="padding-left:5%">
+            <table border="0" style="width:90%" >
+
+                <tr>
+                    <td style="width: 50%; vertical-align:middle"><B style="font-size:5em ; color:#444">Deep<BR>Breathing</B> {{RRIReadng}}</td>
+                        <td style="text-align:right;width:25%;font-size:3em; vertical-align:middle">trials<BR>completed</td>
+                        <td style="text-align:right;width:25%;font-size:10em; font-weight:bold;  vertical-align:middle">{{loop-1}}/6</td>
+                </tr>
+            </table>
+            
+        
+        </div>
+    </div>
+
+<div style="background:rgb(240, 240, 240);text-align:center; padding-top:40px; color:rgb(46,138,212) ;  ">
+ 
+
+<div *ngIf="showDeviceConnectTable">
+    <div style="font-size:2em">
+
+      <!--  <b><u>Device Status</u></b><BR>
+       Heart Rate Device : {{heartRateDeviceConnected}} <BR><BR>-->
+        <div style="width:55%; margin:0 auto;" >
+        <div *ngIf="trial>0">
+                <table cellspacing=0 style="width:100%">
+    <tr style="text-decoration:underline; font-weight:bold;">
+            <td style="width:25%"></td><td style="width:25%">Max</td><td style="width:25%">Min</td><td style="width:25%">Difference</td>
+    </tr>
+<tr>
+<td>1st</td><td>{{tempArray[0]}}</td><td>{{tempArray[1]}}</td><td>{{tempArray[0] - tempArray[1]}}</td>
+</tr>
+<tr>
+<td>2nd</td><td>{{tempArray[2]}}</td><td>{{tempArray[3]}}</td><td>{{tempArray[2] - tempArray[3]}}</td>
+</tr>
+<tr>
+<td>3rd</td><td>{{tempArray[4]}}</td><td>{{tempArray[5]}}</td><td>{{tempArray[4] - tempArray[5]}}</td>
+</tr>
+<tr>
+<td>4th</td><td>{{tempArray[6]}}</td><td>{{tempArray[7]}}</td><td>{{tempArray[6] - tempArray[7]}}</td>
+</tr>
+<tr>
+<td>5th</td><td>{{tempArray[8]}}</td><td>{{tempArray[9]}}</td><td>{{tempArray[8] - tempArray[9]}}</td>
+</tr>
+<tr>
+<td>6th</td><td>{{tempArray[10]}}</td><td>{{tempArray[11]}}</td><td>{{tempArray[10] - tempArray[11]}}</td>
+</tr>    
+                </table>
+                <BR>
+
+        </div>
+    </div>
+       </div><BR>
+        <div *ngIf="heartRateDeviceConnected && trial>=1" (tap)="redoTest()" style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:200px ;  padding:10px">
+                Redo Trial
+                </div>
+                &nbsp;&nbsp;
+        <div *ngIf="heartRateDeviceConnected && trial >=1" (tap)="backTest2()" style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:150px ;  padding:10px">
+                End
+                </div>
+</div>    
+
+<div *ngIf="showCountdownTable"  style="font-size: 20em">
+{{CountdownSecond}}
+ </div>  
+
+<table style="width:80%; margin-left:10%; text-align:left;" id="testingTable" *ngIf="showTestingTable">
+<tr>
+    <td colspan="2">
+        <div *ngIf="!inhale">
+            <span style="font-size:15em; font-weight:bold;">Exhale</span>
+        </div>
+        <div *ngIf="inhale">
+                <span style="font-size:15em; font-weight:bold;">Inhale</span>
+        </div>
+    </td>
+</tr>
+<tr>
+     <td style="width:40%; text-align:left;">
+         <span style="font-size:15em; font-weight:bold;">{{currentTime}}</span><span style="font-weight:bold;font-size:7.5em">s</span>
+    </td>
+    <td style="width:70%">
+            <progress-bar [progress]="loadProgress"></progress-bar>
+    </td>
+    </tr>
+    </table>
+
+</div>
+
+<ion-fab right bottom>
+    <button ion-fab large color="white" style=" font-size:20px;box-shadow:0 0 40px #888" (click)="backTest2()">
+      <ion-icon name="close" style="zoom:2.5"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

@@ -1,0 +1,127 @@
+
+
+<ion-content text-left no-bounce style="overflow:none;background:rgb(240, 240, 240)">
+    <div class="ext-box" style=" background:#fff;box-shadow: 0 15px 15px -15px #888; width:120%; margin-left:-10%;padding-left:7%; font-family:'Calibri' ; height:12%; z-index:99; position:relative"> 
+        <div class="int-box" style="padding-left:5%">
+            <table border="0" style="width:90%" >
+
+                <tr>
+                    <td style="width: 50%; vertical-align:middle"><B style="font-size:5em ; color:#444">30:15 Ratio &amp;<BR>Orthostasis</B> {{RRIReadng}} - {{currentBeatCount}}</td>
+                        <td style="text-align:right;width:25%;font-size:3em; vertical-align:middle">trials<BR>completed</td>
+                        <td style="text-align:right;width:25%;font-size:10em; font-weight:bold;  vertical-align:middle">{{trial}}/1</td>
+                </tr>
+            </table>
+            
+        </div>
+    </div>
+
+<div style="background:rgb(240, 240, 240);text-align:center; padding-top:40px; color:rgb(46,138,212) ;  ">
+ 
+    <div style="position:absolute; right:30px; top:32%;" *ngIf="orthostasis_stage==0">
+        <div (tap)="clickTestStartOrthostasis()" style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:160px ;  padding:10px">
+            NEXT
+            </div>
+        </div>
+
+        <div style="position:absolute; right:30px; top:32%;" *ngIf="orthostasis_stage==2">
+            <div (tap)="standup()" style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:160px ;  padding:10px">
+                NEXT
+                </div>
+            </div>
+
+<table style="width:80%; margin-left:10%; text-align:left;" id="testingTable">
+<tr>
+    <td colspan="2">
+        <div>
+            <div *ngIf=" orthostasis_stage==0" style="font-size:8.5em; padding-top:100px">Lay down<br>and rest.</div>
+            <span *ngIf=" orthostasis_stage==1" style="font-size:7.5em; ">Taking Blood Pressure value.</span>
+            <div  *ngIf="orthostasis_stage==2" style="font-size:1em">
+                    Blood Pressure Value: SYS 
+                    <span *ngIf="reading4_up!=0">{{reading4_up}}</span>
+                    <span *ngIf="reading4_up==0">ERR</span>
+                     DIA <span *ngIf="reading4_down!=0">{{reading4_down}}</span>
+                     <span *ngIf="reading4_down==0">ERR</span>
+                      </div>
+            <div *ngIf="orthostasis_stage==2" style="font-size:8.5em; padding-top:130px ">Stand up.</div>
+            <div *ngIf="orthostasis_stage==3" style="font-size:4.5em;">Keep stand up.</div>
+            <span *ngIf=" orthostasis_stage==4" style="font-size:7.5em; ">Taking Blood Pressure value.</span>
+        </div>
+    </td>
+</tr>
+           <tr *ngIf=" orthostasis_stage==2"> 
+                <td style="width:100%; text-align:left;">
+                   </td>
+                   </tr>
+
+
+
+
+    <tr *ngIf="orthostasis_stage==3"> 
+    <td style="width:100%; text-align:left;" colspan="2">
+        <div style="font-size:1em">
+        Blood Pressure Value: SYS 
+        <span *ngIf="reading4_up!=0">{{reading4_up}}</span>
+        <span *ngIf="reading4_up==0">ERR</span>
+         DIA <span *ngIf="reading4_down!=0">{{reading4_down}}</span>
+         <span *ngIf="reading4_down==0">ERR</span>
+          </div>
+<span style="font-size:2em; font-weight:bold;" *ngIf="currentBeatCount - baseBeatCount <31 ">{{ currentBeatCount - baseBeatCount }} th beats &nbsp;</span>
+<span style="font-size:2em; font-weight:bold;" *ngIf="currentBeatCount - baseBeatCount >=31 ">15th:{{RRI15}} &nbsp;</span>
+<span style="font-size:2em; font-weight:bold;" *ngIf="currentBeatCount - baseBeatCount >=31 ">30th:{{RRI30}}</span>
+    </td>
+    </tr>
+
+    <tr *ngIf="orthostasis_stage==3"> 
+    <td style="width:40%; text-align:left;">
+        <span style="font-size:15em; font-weight:bold;">{{currentTime}}</span><span style="font-weight:bold;font-size:7.5em">s</span> </td>
+    <td style="width:70%">
+            <progress-bar [progress]="loadProgress"></progress-bar>
+    </td>
+    </tr>
+
+
+    <tr *ngIf="orthostasis_stage==4"> 
+            <td style="width:100%; text-align:left;">
+                </td>
+      </tr>
+      <tr *ngIf="orthostasis_stage==5"> 
+            <td style="width:100%; text-align:left; font-size:2em">
+                <b style="font-size:2em">Finish</b> <BR><BR>
+                    15th:{{RRI15}}RRI <BR>
+30th:{{RRI30}}RRI<BR><BR>
+    <div style="font-size:1em">
+            1st Blood Pressure Value: SYS 
+            <span *ngIf="reading4_up!=0">{{reading4_up}}</span>
+            <span *ngIf="reading4_up==0">ERR</span>
+             DIA <span *ngIf="reading4_down!=0">{{reading4_down}}</span>
+             <span *ngIf="reading4_down==0">ERR</span>
+              </div>
+              <div style="font-size:1em">
+                    2nd Blood Pressure Value: SYS 
+                    <span *ngIf="reading4_up2!=0">{{reading4_up2}}</span>
+                    <span *ngIf="reading4_up2==0">ERR</span>
+                     DIA <span *ngIf="reading4_down2!=0">{{reading4_down2}}</span>
+                     <span *ngIf="reading4_down2==0">ERR</span>
+                      </div>
+
+                         <div style="font-size: 0.5em"> 
+                         <div (tap)="redoTest()" style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:200px ;  padding:10px">
+                                    Redo
+                                    </div>
+                                    &nbsp;&nbsp;
+                            <div (tap)="backTest4()" style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:150px ;  padding:10px">
+                                    Finish
+                                    </div>
+                                </div>
+           </td>
+           </tr>        
+    </table>
+
+</div>
+
+<ion-fab right bottom>
+    <button ion-fab large color="white" style=" font-size:20px;box-shadow:0 0 40px #888" (click)="backTest4()">
+      <ion-icon name="close" style="zoom:2.5"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

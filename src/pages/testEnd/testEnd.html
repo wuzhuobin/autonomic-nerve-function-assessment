@@ -1,0 +1,344 @@
+
+
+<ion-content text-left no-bounce>
+
+        <ion-fab right bottom>
+            <button ion-fab large color="white" style="box-shadow:0 0 40px #888" (click)="clickPage(9)">
+                <ion-icon name="close" style="zoom:2.5"></ion-icon>
+            </button>
+          </ion-fab>
+        
+    
+    <div no-bounce id="contentLeft" style="display:block; text-align: left;width:35%; height:100%;box-shadow:0px 10px 40px 0 #888; float:left; z-index:99; position:relative;overflow:scroll; background:#fafafa; color:rgb(46,138,212)">
+        <ion-searchbar text-left
+        placeholder="" 
+        [showCancelButton]="false"
+        [(ngModel)]="searchInput"
+        (ionInput)="onInput($event)"
+        (ionCancel)="onCancel($event)">
+      </ion-searchbar>
+            <ion-list no-bounce style="box-shadow:0px 10px 10px 0 #aaa" >
+                    <ion-item text-wrap *ngFor="let data of datas" (click)="showPatient(data.id)" >
+                        <table style="width: 100%">
+                            <tr>
+                            <td style="font-size: 1.35em; font-weight:bold">{{data.name}}</td>
+                            <td rowspan="2" style="font-size: 3em; text-align:right">{{data.age}}</td>
+                            </tr>
+                            <tr>
+                            <td>{{data.time}}</td>
+                            </tr>
+                            <tr>
+                            <td colspan="2" style="font-size:1em;font-weight:bold; color:rgb(46,138,212)">
+                             {{data.t1result | number:'1.2-2'}} {{data.t2result}}<span style="font-weight:initial; font-size:0.75em">bpm</span> {{data.t3result}}<span style="font-weight:initial; font-size:0.75em">mmHg</span> {{data.t4result | number:'1.2-2'}} {{data.t4result2}}<span style="font-weight:initial; font-size:0.75em">mmHg</span></td>
+                            </tr>                
+                    </table>
+                    </ion-item>
+                  </ion-list>
+    </div>
+        
+    <div text-left id="contentRight" style="background:rgb(240, 240, 240);display:block; width:65%; overflow:scroll; height:100%; float:right; padding-top:3%">
+    
+            <div *ngIf="!selected">
+                    <div style="padding-left:40px;font-size:3.5em ; text-align:left; ">Please select patient record.</div>
+                </div>
+        <div *ngIf="selected">
+
+<div style="padding-top: 0%; padding-left:5%;"><b style="font-size: 5em;color:rgb(46,138,212);">{{patient_name}} ({{patient_age}})</b><BR>
+    <span style="font-size: 3em">{{patient_time}}</span>
+    </div>
+        
+    
+    
+    <table cellspacing=0 cellpadding=0 border=0 style=" margin:5%; width:90%;margin-bottom:0%; margin-top:4%;font-size:1em; border-bottom: 3px solid rgb(46,138,212);color:rgb(46,138,212)">
+            <tr>
+            <td style="padding-left:10px;font-size:3.5em ;width:75%; text-align:left; ">Valsalva Maneuver</td>
+            <td style="padding-right:10px;font-size:4em ;width:25%; text-align:right;color:rgb(46,138,212)" colspan="4">{{average_t1 | number:'1.2-2'}}</td>
+            </table>  
+
+    <div style="padding:5%; padding-top:0;">
+                       <BR>
+            <ion-slides style="width:100%; height:200px" #slidee>
+                    <ion-slide> 
+                                 <div style="text-align: left; padding:2%;">   <span *ngIf="average_t1 >= 1.21" style="color:rgba(112,173,71,1); font-size:1.5em; font-weight:bold">NORMAL</span>
+                                    <span *ngIf="average_t1 >= 1.11 && average_t1 < 1.21 " style="color:rgba(255,192,0,1);font-size:1.5em; font-weight:bold">BORDERLINE</span>
+                                    <span *ngIf="average_t1 > 0 && average_t1 < 1.11" style="color:rgba(237,125,49,1);font-size:1.5em; font-weight:bold">ABNORMAL</span>  </div>
+                            <table cellspacing=0 cellpadding=0 border=0 style="width:100%;font-size:1em; color:#444;">
+                                    <tr>
+                                        <td style="padding-left:10px;font-size:2em ;width:5%; text-align:left;">1<sup>st</sup></td>
+                                        <td style="padding-left:10px;font-size:2em ;width:25%; text-align:left;">Trial</td>
+                                    <td style="padding-left:10px;font-size:2em ;width:30%; text-align:left;">{{highest1}}/{{lowest1}}</td>
+                                    <td style="font-weight:bold;padding-left:10px;font-size:2em ;width:40%; text-align:right; color:rgb(46,138,212)">{{ratio1 | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:10px;font-size:2em ;width:5%; text-align:left;">2<sup>nd</sup></td>
+                                        <td style="padding-left:10px;font-size:2em ;width:25%; text-align:left;">Trial</td>
+                                    <td style="padding-left:10px;font-size:2em ;width:30%; text-align:left;">{{highest2}}/{{lowest2}}</td>
+                                    <td style="font-weight:bold;padding-left:10px;font-size:2em ;width:40%; text-align:right; color:rgb(46,138,212)">{{ratio2 | number:'1.2-2'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left:10px;font-size:2em ;width:5%; text-align:left;">3<sup>rd</sup></td>
+                                        <td style="padding-left:10px;font-size:2em ;width:25%; text-align:left;">Trial</td>
+                                    <td style="padding-left:10px;font-size:2em ;width:30%; text-align:left;">{{highest3}}/{{lowest3}}</td>
+                                    <td style="font-weight:bold;padding-left:10px;font-size:2em ;width:40%; text-align:right; color:rgb(46,138,212)">{{ratio3 | number:'1.2-2'}}</td>
+                                    </tr>
+                                     </table> 
+        
+        
+        
+                        </ion-slide>
+
+                    <ion-slide *ngIf="!hide1">
+                        <canvas #lineCanvas  style="width: 100%; height: 200px"></canvas>
+                    </ion-slide>
+                    <ion-slide *ngIf="!hide2">
+                         <canvas #lineCanvas2  style="width: 100%; height: 200px"></canvas>
+                        </ion-slide>
+                        <ion-slide *ngIf="!hide3">
+
+                           <canvas #lineCanvas3  style="width: 100%; height: 200px"></canvas>
+
+                            </ion-slide>
+                </ion-slides>
+        
+
+
+
+    </div> 
+
+
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <table cellspacing=0 cellpadding=0 border=0 style=" margin:5%; width:90%;margin-bottom:2%; margin-top:0%;font-size:1em; border-bottom: 3px solid rgb(46,138,212);color:rgb(46,138,212)">
+            <tr>
+            <td style="padding-left:10px;font-size:3.5em ;width:60%; text-align:left; ">Deep Breathing</td>
+            <td style="padding-right:10px;font-size:4em ;width:40%; text-align:right;color:rgb(46,138,212)" colspan="4">{{average_t2}} bpm</td>
+            </table>  
+
+    <div style="padding:5%; padding-top:0;">
+            <div style="text-align: left; padding:2%; font-size:1.75em;" *ngIf="result_t2_0.length > 0">   
+                    <span *ngIf="average_t2 >=15" style="color:rgba(112,173,71,1); font-weight:bold">NORMAL</span>
+                    <span *ngIf="average_t2 <=14 && average_t2 >= 11" style="color:rgba(255,192,0,1); font-weight:bold">BORDERLINE</span>
+                    <span *ngIf="average_t2 <=10 && average_t2 >0" style="color:rgba(237,125,49,1); font-weight:bold">ABNORMAL</span>   </div>
+     <ion-slides style="width:100%; height:50%;">
+
+            <ion-slide>
+    
+                    <div style="font-size:1.75em ; text-align:left;" *ngIf="result_t2_0.length == 0" >No Record</div>
+                    <table cellspacing=0 cellpadding=0 border=0 style="width:100%;font-size:1em; color:#444" *ngIf="result_t2_0.length>0">
+                    <tr style="text-decoration: underline;font-weight:bold">
+                            <td></td><td></td><td>Max</td><td>Min</td><td>Difference</td>
+                    </tr>
+                    <tr>
+                    <td style="padding-left:10px;font-size:1.75em ;width:15%; text-align:left;">1<sup>st</sup></td>
+                    <td style="font-size:1.75em ;width:25%; text-align:left;">Trial</td>
+                    <td style="font-size:1.75em ;width:20%; text-align:center;">{{result_t2_0[0]}}</td>
+                    <td style="font-size:1.75em ;width:20%; text-align:center;">{{result_t2_0[1]}}</td>
+                    <td style="font-weight:bold; font-size:1.75em ;width:20%; text-align:center; color:rgb(46,138,212)">{{result_t2_0[0] - result_t2_0[1]}}</td>
+                    </tr>
+                    
+                    <tr>
+                    <td style="padding-left:10px;font-size:1.75em ;width:15%; text-align:left;">2<sup>nd</sup></td>
+                    <td style="font-size:1.75em ;width:25%; text-align:left;">Trial</td>
+                    <td style="font-size:1.75em ;width:20%; text-align:center;">{{result_t2_0[2]}}</td>
+                    <td style="font-size:1.75em ;width:20%; text-align:center;">{{result_t2_0[3]}}</td>
+                    <td style="font-weight:bold; font-size:1.75em ;width:20%; text-align:center; color:rgb(46,138,212)">{{result_t2_0[2] - result_t2_0[3]}}</td>
+                    </tr>
+                    
+                    <tr>
+                    <td style="padding-left:10px;font-size:1.75em ;width:15%; text-align:left;">3<sup>rd</sup></td>
+                    <td style="font-size:1.75em ;width:25%; text-align:left;">Trial</td>
+                    <td style="font-size:1.75em ;width:20%; text-align:center;">{{result_t2_0[4]}}</td>
+                    <td style="font-size:1.75em ;width:20%; text-align:center;">{{result_t2_0[5]}}</td>
+                    <td style="font-weight:bold; font-size:1.75em ;width:20%; text-align:center; color:rgb(46,138,212)">{{result_t2_0[4] - result_t2_0[5]}}</td>
+                    </tr>
+                    
+                    <tr>
+                    <td style="padding-left:10px;font-size:1.75em ;width:15%; text-align:left;">4<sup>th</sup></td>
+                    <td style="font-size:1.75em ;width:25%; text-align:left;">Trial</td>
+                    <td style="font-size:1.75em ;width:20%; text-align:center;">{{result_t2_0[6]}}</td>
+                    <td style="font-size:1.75em ;width:20%; text-align:center;">{{result_t2_0[7]}}</td>
+                    <td style="font-weight:bold; font-size:1.75em ;width:20%; text-align:center; color:rgb(46,138,212)">{{result_t2_0[6] - result_t2_0[7]}}</td>
+                    </tr>
+                    
+                    <tr>
+                    <td style="padding-left:10px;font-size:1.75em ;width:15%; text-align:left;">5<sup>th</sup></td>
+                    <td style="font-size:1.75em ;width:25%; text-align:left;">Trial</td>
+                    <td style="font-size:1.75em ;width:20%; text-align:center;">{{result_t2_0[8]}}</td>
+                    <td style="font-size:1.75em ;width:20%; text-align:center;">{{result_t2_0[9]}}</td>
+                    <td style="font-weight:bold; font-size:1.75em ;width:20%; text-align:center; color:rgb(46,138,212)">{{result_t2_0[8] - result_t2_0[9]}}</td>
+                    </tr>
+                    
+                    <tr>
+                    <td style="padding-left:10px;font-size:1.75em ;width:10%; text-align:left;">6<sup>th</sup></td>
+                    <td style="font-size:1.75em ;width:25%; text-align:left;">Trial</td>
+                    <td style="font-size:1.75em ;width:20%; text-align:center;">{{result_t2_0[10]}}</td>
+                    <td style="font-size:1.75em ;width:20%; text-align:center;">{{result_t2_0[11]}}</td>
+                    <td style="font-weight:bold; font-size:1.75em ;width:20%; text-align:center; color:rgb(46,138,212)">{{result_t2_0[10] - result_t2_0[11]}}</td>
+                    </tr>
+                    
+                    </table>  <BR><BR>
+                    </ion-slide>
+            
+            
+     </ion-slides>
+
+    </div>
+
+
+
+
+
+
+
+
+    <table cellspacing=0 cellpadding=0 border=0 style=" margin:5%; width:90%;margin-bottom:-2%; margin-top:3%;font-size:1em; border-bottom: 3px solid rgb(46,138,212);color:rgb(46,138,212)">
+            <tr>
+            <td style="padding-left:10px;font-size:3.5em ;width:70%; text-align:left; ">Sustained Handgrip</td>
+            <td style="padding-right:10px;font-size:4em ;width:30%; text-align:right;color:rgb(46,138,212)" colspan="4">{{average_t3}} <span style="font-size:0.5em">mmHg</span></td>
+            </table>  
+
+    <div style="padding:5%; padding-top:0;">
+
+                    <div style="font-size:2em; padding-top:25px;" *ngIf="average_t3==0">No Record. </div>
+                    <div style="font-size:2em; " *ngIf="average_t3!=0">
+                        <div style="text-align: left"><BR>
+                                <div style="font-size:1.5em ; text-align:left;color:rgb(46,138,212)" colspan="4">Difference in Diastolic</div>
+                                &nbsp;&nbsp;{{average_t3}} mmHg &nbsp;
+                        <span *ngIf="average_t3>=16" style="color:rgba(112,173,71,1); font-weight:bold;font-size:0.875em">NORMAL</span>
+                        <span *ngIf="average_t3<=15 && average_t3>= 11" style="color:rgba(255,192,0,1); font-weight:bold;font-size:0.875em">BORDERLINE</span>
+                        <span *ngIf="average_t3<=10 && average_t3>0" style="color:rgba(237,125,49,1); font-weight:bold;font-size:0.875em">ABNORMAL</span>  
+                        <BR>
+                            <div style="font-size:1em ; text-align:left;color:rgb(46,138,212)" colspan="4">1st BP Reading</div>
+                            &nbsp;&nbsp;Sys: {{t3_up1}} &nbsp;&nbsp;Dia: {{t3_down1}}<BR>
+    <div style="font-size:1em ; text-align:left;color:rgb(46,138,212)" colspan="4">2nd BP Reading</div>
+    &nbsp;&nbsp;Sys: {{t3_up2}} &nbsp;&nbsp;Dia: {{t3_down2}}
+                    </div>
+
+
+                            </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+    <table cellspacing=0 cellpadding=0 border=0 style=" margin:5%; width:90%;margin-bottom:2%; margin-top:3%;font-size:1em; border-bottom: 3px solid rgb(46,138,212);color:rgb(46,138,212)">
+            <tr>
+            <td style="padding-left:10px;font-size:3.5em ;width:50%; text-align:left; ">30:15 Ratio &amp; Orthostasis</td>
+            <td style="padding-right:10px;font-size:3.5em ;width:50%; text-align:right;color:rgb(46,138,212)" colspan="4">{{average_RRI | number:'1.2-2'}}<BR>{{average_t4}}<span style="font-size:0.5em">mmHg</span></td>
+            </table>  
+
+    <div style="padding:5%; padding-top:0;">
+
+
+
+
+            <div style="font-size:2em; " *ngIf="result_t4_1.length==0">
+                    No Record.
+            </div>
+        
+            <div *ngIf="result_t4_1.length>0">
+                    <table cellspacing=0 cellpadding=0 border=0 style="width:100%;font-size:1em; color:#444">
+                        <tr>
+                        <td style="font-size:6em ;width:20%; text-align:left;color:rgb(46,138,212)" colspan="3">{{average_RRI | number:'1.2-2'}}
+                                <span *ngIf="average_RRI >= 1.035" style="color:rgba(112,173,71,1); font-size:0.3em; font-weight:bold">NORMAL</span>  
+                                <span *ngIf="average_RRI >= 1.005 && average_RRI < 1.035 " style="color:rgba(255,192,0,1);font-size:0.3em; font-weight:bold">BORDERLINE</span>  
+                                <span *ngIf="average_RRI > 0 && average_RRI < 1.005 " style="color:rgba(237,125,49,1);font-size:0.3em; font-weight:bold">ABNORMAL</span>  
+                        </td>
+                       </tr>
+        <tr >
+        <td style="padding-left:10px;font-size:2em ;width:5%; text-align:left;">15<sup>th</sup></td>
+        <td style="padding-left:10px;font-size:2em ;width:15%; text-align:left;">Beat</td>
+        <td style="padding-left:10px;font-size:2em ;width:55%; text-align:left;">{{RRI15}} RRI</td>
+        </tr>
+        <tr>
+        <td style="padding-left:10px;font-size:2em ;width:5%; text-align:left;">30<sup>th</sup></td>
+        <td style="padding-left:10px;font-size:2em ;width:15%; text-align:left;">Beat</td>
+        <td style="padding-left:10px;font-size:2em ;width:55%; text-align:left;">{{RRI30}} RRI</td>
+        </tr>
+            </table><BR>
+        <div style="text-align: left">
+        <div style="font-size:2em;display:inline;">  
+        <div style="font-size:1.5em ; text-align:left;color:rgb(46,138,212)" colspan="4">
+                                        Difference in Systolic</div>
+                                    &nbsp;&nbsp;{{average_t4}} mmHg &nbsp;</div>
+                            <span *ngIf="average_t4 !=0 && average_t4<= 10" style="color:rgba(112,173,71,1); font-weight:bold;font-size:1.75em;">NORMAL</span>
+                            <span *ngIf="average_t4 >=11 && average_t4<= 29" style="color:rgba(255,192,0,1); font-weight:bold;font-size:1.75em;">BORDERLINE</span>
+                            <span *ngIf="average_t4 >=30" style="color:rgba(237,125,49,1); font-weight:bold;font-size:1.75em;">ABNORMAL</span>  
+                            <BR><BR>
+                                <div style="font-size: 1.5em">
+                                <div style="font-size:1.5em ; text-align:left;color:rgb(46,138,212)" colspan="4">1st BP Reading</div>
+                                &nbsp;&nbsp;Sys: {{up1}} &nbsp;&nbsp;Dia: {{down1}}<BR>
+        <div style="font-size:1.5em ; text-align:left;color:rgb(46,138,212)" colspan="4">2nd BP Reading</div>
+        &nbsp;&nbsp;Sys: {{up2}} &nbsp;&nbsp;Dia: {{down2}}
+    </div>
+        
+        </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div> 
+</div>
+
+    </ion-content>
+    

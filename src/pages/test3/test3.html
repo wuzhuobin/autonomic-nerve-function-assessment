@@ -1,0 +1,109 @@
+
+<ion-content text-center no-bounce>
+
+                <ion-fab right bottom>
+                    <button ion-fab large color="white" style="box-shadow:0 0 40px #888" (click)="loadConfig()">
+                      <img src="images/gear.png">
+                    </button>
+                  </ion-fab>
+                
+            
+            <div style="text-align: left;width:40%; height:100%;background:#fafafa;box-shadow:0px 20px 40px 0 #888; float:left; color:rgb(46,138,212);z-index:99; position:relative">
+            
+                <table cellspacing=0 cellpadding=0 border=0 style=" width:100%;font-size:1.5em;color:#444">
+                        <tr>
+                        <td style="padding:5px; padding-left:15px; width:70%; font-weight:bold; padding-right:0; padding-bottom:0;">{{patient_name}}&nbsp;</td>
+                        <td rowspan="2" style=" font-size:2.5em;vertical-align:top;padding:5px;text-align: right">&nbsp;{{patient_age}}</td>
+                        </tr>
+                        <tr><td style="padding:5px; padding-left:15px;padding-right:0; padding-top: 0;"><span *ngIf="patient_elapsed !='0:00'">{{patient_elapsed}} (Time Elapsed)</span>&nbsp;</td></tr>
+                        </table>  
+            
+            <div (tap)="clickPage(1)" style="border:1px solid rgb(46,138,212); border-radius:10px; margin:7%; width:86%; padding:10px; height:100px; margin-bottom:0%;">
+                    <div style="font-size: 1.75em; color:#444">Valsalva Maneuver</div>
+                    <div style="font-size: 3em ; text-align:center ;width:100%">
+                            <span *ngIf="average_t1>0"> {{average_t1 | number:'1.2-2'}}</span>
+                            <span *ngIf="average_t1==0">-</span>
+            </div>                    
+        </div>
+                    
+                    
+                    <div (tap)="clickPage(2)" style="border:1px solid rgb(46,138,212); border-radius:10px; margin:7%; width:86%;  padding:10px; height:100px;margin-bottom:0%;">
+                    <div style="font-size: 1.75em; color:#444">Deep Breathing</div>
+                    <div style="font-size: 3em ; text-align:center ;width:100%"><span *ngIf="average_t2!=0">{{average_t2}} bpm</span>
+                    <span *ngIf="average_t2==0">-</span>
+                    </div>
+                    </div>
+                    
+                    <div (tap)="clickPage(3)" style="border:1px solid rgb(46,138,212); border-radius:10px; margin:7%; width:86%;  padding:10px; height:100px;margin-bottom:0%;">
+                    <div style="font-size: 1.75em; color:#444">Sustained Handgrip</div>
+                    <div style="font-size: 3em ; text-align:center ;width:100%">
+                    <span *ngIf="average_t3!=0">{{average_t3}} mmHg</span>
+                    <span *ngIf="average_t3==0">-</span>
+                    </div>
+                    </div>
+                    
+                    
+                    <div (tap)="clickPage(4)"  style="border:1px solid rgb(46,138,212); border-radius:10px; margin:7%; width:86%;  padding:10px; height:100px;margin-bottom:0%;">
+                    <div style="font-size: 1.75em; color:#444">30:15 Ratio &amp; Orthostasis</div>
+                    <div style="font-size: 3em ; text-align:center ;width:100%">
+                            <span *ngIf="average_RRI!=0">{{average_RRI | number:'1.2-2'}}</span>
+                            <span *ngIf="average_RRI==0">-</span> | <span *ngIf="average_t4!=0">{{average_t4}} mmHg</span>
+                            <span *ngIf="average_t4==0">-</span>
+                    </div>
+                    </div>
+            <BR><BR><BR><BR>
+            <div (tap)="clickPage(6)" style="border:1px solid rgb(46,138,212); border-radius:50px; margin-left:27%; width:170px; padding:7px; font-size: 1.5em; color:rgb(46,138,212);text-align:center;">
+                COMPLETE
+            </div>
+            
+            </div>
+                
+             <div style="width:60%; height:100%; float:right; background-color:rgb(240, 240, 240);">
+            
+            
+            <table cellspacing=0 cellpadding=0 border=0 style="font-family: 'Calibri'; margin:15%; margin-bottom:2%;margin-left:12%;width:70%;font-size:1em; border-bottom: 3px solid rgb(46,138,212);color:rgb(46,138,212)">
+            <tr> 
+            <td style="padding-left:10px;font-size:4em; font-weight:bold;width:65%; text-align:left;">Sustained<BR>Handgrip</td>
+            <td style="padding-top:12px"><BR><BR><BR>
+            <div *ngIf="(Gripready && BPready)" (tap)="enterTest()" style="border:1px solid rgb(46,138,212); border-radius:75px; width:150px ;  padding:7px; padding-bottom:5px;">
+            <div style="font-size: 1.5em; color:rgb(46,138,212);text-align:center; width:100%">BEGIN</div>
+            </div>
+            <div *ngIf="!(Gripready && BPready)"  style="border:1px solid rgb(190,190,190); border-radius:75px; width:150px ;  padding:7px; padding-bottom:5px;">
+                    <div style="font-size: 1.5em; color:rgb(190,190,190);text-align:center; width:100%">BEGIN</div>
+                    </div>
+            </td>
+            </table>  
+            <div style="padding:15%; padding-top:0; padding-bottom:0; padding-left:12%;">
+            <ion-slides style="width:100%;" >
+            
+                    <ion-slide style="font-size:2.5em; text-align:left" *ngIf="result.length==0">
+                        <div style="text-align:left">
+No Record
+</div>
+                </ion-slide>
+
+                    <ion-slide style="font-size:2em; " *ngIf="result.length>0">
+                        <div style="text-align: left"><BR>
+                                <div style="font-size:1.5em ; text-align:left;color:rgb(46,138,212)" colspan="4">Difference in Diastolic</div>
+                                &nbsp;&nbsp;{{average_t3}} mmHg &nbsp;
+                        <span *ngIf="average_t3>=16" style="color:rgba(112,173,71,1); font-weight:bold">NORMAL</span>
+                        <span *ngIf="average_t3<=15 && average_t3>= 11" style="color:rgba(255,192,0,1); font-weight:bold">BORDERLINE</span>
+                        <span *ngIf="average_t3<=10 && result.length>0" style="color:rgba(237,125,49,1); font-weight:bold">ABNORMAL</span>  
+                        <BR><BR>
+                            <div style="font-size:1.5em ; text-align:left;color:rgb(46,138,212)" colspan="4">1st BP Reading</div>
+                            &nbsp;&nbsp;Sys: {{up1}} &nbsp;&nbsp;Dia: {{down1}}<BR>
+    <div style="font-size:1.5em ; text-align:left;color:rgb(46,138,212)" colspan="4">2nd BP Reading</div>
+    &nbsp;&nbsp;Sys: {{up2}} &nbsp;&nbsp;Dia: {{down2}}
+
+
+</div>
+                            </ion-slide>
+                      </ion-slides>
+                                </div>
+            
+            </div>
+            
+            
+            
+            </ion-content>
+            
