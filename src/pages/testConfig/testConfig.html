@@ -31,9 +31,6 @@
       <div style="width:100%; text-align:center; font-size:2em">
           <table *ngIf="!calibrating3 && hardware3ready" style="width: 100%; text-align:center"><tr><td>
               <ion-icon name="heart" style="zoom:2.0"></ion-icon><BR>
-              <div (tap)="clickCalibrate()" style="font-size: 0.75em;font-family:'Calibril'; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:150px;  display:inline-block; padding:3px">
-                  CALIBRATE
-                  </div> 
           </td><td><B style="font-size:2.5em">{{reading3}}</B> RRI</td></tr>
         </table>
         <table *ngIf="calibrating3 && hardware3ready" style="width: 100%; text-align:center;"><tr><td>
