@@ -279,11 +279,11 @@ this.trial--;
   }
 
   checkAllHardware(){
-    this.ble.isConnected('48A655A2-4501-85DC-3C66-567AB4B05570').then(
+    this.ble.isConnected('52E068E1-84B8-1271-EA06-3DC903EA38C5').then(
       ()=>{ 
         this.breathDeviceConnected = true; 
 
-        this.ble.read('48A655A2-4501-85DC-3C66-567AB4B05570','19b10000-e8f2-537e-4f6c-d104768a1214','19b10001-e8f2-537e-4f6c-d104768a1214').then(data2=>{
+        this.ble.read('52E068E1-84B8-1271-EA06-3DC903EA38C5','19b10000-e8f2-537e-4f6c-d104768a1214','19b10001-e8f2-537e-4f6c-d104768a1214').then(data2=>{
           
           this.breathReading = (new Uint8Array(data2)[0]);
 
@@ -304,11 +304,11 @@ this.trial--;
       this.connectBreath();
     }
 
-    this.ble.isConnected('1299559F-DF0D-783C-9E47-DB2E6CFA82F3').then(
+    this.ble.isConnected('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9').then(
       ()=>{ 
         this.heartRateDeviceConnected = true; 
 
-        this.ble.read('1299559F-DF0D-783C-9E47-DB2E6CFA82F3','19b10000-e8f2-537e-4f6c-d104768a1216','19b10001-e8f2-537e-4f6c-d104768a1216').then(data2=>{
+        this.ble.read('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9','19b10000-e8f2-537e-4f6c-d104768a1216','19b10001-e8f2-537e-4f6c-d104768a1216').then(data2=>{
           
           //this.RRIReadng = Math.round((new Uint16Array(data2)[0])/5) * 5;
           this.RRIReadng = (new Uint16Array(data2)[0]);
@@ -332,7 +332,7 @@ this.trial--;
     this.ble.scan([], 3).subscribe(device => {
 
       console.log(JSON.stringify(device));
-        this.ble.connect('48A655A2-4501-85DC-3C66-567AB4B05570').subscribe(data => {
+        this.ble.connect('52E068E1-84B8-1271-EA06-3DC903EA38C5').subscribe(data => {
           this.breathDeviceConnected  = true;
            },error =>{
             console.log(error);
@@ -345,7 +345,7 @@ this.trial--;
     this.ble.scan([], 3).subscribe(device => {
       console.log(JSON.stringify(device));
       
-      this.ble.connect('1299559F-DF0D-783C-9E47-DB2E6CFA82F3').subscribe(data => {
+      this.ble.connect('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9').subscribe(data => {
         this.heartRateDeviceConnected = true;
         },error =>{
           console.log(error);

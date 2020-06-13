@@ -116,11 +116,23 @@ public t3_up1 : any ;
 public t3_down1 : any ;
 public t3_up2 : any ;
 public t3_down2 : any ;
+public t3_up3: any;
+public t3_down3: any;
+public t3_up4: any;
+public t3_down4: any;
+public t3_up5: any;
+public t3_down5: any;
+public t3_up6: any;
+public t3_down6: any;
 
 public up1 : any = 0;
 public down1 : any = 0;
 public up2 : any = 0;
 public down2 : any = 0;
+public up3 : any = 0;
+public down3 : any = 0;
+public up4 : any = 0;
+public down4 : any = 0;
 
 
 public RRI15 = 0;
@@ -265,75 +277,218 @@ this.ratio3 = 0;
               tem2 = Math.round(sum / valid_test);
             }
             // end test2 data 
-  
+            
             // start test3 data
             this.result3_1 = JSON.parse(data.rows.item(i).t3_1);
-            if(this.result3_1.length==4)
-            tem3 =  Math.abs(this.result3_1[3]-this.result3_1[1]);
-            else tem3 = 0;
+            if (this.result3_1.length > 0) {
+              var max = this.result3_1[3];
+              if (this.result3_1[5] > max)
+                  max = this.result3_1[5];
+              if (this.result3_1[7] > max)
+                  max = this.result3_1[7];
+              if (this.result3_1[9] > max)
+                  max = this.result3_1[9];
+              if (this.result3_1[11] > max)
+                  max = this.result3_1[11];
+              console.log(max, this.result3_1[1]);
+              tem3 = max - this.result3_1[1];
+          }
+          else {
+              tem3 = 0;
+          }
   
             // end test3 data 
   
             // start test4 data
         
-            this.result4_1 = JSON.parse(data.rows.item(i).t4_1);
-  
-            if(this.result4_1.length>0){
-              tem4 = this.result4_1[1] / this.result4_1[0];
-            } else {
-              tem4 = 0;
-            }
+          this.result4_1 = JSON.parse(data.rows.item(i).t4_1);
+          if (this.result4_1.length > 0) {
+            tem4 = this.result4_1[1] / this.result4_1[0];
+          } else {
+            tem4 = 0;
+          }
             
             // end test4 data 
   
             // start test4b data
-            this.result4b_1 = JSON.parse(data.rows.item(i).t4_2);
+          this.result4b_1 = JSON.parse(data.rows.item(0).t4_2);
+          if (this.result4b_1.length > 0) {
+            var min = this.result4b_1[2];
+            if (this.result4b_1[4] < min)
+              min = this.result4b_1[4];
+            if (this.result4b_1[6] < min)
+              min = this.result4b_1[6];
+            tem5 = Math.abs(min - this.result4b_1[0]);
+          }
+          else {
+            tem5 = 0;
+          }
+          // end test4b data 
+          var t1_f = 0;
+          var t2_f = 0;
+          var t3_f = 0;
+          var t4_f = 0;
+          var t5_f = 0;
+          if (tem1 != 0 && tem1 <= 1.1) {
+            t1_f = 0;
+          }
+          else if (tem1 > 1.1 && tem1 <= 1.20) {
+            t1_f = 1;
+          }
+          else {
+            t1_f = 2;
+          }
+          if (tem2 != 0 && tem2 <= 10) {
+            t2_f = 0;
+          }
+          else if (tem2 > 10 && tem2 <= 14) {
+            t2_f = 1;
+          }
+          else {
+            t2_f = 2;
+          }
+          if (tem3 != 0 && tem3 <= 10) {
+            t3_f = 0;
+          }
+          else if (tem3 > 10 && tem3 < 16) {
+            t3_f = 1;
+          }
+          else {
+            t3_f = 2;
+          }
+          if (tem4 != 0 && tem4 <= 1) {
+            t4_f = 0;
+          }
+          else if (tem4 > 1 && tem4 <= 1.03) {
+            t4_f = 1;
+          }
+          else {
+            t4_f = 2;
+          }
+          if (tem5 != 0 && tem5 >= 30) {
+            t5_f = 0;
+          }
+          else if (tem5 > 10 && tem5 < 30) {
+            t5_f = 1;
+          }
+          else {
+            t5_f = 2;
+          }
+          var normal = 0;
+          var borderline = 0;
+          var abnormal = 0;
+          var HR_borderline = 0;
+          var HR_abnormal = 0;
+          var BP_borderline = 0;
+          var BP_abnormal = 0;
+          var final_type = 1;
+          if (t1_f == 2)
+            normal++;
+          if (t2_f == 2)
+            normal++;
+          if (t3_f == 2)
+            normal++;
+          if (t4_f == 2)
+            normal++;
+          if (t5_f == 2)
+            normal++;
+          if (t1_f == 1)
+            borderline++;
+          if (t2_f == 1)
+            borderline++;
+          if (t3_f == 1)
+            borderline++;
+          if (t4_f == 1)
+            borderline++;
+          if (t5_f == 1)
+            borderline++;
+          if (t1_f == 0)
+            abnormal++;
+          if (t2_f == 0)
+            abnormal++;
+          if (t3_f == 0)
+            abnormal++;
+          if (t4_f == 0)
+            abnormal++;
+          if (t5_f == 0)
+            abnormal++;
+          if (t1_f == 1)
+            HR_borderline++;
+          if (t2_f == 1)
+            HR_borderline++;
+          if (t4_f == 1)
+            HR_borderline++;
+          if (t1_f == 0)
+            HR_abnormal++;
+          if (t2_f == 0)
+            HR_abnormal++;
+          if (t4_f == 0)
+            HR_abnormal++;
+          if (t3_f == 1)
+            BP_borderline++;
+          if (t5_f == 1)
+            BP_borderline++;
+          if (t3_f == 0)
+            BP_abnormal++;
+          if (t5_f == 0)
+            BP_abnormal++;
+          console.log(t1_f, t2_f, t3_f, t4_f, t5_f);
+          if (normal == 5 || (normal == 4 && borderline == 1)) {
+            final_type = 1;
+          }
+          else if (HR_borderline >= 2 || HR_abnormal == 1) {
+            final_type = 2;
+          }
+          else if (HR_abnormal >= 2) {
+            if (BP_borderline == 2 || BP_abnormal >= 1)
+              final_type = 4;
+            else
+              final_type = 3;
+          }
+          else {
+            final_type = 5;
+          }
 
-            if(this.result4b_1.length==4)
-            tem5 =  Math.abs(this.result4b_1[0]-this.result4b_1[2]);
-            else tem5 = 0;
-  
-            // end test4b data 
-  
           this.datas.push({
-            id:data.rows.item(i).id,
-            age:data.rows.item(i).age,
-            name:data.rows.item(i).name,
-            time:data.rows.item(i).createTime,
+            id: data.rows.item(i).id,
+            age: data.rows.item(i).age,
+            name: data.rows.item(i).name,
+            time: data.rows.item(i).createTime,
             t1result: tem1,
             t2result: tem2,
             t3result: tem3,
             t4result: tem4,
-            t4result2: tem5
+            t4result2: tem5,
+            failure: final_type
           });
-      
+
         }
 
-      
-
-      });
 
 
       });
 
 
-     this.presentPrompt();
-               
+    });
+
+
+    this.presentPrompt();
+
 
   }
 
 
-  onInput(a){
+  onInput(a) {
     this.searchAllRecord();
   }
-  onCancel(a){
+  onCancel(a) {
     this.searchAllRecord();
   }
 
-showPatient(id){
-console.log(id);
-  this.datab.executeSql(`select * from patient_table where id = `+id+`;`, {})
-  .then( data => {
+  showPatient(id) {
+    console.log(id);
+    this.datab.executeSql(`select * from patient_table where id = ` + id + `;`, {})
+      .then(data => {
     this.hide1 = false;
     this.hide2 = false;
     this.hide3 = false;
@@ -465,11 +620,28 @@ if(tempMin ==0)
      this.result_t3_1 = JSON.parse(data.rows.item(0).t3_1);
 
      if(this.result_t3_1.length>0){
-         this.t3_up1 = this.result_t3_1[0];
-         this.t3_down1 = this.result_t3_1[1];
-         this.t3_up2 = this.result_t3_1[2];
-         this.t3_down2 = this.result_t3_1[3];
-         this.average_t3 = Math.abs(this.t3_down1 - this.t3_down2);
+       this.t3_up1 = this.result_t3_1[0];
+       this.t3_down1 = this.result_t3_1[1];
+       this.t3_up2 = this.result_t3_1[2];
+       this.t3_down2 = this.result_t3_1[3];
+       this.t3_up3 = this.result_t3_1[4];
+       this.t3_down3 = this.result_t3_1[5];
+       this.t3_up4 = this.result_t3_1[6];
+       this.t3_down4 = this.result_t3_1[7];
+       this.t3_up5 = this.result_t3_1[8];
+       this.t3_down5 = this.result_t3_1[9];
+       this.t3_up6 = this.result_t3_1[10];
+       this.t3_down6 = this.result_t3_1[11];
+       var max = this.result_t3_1[3];
+       if (this.result_t3_1[5] > max)
+         max = this.result_t3_1[5];
+       if (this.result_t3_1[7] > max)
+         max = this.result_t3_1[7];
+       if (this.result_t3_1[9] > max)
+         max = this.result_t3_1[9];
+       if (this.result_t3_1[11] > max)
+         max = this.result_t3_1[11];
+       this.average_t3 = max - this.result_t3_1[1];
      
        } else { this.average_t3 = 0;}
 
@@ -485,11 +657,20 @@ if(tempMin ==0)
        this.result_t4_2 = JSON.parse(data.rows.item(0).t4_2);
 
        if(this.result_t4_2.length>0){
-           this.up1 = this.result_t4_2[0];
-           this.down1 = this.result_t4_2[1];
-           this.up2 = this.result_t4_2[2];
-           this.down2 = this.result_t4_2[3];                
-           this.average_t4 = Math.abs(this.up1 - this.up2);
+         this.up1 = this.result_t4_2[0];
+         this.down1 = this.result_t4_2[1];
+         this.up2 = this.result_t4_2[2];
+         this.down2 = this.result_t4_2[3];                
+         this.up3 = this.result_t4_2[4];
+         this.down3 = this.result_t4_2[5];
+         this.up4 = this.result_t4_2[6];
+         this.down4 = this.result_t4_2[7];
+         var min = this.up2;
+         if (this.up3 < min)
+           min = this.up3;
+         if (this.up4 < min)
+           min = this.up4;
+         this.average_t4 = Math.abs(min - this.up1);
          } else { this.average_t4 = 0;}
 
 
@@ -674,6 +855,9 @@ searchAllRecord(){
         let tem3 = 0;
         let tem4 = 0;
         let tem5 = 0;
+        this.ratio1 = 0;
+        this.ratio2 = 0;
+        this.ratio3 = 0;
 
           // start test1 data 
           this.result1_1 = JSON.parse(data.rows.item(i).t1_1);
@@ -748,9 +932,9 @@ searchAllRecord(){
       
           tempMax = 0;
           tempMin = 0;
-          if(this.ratio1 > 0) {tempMax += this.ratio1; tempMin++;}
-          if(this.ratio2 > 0) {tempMax += this.ratio2; tempMin++;}
-          if(this.ratio3 > 0) {tempMax += this.ratio3; tempMin++;}
+          if(this.ratio1 != 0) {tempMax += this.ratio1; tempMin++;}
+          if(this.ratio2 != 0) {tempMax += this.ratio2; tempMin++;}
+          if(this.ratio3 != 0) {tempMax += this.ratio3; tempMin++;}
 
           if(tempMin ==0)
               tem1 = 0;
@@ -761,39 +945,17 @@ searchAllRecord(){
           // start test2 data 
 
           this.result2_1 = JSON.parse(data.rows.item(i).t2_1);
-          this.result2_2 = JSON.parse(data.rows.item(i).t2_2);
-          this.result2_3 = JSON.parse(data.rows.item(i).t2_3);  
 
           let valid_test = 0;
           let sum = 0;
           if(this.result2_1.length>0){
             valid_test++;
-            sum = Math.round((this.result2_1[0] - this.result2_1[1])+
+            sum += Math.round(((this.result2_1[0] - this.result2_1[1])+
                   (this.result2_1[2] - this.result2_1[3])+
                   (this.result2_1[4] - this.result2_1[5])+
                   (this.result2_1[6] - this.result2_1[7])+
                   (this.result2_1[8] - this.result2_1[9])+
-                  (this.result2_1[10] - this.result2_1[11])/ 6);
-          }
-
-          if(this.result2_2.length>0){
-            valid_test++;
-            sum = Math.round((this.result2_2[0] - this.result2_2[1])+
-                  (this.result2_2[2] - this.result2_2[3])+
-                  (this.result2_2[4] - this.result2_2[5])+
-                  (this.result2_2[6] - this.result2_2[7])+
-                  (this.result2_2[8] - this.result2_2[9])+
-                  (this.result2_2[10] - this.result2_2[11])/ 6);
-          }
-          
-          if(this.result2_3.length>0){
-            valid_test++;
-            sum = Math.round((this.result2_3[0] - this.result2_3[1])+
-                  (this.result2_3[2] - this.result2_3[3])+
-                  (this.result2_3[4] - this.result2_3[5])+
-                  (this.result2_3[6] - this.result2_3[7])+
-                  (this.result2_3[8] - this.result2_3[9])+
-                  (this.result2_3[10] - this.result2_3[11])/ 6);
+                  (this.result2_1[10] - this.result2_1[11])) / 6);
           }
 
           if(valid_test == 0)
@@ -807,33 +969,174 @@ searchAllRecord(){
 
           this.result3_1 = JSON.parse(data.rows.item(i).t3_1);
 
-          if(this.result3_1.length>0)
-          tem3 =  Math.abs(this.result3_1[3]-this.result3_1[1]);
-          else tem3 = 0;
+        if (this.result3_1.length > 0) {
+          let max = this.result3_1[3];
+          if (this.result3_1[5] > max)
+            max = this.result3_1[5];
+          if (this.result3_1[7] > max)
+            max = this.result3_1[7];
+          if (this.result3_1[9] > max)
+            max = this.result3_1[9];
+          if (this.result3_1[11] > max)
+            max = this.result3_1[11];
+          console.log(max, this.result3_1[1]);
+          tem3 = max - this.result3_1[1];
+        }
+        else{
+          tem3 = 0;
+        }
 
           // end test3 data 
 
           // start test4 data
 
-          this.result4_1 = JSON.parse(data.rows.item(0).t4_1);
+        this.result4_1 = JSON.parse(data.rows.item(i).t4_1);
+        if (this.result4_1.length > 0) {
+          tem4 = this.result4_1[1] / this.result4_1[0];
+        }
+        else {
+          tem4 = 0;
+        }
+        // end test4 data 
+        // start test4b data
+        this.result4b_1 = JSON.parse(data.rows.item(0).t4_2);
+        if (this.result4b_1.length > 0) {
+          var min = this.result4b_1[2];
+          if (this.result4b_1[4] < min)
+            min = this.result4b_1[4];
+          if (this.result4b_1[6] < min)
+            min = this.result4b_1[6];
+          tem5 = Math.abs(min - this.result4b_1[0]);
+        }
+        else {
+          tem5 = 0;
+        }
 
-          if(this.result4_1.length>0){
-            tem4 = this.result4_1[1] / this.result4_1[0];
-          } else {
-            tem4 = 0;
-          }
-          
-          // end test4 data 
-
-          // start test4b data
-
-          this.result4b_1 = JSON.parse(data.rows.item(i).t4_2);
-
-          if(this.result4b_1.length>0)
-          tem5 =  Math.abs(this.result3_1[0]-this.result4b_1[2]);
-          else tem5 = 0;
-
-          // end test4b data 
+        // end test4b data 
+        var t1_f = 0;
+        var t2_f = 0;
+        var t3_f = 0;
+        var t4_f = 0;
+        var t5_f = 0;
+        if (tem1 != 0 && tem1 <= 1.1) {
+          t1_f = 0;
+        }
+        else if (tem1 > 1.1 && tem1 <= 1.20) {
+          t1_f = 1;
+        }
+        else {
+          t1_f = 2;
+        }
+        if (tem2 != 0 && tem2 <= 10) {
+          t2_f = 0;
+        }
+        else if (tem2 > 10 && tem2 <= 14) {
+          t2_f = 1;
+        }
+        else {
+          t2_f = 2;
+        }
+        if (tem3 != 0 && tem3 <= 10) {
+          t3_f = 0;
+        }
+        else if (tem3 > 10 && tem3 < 16) {
+          t3_f = 1;
+        }
+        else {
+          t3_f = 2;
+        }
+        if (tem4 != 0 && tem4 <= 1) {
+          t4_f = 0;
+        }
+        else if (tem4 > 1 && tem4 <= 1.03) {
+          t4_f = 1;
+        }
+        else {
+          t4_f = 2;
+        }
+        if (tem5 != 0 && tem5 >= 30) {
+          t5_f = 0;
+        }
+        else if (tem5 > 10 && tem5 < 30) {
+          t5_f = 1;
+        }
+        else {
+          t5_f = 2;
+        }
+        let normal = 0;
+        let borderline = 0;
+        let abnormal = 0;
+        let HR_borderline = 0;
+        let HR_abnormal = 0;
+        let BP_borderline = 0;
+        let BP_abnormal = 0;
+        let final_type = 1;
+        if (t1_f == 2)
+          normal++;
+        if (t2_f == 2)
+          normal++;
+        if (t3_f == 2)
+          normal++;
+        if (t4_f == 2)
+          normal++;
+        if (t5_f == 2)
+          normal++;
+        if (t1_f == 1)
+          borderline++;
+        if (t2_f == 1)
+          borderline++;
+        if (t3_f == 1)
+          borderline++;
+        if (t4_f == 1)
+          borderline++;
+        if (t5_f == 1)
+          borderline++;
+        if (t1_f == 0)
+          abnormal++;
+        if (t2_f == 0)
+          abnormal++;
+        if (t3_f == 0)
+          abnormal++;
+        if (t4_f == 0)
+          abnormal++;
+        if (t5_f == 0)
+          abnormal++;
+        if (t1_f == 1)
+          HR_borderline++;
+        if (t2_f == 1)
+          HR_borderline++;
+        if (t4_f == 1)
+          HR_borderline++;
+        if (t1_f == 0)
+          HR_abnormal++;
+        if (t2_f == 0)
+          HR_abnormal++;
+        if (t4_f == 0)
+          HR_abnormal++;
+        if (t3_f == 1)
+          BP_borderline++;
+        if (t5_f == 1)
+          BP_borderline++;
+        if (t3_f == 0)
+          BP_abnormal++;
+        if (t5_f == 0)
+          BP_abnormal++;
+        console.log(t1_f, t2_f, t3_f, t4_f, t5_f);
+        if (normal == 5 || (normal == 4 && borderline == 1)) {
+          final_type = 1;
+        }
+        else if (HR_borderline >= 2 || HR_abnormal == 1) {
+          final_type = 2;
+        }
+        else if (HR_abnormal >= 2) {
+          if (BP_borderline == 2 || BP_abnormal >= 1)
+            final_type = 4;
+          else
+            final_type = 3;
+        }
+        else {
+          final_type = 5;
+        }
 
         this.datas.push({
           id:data.rows.item(i).id,
@@ -844,7 +1147,8 @@ searchAllRecord(){
           t2result: tem2,
           t3result: tem3,
           t4result: tem4,
-          t4result2: tem5
+          t4result2: tem5,
+          failure: final_type
         });
 
     

@@ -128,7 +128,7 @@ export class Test4DetailPage {
 
     var daa = new Uint8Array(1);
     daa[0] = 2;
-    this.ble.write('1299559F-DF0D-783C-9E47-DB2E6CFA82F3','19b10000-e8f2-537e-4f6c-d104768a1216','19B10001-E8F2-537E-4F6C-D104768A1218',daa.buffer).then(data2=>{
+    this.ble.write('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9','19b10000-e8f2-537e-4f6c-d104768a1216','19B10001-E8F2-537E-4F6C-D104768A1218',daa.buffer).then(data2=>{
       console.log(data2);
       }).catch(error=>{
         console.log(error);
@@ -176,7 +176,7 @@ export class Test4DetailPage {
 
 var daa = new Uint8Array(1);
     daa[0] = 2;
-    this.ble.write('1299559F-DF0D-783C-9E47-DB2E6CFA82F3','19b10000-e8f2-537e-4f6c-d104768a1216','19B10001-E8F2-537E-4F6C-D104768A1218',daa.buffer).then(data2=>{
+    this.ble.write('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9','19b10000-e8f2-537e-4f6c-d104768a1216','19B10001-E8F2-537E-4F6C-D104768A1218',daa.buffer).then(data2=>{
       console.log(data2);
       }).catch(error=>{
         console.log(error);
@@ -259,11 +259,11 @@ var daa = new Uint8Array(1);
 
   checkAllHardware(){
 
-    this.ble.isConnected('1299559F-DF0D-783C-9E47-DB2E6CFA82F3').then(
+    this.ble.isConnected('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9').then(
       ()=>{ 
         this.heartRateDeviceConnected = true; 
 
-        this.ble.read('1299559F-DF0D-783C-9E47-DB2E6CFA82F3','19b10000-e8f2-537e-4f6c-d104768a1216','19b10001-e8f2-537e-4f6c-d104768a1216').then(data2=>{
+        this.ble.read('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9','19b10000-e8f2-537e-4f6c-d104768a1216','19b10001-e8f2-537e-4f6c-d104768a1216').then(data2=>{
           
           if((new Uint16Array(data2)[0])>560 && (new Uint16Array(data2)[0])<1450)
           this.RRIReadng = (new Uint16Array(data2)[0]);
@@ -272,7 +272,7 @@ var daa = new Uint8Array(1);
             console.log(error);
           });
 
-          this.ble.read('1299559F-DF0D-783C-9E47-DB2E6CFA82F3','19b10000-e8f2-537e-4f6c-d104768a1216','19b10001-e8f2-537e-4f6c-d104768a1217').then(data2=>{
+          this.ble.read('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9','19b10000-e8f2-537e-4f6c-d104768a1216','19b10001-e8f2-537e-4f6c-d104768a1217').then(data2=>{
             this.currentBeatCount = (new Uint16Array(data2)[0]);
 
             }).catch(error=>{
@@ -294,7 +294,7 @@ var daa = new Uint8Array(1);
     this.ble.scan([], 3).subscribe(device => {
       console.log(JSON.stringify(device));
       
-      this.ble.connect('1299559F-DF0D-783C-9E47-DB2E6CFA82F3').subscribe(data => {
+      this.ble.connect('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9').subscribe(data => {
         this.heartRateDeviceConnected = true;
         },error =>{
           console.log(error);
@@ -306,11 +306,11 @@ var daa = new Uint8Array(1);
 
 
   resetValue(){
-     this.ble.isConnected('BEE5D114-1482-A85C-6861-256ABE298898').then(
+     this.ble.isConnected('9ADE4682-C753-3B3A-7454-50123794CAF4').then(
        ()=>{ 
          var daa = new Uint8Array(1);
          daa[0] = 2;
-         this.ble.write('BEE5D114-1482-A85C-6861-256ABE298898','19b10000-e8f2-537e-4f6c-d104768a1223','19B10001-E8F2-537E-4F6C-D104768A1223',daa.buffer).then(data2=>{
+         this.ble.write('9ADE4682-C753-3B3A-7454-50123794CAF4','19b10000-e8f2-537e-4f6c-d104768a1223','19B10001-E8F2-537E-4F6C-D104768A1223',daa.buffer).then(data2=>{
            console.log(data2);
            }).catch(error=>{
              console.log(error);

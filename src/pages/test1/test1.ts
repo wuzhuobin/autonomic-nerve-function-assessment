@@ -260,7 +260,16 @@ export class Test1Page {
                this.result_t3_1 = JSON.parse(data.rows.item(0).t3_1);  
 
                if(this.result_t3_1.length>0){
-                this.average_t3 = Math.abs(this.result_t3_1[1] - this.result_t3_1[3]);
+                let max = this.result_t3_1[3];
+                if(this.result_t3_1[5] > max)
+                  max = this.result_t3_1[5];
+                if(this.result_t3_1[7] > max)
+                  max = this.result_t3_1[7];
+                if(this.result_t3_1[9] > max)
+                  max = this.result_t3_1[9];
+                if(this.result_t3_1[11] > max)
+                  max = this.result_t3_1[11];
+                 this.average_t3 = Math.abs(max - this.result_t3_1[1]);
             
               } else { this.average_t3 = 0;}
 
@@ -275,7 +284,12 @@ export class Test1Page {
               this.result_t4_2 = JSON.parse(data.rows.item(0).t4_2);
 
               if(this.result_t4_2.length>0){              
-                  this.average_t4 = Math.abs(this.result_t4_2[0] - this.result_t4_2[2]);
+                let min = this.result_t4_2[2];
+                if (this.result_t4_2[4] < min)
+                  min = this.result_t4_2[4];
+                if (this.result_t4_2[6] < min)
+                  min = this.result_t4_2[6];
+                this.average_t4 = Math.abs(min - this.result_t4_2[0]);
                 } else { this.average_t4 = 0; }
 
 
@@ -541,7 +555,7 @@ export class Test1Page {
 
   checkAllHardware(){
 
-    this.ble.isConnected('48A655A2-4501-85DC-3C66-567AB4B05570').then(
+    this.ble.isConnected('52E068E1-84B8-1271-EA06-3DC903EA38C5').then(
       ()=>{ 
         this.Breathready = true; 
       },
@@ -549,7 +563,7 @@ export class Test1Page {
       }
     );
 
-  this.ble.isConnected('1299559F-DF0D-783C-9E47-DB2E6CFA82F3').then(
+  this.ble.isConnected('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9').then(
     ()=>{ 
       this.HRready = true; 
     },
@@ -561,7 +575,7 @@ export class Test1Page {
 
 connectBreath(){
   this.ble.scan([], 3).subscribe(device => {
-    this.ble.connect('48A655A2-4501-85DC-3C66-567AB4B05570').subscribe(data => {
+    this.ble.connect('52E068E1-84B8-1271-EA06-3DC903EA38C5').subscribe(data => {
       this.Breathready = true; 
       },error =>{
         console.log(error);
@@ -571,7 +585,7 @@ connectBreath(){
 
 connectHeartRate(){
   this.ble.scan([], 3).subscribe(device => {
-    this.ble.connect('1299559F-DF0D-783C-9E47-DB2E6CFA82F3').subscribe(data => {
+    this.ble.connect('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9').subscribe(data => {
       this.HRready = true; 
       },error =>{
         console.log(error);

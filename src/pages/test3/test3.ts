@@ -74,6 +74,14 @@ export class Test3Page {
   public down1 : any = 0;
   public up2 : any = 0;
   public down2 : any = 0;
+  public up3 : any = 0;
+  public down3 : any = 0;
+  public up4 : any = 0;
+  public down4 : any = 0;
+  public up5 : any = 0;
+  public down5 : any = 0;
+  public up6 : any = 0;
+  public down6 : any = 0;
   
   public ratio1 : any= 0;
   public ratio2 : any= 0;
@@ -233,36 +241,38 @@ export class Test3Page {
       this.result_t4_2 = JSON.parse(data.rows.item(0).t4_2);
 
       if(this.result_t4_2.length>0){              
-          this.average_t4 = Math.abs(this.result_t4_2[0] - this.result_t4_2[2]);
+        let min = this.result_t4_2[2];
+        if (this.result_t4_2[4] < min)
+          min = this.result_t4_2[4];
+        if (this.result_t4_2[6] < min)
+          min = this.result_t4_2[6];
+        this.average_t4 = Math.abs(min - this.result_t4_2[0]);
         } else { this.average_t4 = 0; }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-       
-       
           this.result = JSON.parse(data.rows.item(0).t3_1);
+          if (this.result.length > 0) {
+            this.up1 = this.result[0];
+            this.down1 = this.result[1];
+            this.up2 = this.result[2];
+            this.down2 = this.result[3];
+            this.up3 = this.result[4];
+            this.down3 = this.result[5];
+            this.up4 = this.result[6];
+            this.down4 = this.result[7];
+            this.up5 = this.result[8];
+            this.down5 = this.result[9];
+            this.up6 = this.result[10];
+            this.down6 = this.result[11];
+            var max = this.down2;
+            if (this.down3 > max)
+              max = this.down3;
+            if (this.down4 > max)
+              max = this.down4;
+            if (this.down5 > max)
+              max = this.down5;
+            if (this.down6 > max)
+              max = this.down6;
+            this.average_t3 = Math.abs(max - this.down1);
 
-  
-          if(this.result.length>0){
-              this.up1 = this.result[0];
-              this.down1 = this.result[1];
-              this.up2 = this.result[2];
-              this.down2 = this.result[3];
-              this.average_t3 = Math.abs(this.down1 - this.down2);
-          
             } else { this.average_t3 = 0;}
 
           
@@ -270,45 +280,45 @@ export class Test3Page {
 
 
 
-          let diffTime = moment().diff(this.patient_created,'seconds',false);
-          let duration = moment.duration(diffTime,'seconds');
+          let diffTime = moment().diff(this.patient_created, 'seconds', false);
+          let duration = moment.duration(diffTime, 'seconds');
 
-          if(duration.seconds()<10){
-            this.patient_elapsed = duration.minutes().toString()+":0"+duration.seconds().toString();
-          }else{
-            this.patient_elapsed = duration.minutes().toString()+":"+duration.seconds().toString();
-          } 
+          if (duration.seconds() < 10) {
+            this.patient_elapsed = duration.minutes().toString() + ":0" + duration.seconds().toString();
+          } else {
+            this.patient_elapsed = duration.minutes().toString() + ":" + duration.seconds().toString();
+          }
 
-          this.task = setInterval(()=>{ 
+          this.task = setInterval(() => {
 
-            let diffTime = moment().diff(this.patient_created,'seconds',false);
-             let duration = moment.duration(diffTime,'seconds');
+            let diffTime = moment().diff(this.patient_created, 'seconds', false);
+            let duration = moment.duration(diffTime, 'seconds');
 
-            if(duration.seconds()<10){
-              this.patient_elapsed = duration.minutes().toString()+":0"+duration.seconds().toString();
-            }else{
-             this.patient_elapsed = duration.minutes().toString()+":"+duration.seconds().toString();
-            } 
-          },1000);
-
- 
+            if (duration.seconds() < 10) {
+              this.patient_elapsed = duration.minutes().toString() + ":0" + duration.seconds().toString();
+            } else {
+              this.patient_elapsed = duration.minutes().toString() + ":" + duration.seconds().toString();
+            }
+          }, 1000);
         });
 
       });
 
 
-      });
+    });
 
 
-      this.checkDeviceTask = setInterval(()=>{
-        this.checkAllHardware();
-      },1000);
-
+    this.checkDeviceTask = setInterval(() => {
+      this.checkAllHardware();
+    }, 1000);
+      /*this.BPready = true;
+      this.Gripready = true;
+      */
   }
   
   checkAllHardware(){
 
-    this.ble.isConnected('BEE5D114-1482-A85C-6861-256ABE298898').then(
+    this.ble.isConnected('9ADE4682-C753-3B3A-7454-50123794CAF4').then(
       ()=>{ 
         this.BPready = true; 
       },
@@ -316,7 +326,7 @@ export class Test3Page {
 
               this.ble.scan([], 3).subscribe(device => {
               
-                this.ble.connect('BEE5D114-1482-A85C-6861-256ABE298898').subscribe(data => {
+                this.ble.connect('9ADE4682-C753-3B3A-7454-50123794CAF4').subscribe(data => {
                   this.BPready = true;
                   },error =>{
                     console.log(error);
@@ -327,7 +337,7 @@ export class Test3Page {
       }
     );
 
-      this.ble.isConnected('E69A1D2B-7877-E45B-A5AB-19D0D4C6C22F').then(
+      this.ble.isConnected('58A8CA24-F894-D922-0462-A287BE6D53FE').then(
         ()=>{ 
           this.Gripready = true; 
         },
@@ -335,7 +345,7 @@ export class Test3Page {
 
                 this.ble.scan([], 3).subscribe(device => {
                   
-                  this.ble.connect('E69A1D2B-7877-E45B-A5AB-19D0D4C6C22F').subscribe(data => {
+                  this.ble.connect('58A8CA24-F894-D922-0462-A287BE6D53FE').subscribe(data => {
                     this.Gripready = true;
                     },error =>{
                       console.log(error);

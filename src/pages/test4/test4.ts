@@ -47,6 +47,10 @@ export class Test4Page {
   public down1 : any = 0;
   public up2 : any = 0;
   public down2 : any = 0;
+  public up3 : any = 0;
+  public down3 : any = 0;
+  public up4 : any = 0;
+  public down4 : any = 0;
 
   public task:any;
 
@@ -214,7 +218,16 @@ if(tempMin ==0)
      this.result_t3_1 = JSON.parse(data.rows.item(0).t3_1);  
 
      if(this.result_t3_1.length>0){
-      this.average_t3 = Math.abs(this.result_t3_1[1] - this.result_t3_1[3]);
+       let max = this.result_t3_1[3];
+       if (this.result_t3_1[5] > max)
+         max = this.result_t3_1[5];
+       if (this.result_t3_1[7] > max)
+         max = this.result_t3_1[7];
+       if (this.result_t3_1[9] > max)
+         max = this.result_t3_1[9];
+       if (this.result_t3_1[11] > max)
+         max = this.result_t3_1[11];
+       this.average_t3 = Math.abs(max - this.result_t3_1[1]);
   
     } else { this.average_t3 = 0;}
 
@@ -250,11 +263,20 @@ if(tempMin ==0)
               this.resultBP = JSON.parse(data.rows.item(0).t4_2);
 
               if(this.resultBP.length>0){
-                  this.up1 = this.resultBP[0];
-                  this.down1 = this.resultBP[1];
-                  this.up2 = this.resultBP[2];
-                  this.down2 = this.resultBP[3];                
-                  this.average_t4 = Math.abs(this.up1 - this.up2);
+                this.up1 = this.resultBP[0];
+                this.down1 = this.resultBP[1];
+                this.up2 = this.resultBP[2];
+                this.down2 = this.resultBP[3];
+                this.up3 = this.resultBP[4];
+                this.down3 = this.resultBP[5];
+                this.up4 = this.resultBP[6];
+                this.down4 = this.resultBP[7];
+                var min = this.up2;
+                if (this.up3 < min)
+                  min = this.up3;
+                if (this.up4 < min)
+                  min = this.up4;
+                this.average_t4 = Math.abs(min - this.up1);
                 } else { this.average_t4 = 0;}
 
 
@@ -315,7 +337,7 @@ if(tempMin ==0)
 
   checkAllHardware(){
 
-      this.ble.isConnected('BEE5D114-1482-A85C-6861-256ABE298898').then(
+      this.ble.isConnected('9ADE4682-C753-3B3A-7454-50123794CAF4').then(
         ()=>{ 
           this.BPready = true; 
         },
@@ -323,7 +345,7 @@ if(tempMin ==0)
 
           this.ble.scan([], 3).subscribe(device => {
               
-            this.ble.connect('BEE5D114-1482-A85C-6861-256ABE298898').subscribe(data => {
+            this.ble.connect('9ADE4682-C753-3B3A-7454-50123794CAF4').subscribe(data => {
               this.BPready = true;
               },error =>{
                 console.log(error);
@@ -333,7 +355,7 @@ if(tempMin ==0)
         }
       );
 
-    this.ble.isConnected('1299559F-DF0D-783C-9E47-DB2E6CFA82F3').then(
+    this.ble.isConnected('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9').then(
       ()=>{ 
         this.HRready = true; 
       },
@@ -341,7 +363,7 @@ if(tempMin ==0)
 
         this.ble.scan([], 3).subscribe(device => {
               
-          this.ble.connect('1299559F-DF0D-783C-9E47-DB2E6CFA82F3').subscribe(data => {
+          this.ble.connect('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9').subscribe(data => {
             this.HRready = true;
             },error =>{
               console.log(error);

@@ -22,7 +22,9 @@ export class Test4DetailPage_2 {
     public countdownTask : any;
     public saveDataTask : any;
 
-    public currentTime = 60;
+    public currentTime = 180;
+    public currentTimeTextM: any = "3";
+    public currentTimeTextS: any = "0";
     public loadProgress = 100;
     public result : number[] = [];
 
@@ -38,9 +40,10 @@ export class Test4DetailPage_2 {
     public reading4_up : any = 0;
     public reading4_down : any = 0;
 
-    public reading4_up2 : any = 0;
-    public reading4_down2 : any = 0;
+    public reading4_up_trial : any = [0, 0, 0];
+    public reading4_down_trial : any = [0, 0, 0];
 
+    public BP_Trial : any = 0;
     public trial : any = 0;
     
     public RRIReadng : any = 0;
@@ -61,7 +64,6 @@ export class Test4DetailPage_2 {
 
     public timesup:boolean = false;
 
-
     constructor( private storage: Storage , private sqlite: SQLite ,public ble: BLE,public navCtrl: NavController, public navParams: NavParams) {
 
     this.storage.get('id').then((val) => {
@@ -71,8 +73,6 @@ export class Test4DetailPage_2 {
 
 
     this.resetValue(); 
-
-    this.orthostasis_stage=0;
 
     this.gettingHRTask = setInterval(()=>{
       this.getRRIvalue();
@@ -96,8 +96,12 @@ export class Test4DetailPage_2 {
       this.datab = db;
       this.result.push(this.reading4_up);
       this.result.push(this.reading4_down);
-      this.result.push(this.reading4_up2);
-      this.result.push(this.reading4_down2);
+      this.result.push(this.reading4_up_trial[0]);
+      this.result.push(this.reading4_down_trial[0]);
+      this.result.push(this.reading4_up_trial[1]);
+      this.result.push(this.reading4_down_trial[1]);
+      this.result.push(this.reading4_up_trial[2]);
+      this.result.push(this.reading4_down_trial[2]);
       let data = [JSON.stringify(this.result)]
       let data2 = [JSON.stringify(this.result3015)]
 
@@ -113,13 +117,17 @@ export class Test4DetailPage_2 {
       });
 
   }
+  
+  standup25() {
+    this.orthostasis_stage = 25;
+  }
 
   standup(){
     this.RRI15 = 0;
     this.RRI30 = 0;
     var daa = new Uint8Array(1);
     daa[0] = 2;
-    this.ble.write('1299559F-DF0D-783C-9E47-DB2E6CFA82F3','19b10000-e8f2-537e-4f6c-d104768a1216','19B10001-E8F2-537E-4F6C-D104768A1218',daa.buffer).then(data2=>{
+    this.ble.write('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9', '19b10000-e8f2-537e-4f6c-d104768a1216', '19B10001-E8F2-537E-4F6C-D104768A1218',daa.buffer).then(data2=>{
       this.orthostasis_stage = 3;
 
       this.testSecondTask = setInterval(()=>{
@@ -133,16 +141,76 @@ export class Test4DetailPage_2 {
     this.saveDataTask = setInterval(()=>{
       this.readDatafor15and30();
     },200);
-
     
   }
 
+  takeReading() {
+    this.resetValue();
+    this.ble.isConnected('9ADE4682-C753-3B3A-7454-50123794CAF4').then( () => {
+      var daa = new Uint8Array(1);
+      daa[0] = 1;
+      this.ble.write('9ADE4682-C753-3B3A-7454-50123794CAF4', '19b10000-e8f2-537e-4f6c-d104768a1223', '19B10001-E8F2-537E-4F6C-D104768A1223', daa.buffer).then((data2) => {
+        console.log(" reset");
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }, function () {
+    });
+    this.gettingBPTask = setInterval( () => {
+      this.ble.isConnected('9ADE4682-C753-3B3A-7454-50123794CAF4').then( () => {
+        this.ble.read('9ADE4682-C753-3B3A-7454-50123794CAF4', '19B10000-E8F2-537E-4F6C-D104768A1223', '19B10001-E8F2-537E-4F6C-D104768A1226').then((data2) => {
+          this.reading4_status = (new Uint16Array(data2)[0]);
+          console.log("this.reading4_status", this.reading4_status, " BP readed", this.bp_readed);
+          if (!this.bp_readed) {
+            if (this.reading4_status == 0) {
+              this.reading4_up_trial[this.BP_Trial] = 0;
+              this.reading4_down_trial[this.BP_Trial] = 0;
+            }
+            else if (this.reading4_status == 1) {
+              this.reading4_up_trial[this.BP_Trial] = 0;
+              this.reading4_down_trial[this.BP_Trial] = 0;
+            }
+            else {
+              this.ble.read('9ADE4682-C753-3B3A-7454-50123794CAF4', '19B10000-E8F2-537E-4F6C-D104768A1223', '19B10001-E8F2-537E-4F6C-D104768A1224').then( (dataUP) => {
+                if (Math.round((new Uint16Array(dataUP)[0]) / 3) < 300)
+                  this.reading4_up_trial[this.BP_Trial] = Math.round((new Uint16Array(dataUP)[0]) / 3);
+                else
+                  this.reading4_up_trial[this.BP_Trial] = 0;
+              }).catch(function (error) {
+                console.log(error);
+              });
+              this.ble.read('9ADE4682-C753-3B3A-7454-50123794CAF4', '19B10000-E8F2-537E-4F6C-D104768A1223', '19B10001-E8F2-537E-4F6C-D104768A1225').then( (dataDOWN) => {
+                if (Math.round((new Uint16Array(dataDOWN)[0]) / 3) < 150)
+                  this.reading4_down_trial[this.BP_Trial] = Math.round((new Uint16Array(dataDOWN)[0]) / 3);
+                else
+                  this.reading4_down_trial[this.BP_Trial] = 0;
+              }).catch(function (error) {
+                console.log(error);
+              });
+              if (this.reading4_down_trial[this.BP_Trial] != 0 && this.reading4_up_trial[this.BP_Trial] != 0) {
+                this.bp_readed = true;
+                this.BP_Trial++;
+                clearInterval(this.gettingBPTask);
+                if (this.BP_Trial >= 3) {
+                  this.orthostasis_stage = 5;
+                  this.trial = 1;
+                }
+              }
+            }
+          }
+        }).catch(function (error) {
+          console.log(error);
+        });
+      }, function () { });
+    }, 300);
+  }
 
-  readDatafor15and30(){
+
+  readDatafor15and30() {
 
     this.result3015 = [];
 
-    if(( this.currentBeatCount - this.baseBeatCount) == 15 && this.RRI15 == 0 ){
+    if ((this.currentBeatCount - this.baseBeatCount) == 15 && this.RRI15 == 0) {
       this.RRI15 = this.RRIReadng;
     }
 
@@ -161,11 +229,11 @@ export class Test4DetailPage_2 {
 
     this.bp_readed = false;
 
-     this.ble.isConnected('BEE5D114-1482-A85C-6861-256ABE298898').then(
+     this.ble.isConnected('9ADE4682-C753-3B3A-7454-50123794CAF4').then(
        ()=>{ 
          var daa = new Uint8Array(1);
          daa[0] = 1;
-         this.ble.write('BEE5D114-1482-A85C-6861-256ABE298898','19b10000-e8f2-537e-4f6c-d104768a1223','19B10001-E8F2-537E-4F6C-D104768A1223',daa.buffer).then(data2=>{
+         this.ble.write('9ADE4682-C753-3B3A-7454-50123794CAF4','19b10000-e8f2-537e-4f6c-d104768a1223','19B10001-E8F2-537E-4F6C-D104768A1223',daa.buffer).then(data2=>{
            //console.log(data2);
            }).catch(error=>{
              //console.log(error);
@@ -178,10 +246,10 @@ export class Test4DetailPage_2 {
 
      this.gettingBPTask =  setInterval(()=>{
 
-      this.ble.isConnected('BEE5D114-1482-A85C-6861-256ABE298898').then( 
+      this.ble.isConnected('9ADE4682-C753-3B3A-7454-50123794CAF4').then( 
         ()=>{ 
 
-          this.ble.read('BEE5D114-1482-A85C-6861-256ABE298898','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1226').then(data2=>{
+          this.ble.read('9ADE4682-C753-3B3A-7454-50123794CAF4','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1226').then(data2=>{
             
             this.reading4_status = (new Uint16Array(data2)[0]);
   
@@ -196,7 +264,7 @@ export class Test4DetailPage_2 {
                     
                     this.bp_readed = true;
 
-                    this.ble.read('BEE5D114-1482-A85C-6861-256ABE298898','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1224').then(dataUP=>{
+                    this.ble.read('9ADE4682-C753-3B3A-7454-50123794CAF4','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1224').then(dataUP=>{
                       if(Math.round((new Uint16Array(dataUP)[0]) / 3)<150)
                       this.reading4_up  = Math.round((new Uint16Array(dataUP)[0]) / 3);
                       else
@@ -205,7 +273,7 @@ export class Test4DetailPage_2 {
                     console.log("e1");
                     });
   
-                    this.ble.read('BEE5D114-1482-A85C-6861-256ABE298898','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1225').then(dataDOWN=>{
+                    this.ble.read('9ADE4682-C753-3B3A-7454-50123794CAF4','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1225').then(dataDOWN=>{
                       if(Math.round((new Uint16Array(dataDOWN)[0]) / 3)<150)
                       this.reading4_down  = Math.round((new Uint16Array(dataDOWN)[0]) / 3);
                       else
@@ -246,17 +314,17 @@ export class Test4DetailPage_2 {
   this.result = [];
   this.trial = 0;
   this.orthostasis_stage = 0;
-    this.currentTime = 60;
+    this.currentTime = 180;
     this.loadProgress = 100;
     this.bp_readed = false;
     this.reading4_up = 0;
-    this.reading4_up2 = 0;
     this.reading4_down=0;
-    this.reading4_down2=0;
     this.resetValue();
     this.timesup = false;
     this.RRI15 = 0;
     this.RRI30 = 0;
+    this.reading4_up_trial = [0, 0, 0];
+    this.reading4_down_trial=[0, 0, 0];
 
     clearInterval(this.testSecondTask);
     clearInterval(this.gettingBPTask);
@@ -266,105 +334,30 @@ export class Test4DetailPage_2 {
 
 
   eachSecond(){
-
     this.currentTime--;
-    this.loadProgress = (this.currentTime / 60 )*100;
-
+    this.currentTimeTextM = Math.floor(this.currentTime / 60);
+    this.currentTimeTextS = (this.currentTime % 60);
+    this.loadProgress = (this.currentTime / 180) * 100;
+    console.log("this.loadProgress", this.loadProgress);
+    if (this.currentTime == 125 || this.currentTime == 65 ||
+        this.currentTime == 5) {
+        this.bp_readed = false;
+        this.takeReading();
+    }
     if(this.currentTime<=0){
 
         clearInterval(this.testSecondTask);
-        this.orthostasis_stage = 4;
-        this.bp_readed = false;
-
-        this.stage4();
-
+        //this.orthostasis_stage = 4;
+        //this.bp_readed = false;
       } 
   }
 
-
-
-  stage4(){
-
-    this.ble.isConnected('BEE5D114-1482-A85C-6861-256ABE298898').then(
-      ()=>{ 
-        var daa = new Uint8Array(1);
-        daa[0] = 1;
-        this.ble.write('BEE5D114-1482-A85C-6861-256ABE298898','19b10000-e8f2-537e-4f6c-d104768a1223','19B10001-E8F2-537E-4F6C-D104768A1223',daa.buffer).then(data2=>{
-          console.log(data2);
-          }).catch(error=>{
-            console.log(error);
-          });
-
-      },
-      ()=>{
-      }
-    );
-
-    this.gettingBPTask =  setInterval(()=>{
-
-      this.ble.isConnected('BEE5D114-1482-A85C-6861-256ABE298898').then( 
-        ()=>{ 
-
-          this.ble.read('BEE5D114-1482-A85C-6861-256ABE298898','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1226').then(data2=>{
-
-            this.reading4_status = (new Uint16Array(data2)[0]);
-  
-            if(!this.bp_readed){
-                  if(this.reading4_status==0){
-                    this.reading4_up2 = 0;
-                    this.reading4_down2 = 0;
-                  } else if(this.reading4_status == 1){
-                    this.reading4_up2 = 0;
-                    this.reading4_down2 = 0;
-                  } else {
-                    
-                    this.bp_readed = true;
-
-                    this.ble.read('BEE5D114-1482-A85C-6861-256ABE298898','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1224').then(dataUP=>{
-                      if(Math.round((new Uint16Array(dataUP)[0]) / 3)<300)
-                      this.reading4_up2  = Math.round((new Uint16Array(dataUP)[0]) / 3);
-                      else
-                      this.reading4_up2  = "0";
-                    }).catch(error=>{
-                    //console.log(error);
-                    });
-  
-                    this.ble.read('BEE5D114-1482-A85C-6861-256ABE298898','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1225').then(dataDOWN=>{
-                      if(Math.round((new Uint16Array(dataDOWN)[0]) / 3)<150)
-                      this.reading4_down2  = Math.round((new Uint16Array(dataDOWN)[0]) / 3);
-                      else
-                      this.reading4_down2  = "0";
-                    }).catch(error=>{
-                    //console.log(error);
-                    });
-  
-                    clearInterval(this.gettingBPTask);
-                    
-                    this.orthostasis_stage = 5;
-                    this.trial = 1;
-                    this.resetValue();
-  
-                  }
-  
-                 }
-           }).catch(error=>{
-             //console.log(error);
-           });
-  
-        },
-        ()=>{}
-      );
-     },1000);
-
-
-  }
-
   resetValue(){
-     this.ble.isConnected('BEE5D114-1482-A85C-6861-256ABE298898').then(
+     this.ble.isConnected('9ADE4682-C753-3B3A-7454-50123794CAF4').then(
        ()=>{ 
          var daa = new Uint8Array(1);
          daa[0] = 2;
-         this.ble.write('BEE5D114-1482-A85C-6861-256ABE298898','19b10000-e8f2-537e-4f6c-d104768a1223','19B10001-E8F2-537E-4F6C-D104768A1223',daa.buffer).then(data2=>{
+         this.ble.write('9ADE4682-C753-3B3A-7454-50123794CAF4','19b10000-e8f2-537e-4f6c-d104768a1223','19B10001-E8F2-537E-4F6C-D104768A1223',daa.buffer).then(data2=>{
            //console.log(data2);
            }).catch(error=>{
              //console.log(error);
@@ -377,19 +370,19 @@ export class Test4DetailPage_2 {
 
     getRRIvalue(){
 
-      this.ble.isConnected('1299559F-DF0D-783C-9E47-DB2E6CFA82F3').then(
+      this.ble.isConnected('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9').then(
         ()=>{ 
   
-          this.ble.read('1299559F-DF0D-783C-9E47-DB2E6CFA82F3','19b10000-e8f2-537e-4f6c-d104768a1216','19b10001-e8f2-537e-4f6c-d104768a1216').then(data2=>{
+          this.ble.read('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9','19b10000-e8f2-537e-4f6c-d104768a1216','19b10001-e8f2-537e-4f6c-d104768a1216').then(data2=>{
             
-            if((new Uint16Array(data2)[0])>560 && (new Uint16Array(data2)[0])<1450)
+            if((new Uint16Array(data2)[0])>500 && (new Uint16Array(data2)[0])<1450)
             this.RRIReadng = (new Uint16Array(data2)[0]);
   
             }).catch(error=>{
               console.log(error);
             });
   
-            this.ble.read('1299559F-DF0D-783C-9E47-DB2E6CFA82F3','19b10000-e8f2-537e-4f6c-d104768a1216','19b10001-e8f2-537e-4f6c-d104768a1217').then(data2=>{
+            this.ble.read('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9','19b10000-e8f2-537e-4f6c-d104768a1216','19b10001-e8f2-537e-4f6c-d104768a1217').then(data2=>{
               this.currentBeatCount = (new Uint16Array(data2)[0]);
   
               }).catch(error=>{
