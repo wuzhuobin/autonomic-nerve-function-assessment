@@ -72,10 +72,10 @@ export class Test3DetailPage {
   }
   
   getGripReading(){
-    this.ble.isConnected('58A8CA24-F894-D922-0462-A287BE6D53FE').then(
+    this.ble.isConnected('3C1FD496-0DEB-4713-662F-FAE7AE85F548').then(
       ()=>{ 
 
-        this.ble.read('58A8CA24-F894-D922-0462-A287BE6D53FE','19b10000-e8f2-537e-4f6c-d104768a1220','19b10001-e8f2-537e-4f6c-d104768a1220').then(data2=>{
+        this.ble.read('3C1FD496-0DEB-4713-662F-FAE7AE85F548','19b10000-e8f2-537e-4f6c-d104768a1220','19b10001-e8f2-537e-4f6c-d104768a1220').then(data2=>{
           this.grip_reading = (new Uint8Array(data2)[0]);
             if(this.handgrip_stage == 15 && this.grip_reading > this.grip_reading_max){
               this.grip_reading_max = this.grip_reading;
@@ -142,11 +142,11 @@ export class Test3DetailPage {
 
     this.bp_readed = false;
 
-     this.ble.isConnected('9ADE4682-C753-3B3A-7454-50123794CAF4').then(
+     this.ble.isConnected('B2BA478A-1212-5501-3801-2153FC58CE65').then(
        ()=>{ 
          var daa = new Uint8Array(1);
          daa[0] = 1;
-         this.ble.write('9ADE4682-C753-3B3A-7454-50123794CAF4','19b10000-e8f2-537e-4f6c-d104768a1223','19B10001-E8F2-537E-4F6C-D104768A1223',daa.buffer).then(data2=>{
+         this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65','19b10000-e8f2-537e-4f6c-d104768a1223','19B10001-E8F2-537E-4F6C-D104768A1223',daa.buffer).then(data2=>{
            }).catch(error=>{
              console.log(error);
            });
@@ -158,10 +158,10 @@ export class Test3DetailPage {
 
      this.gettingBPTask =  setInterval(()=>{
 
-      this.ble.isConnected('9ADE4682-C753-3B3A-7454-50123794CAF4').then( 
+      this.ble.isConnected('B2BA478A-1212-5501-3801-2153FC58CE65').then( 
         ()=>{ 
 
-          this.ble.read('9ADE4682-C753-3B3A-7454-50123794CAF4','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1226').then(data2=>{
+          this.ble.read('B2BA478A-1212-5501-3801-2153FC58CE65','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1226').then(data2=>{
             
             this.reading4_status = (new Uint16Array(data2)[0]);
   
@@ -176,7 +176,7 @@ export class Test3DetailPage {
                     
                     this.bp_readed = true;
 
-                    this.ble.read('9ADE4682-C753-3B3A-7454-50123794CAF4','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1224').then(dataUP=>{
+                    this.ble.read('B2BA478A-1212-5501-3801-2153FC58CE65','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1224').then(dataUP=>{
                       if(Math.round((new Uint16Array(dataUP)[0]) / 3)<300)
                       this.reading4_up  = Math.round((new Uint16Array(dataUP)[0]) / 3);
                       else
@@ -185,7 +185,7 @@ export class Test3DetailPage {
                     console.log(error);
                     });
   
-                    this.ble.read('9ADE4682-C753-3B3A-7454-50123794CAF4','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1225').then(dataDOWN=>{
+                    this.ble.read('B2BA478A-1212-5501-3801-2153FC58CE65','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1225').then(dataDOWN=>{
                       if(Math.round((new Uint16Array(dataDOWN)[0]) / 3)<150)
                       this.reading4_down  = Math.round((new Uint16Array(dataDOWN)[0]) / 3);
                       else
@@ -247,11 +247,11 @@ export class Test3DetailPage {
 
   takeReading(){
     this.resetValue();
-    this.ble.isConnected('9ADE4682-C753-3B3A-7454-50123794CAF4').then(
+    this.ble.isConnected('B2BA478A-1212-5501-3801-2153FC58CE65').then(
       ()=>{ 
         var daa = new Uint8Array(1);
         daa[0] = 1;
-        this.ble.write('9ADE4682-C753-3B3A-7454-50123794CAF4','19b10000-e8f2-537e-4f6c-d104768a1223','19B10001-E8F2-537E-4F6C-D104768A1223',daa.buffer).then(data2=>{
+        this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65','19b10000-e8f2-537e-4f6c-d104768a1223','19B10001-E8F2-537E-4F6C-D104768A1223',daa.buffer).then(data2=>{
           }).catch(error=>{
             console.log(error);
           });
@@ -263,10 +263,10 @@ export class Test3DetailPage {
 
     this.gettingBPTask =  setInterval(()=>{
 
-      this.ble.isConnected('9ADE4682-C753-3B3A-7454-50123794CAF4').then( 
+      this.ble.isConnected('B2BA478A-1212-5501-3801-2153FC58CE65').then( 
         ()=>{ 
 
-          this.ble.read('9ADE4682-C753-3B3A-7454-50123794CAF4','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1226').then(data2=>{
+          this.ble.read('B2BA478A-1212-5501-3801-2153FC58CE65','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1226').then(data2=>{
 
             this.reading4_status = (new Uint16Array(data2)[0]);
             console.log("this.reading4_status", this.reading4_status, " BP readed", this.bp_readed);
@@ -278,7 +278,7 @@ export class Test3DetailPage {
                     this.reading4_up_trial[this.BP_Trial] = 0;
                     this.reading4_down_trial[this.BP_Trial] = 0;
                   } else {
-                    this.ble.read('9ADE4682-C753-3B3A-7454-50123794CAF4','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1224').then(dataUP=>{
+                    this.ble.read('B2BA478A-1212-5501-3801-2153FC58CE65','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1224').then(dataUP=>{
                       //if(!this.bp_readed){
                       if (Math.round((new Uint16Array(dataUP)[0]) / 3) < 300)
                         this.reading4_up_trial[this.BP_Trial] = Math.round((new Uint16Array(dataUP)[0]) / 3);
@@ -289,7 +289,7 @@ export class Test3DetailPage {
                       console.log(error);
                     });
 
-                    this.ble.read('9ADE4682-C753-3B3A-7454-50123794CAF4', '19B10000-E8F2-537E-4F6C-D104768A1223', '19B10001-E8F2-537E-4F6C-D104768A1225').then(dataDOWN => {
+                    this.ble.read('B2BA478A-1212-5501-3801-2153FC58CE65', '19B10000-E8F2-537E-4F6C-D104768A1223', '19B10001-E8F2-537E-4F6C-D104768A1225').then(dataDOWN => {
                       // if(!this.bp_readed){
                       if (Math.round((new Uint16Array(dataDOWN)[0]) / 3) < 150)
                         this.reading4_down_trial[this.BP_Trial] = Math.round((new Uint16Array(dataDOWN)[0]) / 3);
@@ -364,7 +364,7 @@ export class Test3DetailPage {
   }
   
   checkAllHardware(){
-    this.ble.isConnected('9ADE4682-C753-3B3A-7454-50123794CAF4').then(
+    this.ble.isConnected('B2BA478A-1212-5501-3801-2153FC58CE65').then(
       ()=>{ 
         this.hardwareReady = true; 
       },
@@ -374,11 +374,11 @@ export class Test3DetailPage {
   }
 
   resetValue(){
-     this.ble.isConnected('9ADE4682-C753-3B3A-7454-50123794CAF4').then(
+     this.ble.isConnected('B2BA478A-1212-5501-3801-2153FC58CE65').then(
        ()=>{ 
          var daa = new Uint8Array(1);
          daa[0] = 2;
-         this.ble.write('9ADE4682-C753-3B3A-7454-50123794CAF4','19b10000-e8f2-537e-4f6c-d104768a1223','19B10001-E8F2-537E-4F6C-D104768A1223',daa.buffer).then(data2=>{
+         this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65','19b10000-e8f2-537e-4f6c-d104768a1223','19B10001-E8F2-537E-4F6C-D104768A1223',daa.buffer).then(data2=>{
            console.log("reset");
            }).catch(error=>{
              console.log(error);

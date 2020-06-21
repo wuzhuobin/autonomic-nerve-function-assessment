@@ -296,7 +296,7 @@ export class Test2Page {
 
 checkAllHardware(){
 
-  this.ble.isConnected('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9').then(
+  this.ble.isConnected('F14956A6-16EC-88BA-1426-03749EBE87DE').then(
     ()=>{ 
       this.allDeviceReady = true; 
     },
@@ -314,7 +314,7 @@ connectHeartRate(){
   this.ble.scan([], 3).subscribe(device => {
     console.log(JSON.stringify(device));
     
-    this.ble.connect('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9').subscribe(data => {
+    this.ble.connect('F14956A6-16EC-88BA-1426-03749EBE87DE').subscribe(data => {
       this.allDeviceReady = true;
       },error =>{
         console.log(error);

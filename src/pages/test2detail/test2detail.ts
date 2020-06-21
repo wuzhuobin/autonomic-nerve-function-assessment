@@ -291,11 +291,11 @@ this.countdownTask = setInterval(()=>{
 
   checkAllHardware(){
 
-    this.ble.isConnected('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9').then(
+    this.ble.isConnected('F14956A6-16EC-88BA-1426-03749EBE87DE').then(
       ()=>{ 
         this.heartRateDeviceConnected = true; 
 
-        this.ble.read('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9','19b10000-e8f2-537e-4f6c-d104768a1216','19b10001-e8f2-537e-4f6c-d104768a1216').then(data2=>{
+        this.ble.read('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37').then(data2=>{
           
           if((new Uint16Array(data2)[0])>560 && (new Uint16Array(data2)[0])<1450)
           this.RRIReadng = (new Uint16Array(data2)[0]);
@@ -319,7 +319,7 @@ this.countdownTask = setInterval(()=>{
     this.ble.scan([], 3).subscribe(device => {
       console.log(JSON.stringify(device));
       
-      this.ble.connect('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9').subscribe(data => {
+      this.ble.connect('F14956A6-16EC-88BA-1426-03749EBE87DE').subscribe(data => {
         this.heartRateDeviceConnected = true;
         },error =>{
           console.log(error);

@@ -318,7 +318,7 @@ export class Test3Page {
   
   checkAllHardware(){
 
-    this.ble.isConnected('9ADE4682-C753-3B3A-7454-50123794CAF4').then(
+    this.ble.isConnected('B2BA478A-1212-5501-3801-2153FC58CE65').then(
       ()=>{ 
         this.BPready = true; 
       },
@@ -326,7 +326,7 @@ export class Test3Page {
 
               this.ble.scan([], 3).subscribe(device => {
               
-                this.ble.connect('9ADE4682-C753-3B3A-7454-50123794CAF4').subscribe(data => {
+                this.ble.connect('B2BA478A-1212-5501-3801-2153FC58CE65').subscribe(data => {
                   this.BPready = true;
                   },error =>{
                     console.log(error);
@@ -337,7 +337,7 @@ export class Test3Page {
       }
     );
 
-      this.ble.isConnected('58A8CA24-F894-D922-0462-A287BE6D53FE').then(
+      this.ble.isConnected('3C1FD496-0DEB-4713-662F-FAE7AE85F548').then(
         ()=>{ 
           this.Gripready = true; 
         },
@@ -345,7 +345,7 @@ export class Test3Page {
 
                 this.ble.scan([], 3).subscribe(device => {
                   
-                  this.ble.connect('58A8CA24-F894-D922-0462-A287BE6D53FE').subscribe(data => {
+                  this.ble.connect('3C1FD496-0DEB-4713-662F-FAE7AE85F548').subscribe(data => {
                     this.Gripready = true;
                     },error =>{
                       console.log(error);

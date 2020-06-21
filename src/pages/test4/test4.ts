@@ -337,7 +337,7 @@ if(tempMin ==0)
 
   checkAllHardware(){
 
-      this.ble.isConnected('9ADE4682-C753-3B3A-7454-50123794CAF4').then(
+      this.ble.isConnected('B2BA478A-1212-5501-3801-2153FC58CE65').then(
         ()=>{ 
           this.BPready = true; 
         },
@@ -345,7 +345,7 @@ if(tempMin ==0)
 
           this.ble.scan([], 3).subscribe(device => {
               
-            this.ble.connect('9ADE4682-C753-3B3A-7454-50123794CAF4').subscribe(data => {
+            this.ble.connect('B2BA478A-1212-5501-3801-2153FC58CE65').subscribe(data => {
               this.BPready = true;
               },error =>{
                 console.log(error);
@@ -355,7 +355,7 @@ if(tempMin ==0)
         }
       );
 
-    this.ble.isConnected('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9').then(
+    this.ble.isConnected('F14956A6-16EC-88BA-1426-03749EBE87DE').then(
       ()=>{ 
         this.HRready = true; 
       },
@@ -363,7 +363,7 @@ if(tempMin ==0)
 
         this.ble.scan([], 3).subscribe(device => {
               
-          this.ble.connect('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9').subscribe(data => {
+          this.ble.connect('F14956A6-16EC-88BA-1426-03749EBE87DE').subscribe(data => {
             this.HRready = true;
             },error =>{
               console.log(error);

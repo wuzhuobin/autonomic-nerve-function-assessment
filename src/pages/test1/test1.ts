@@ -555,7 +555,7 @@ export class Test1Page {
 
   checkAllHardware(){
 
-    this.ble.isConnected('52E068E1-84B8-1271-EA06-3DC903EA38C5').then(
+    this.ble.isConnected('3896CAC8-C2CD-C0CA-679D-9CDCC9E4FE78').then(
       ()=>{ 
         this.Breathready = true; 
       },
@@ -563,7 +563,7 @@ export class Test1Page {
       }
     );
 
-  this.ble.isConnected('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9').then(
+  this.ble.isConnected('F14956A6-16EC-88BA-1426-03749EBE87DE').then(
     ()=>{ 
       this.HRready = true; 
     },
@@ -575,7 +575,7 @@ export class Test1Page {
 
 connectBreath(){
   this.ble.scan([], 3).subscribe(device => {
-    this.ble.connect('52E068E1-84B8-1271-EA06-3DC903EA38C5').subscribe(data => {
+    this.ble.connect('3896CAC8-C2CD-C0CA-679D-9CDCC9E4FE78').subscribe(data => {
       this.Breathready = true; 
       },error =>{
         console.log(error);
@@ -585,7 +585,7 @@ connectBreath(){
 
 connectHeartRate(){
   this.ble.scan([], 3).subscribe(device => {
-    this.ble.connect('8AD5E630-8A2D-C628-1622-1A1F58EF6BA9').subscribe(data => {
+    this.ble.connect('F14956A6-16EC-88BA-1426-03749EBE87DE').subscribe(data => {
       this.HRready = true; 
       },error =>{
         console.log(error);
