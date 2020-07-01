@@ -1,129 +1,121 @@
 
-
-<ion-content text-left no-bounce style="overflow:none;background:rgb(240, 240, 240)">
-    <div class="ext-box" style=" background:#fff;box-shadow: 0 15px 15px -15px #888; width:120%; margin-left:-10%;padding-left:7%; font-family:'Calibri' ; height:12%; z-index:99; position:relative"> 
-        <div class="int-box" style="padding-left:5%">
-            <table border="0" style="width:90%" >
-
-                <tr>
-                    <td style="width: 50%; vertical-align:middle"><B style="font-size:5em ; color:#444">Sustained<BR>Handgrip</B></td>
-                        <td style="text-align:right;width:25%;font-size:3em; vertical-align:middle">trials<BR>completed</td>
-                        <td style="text-align:right;width:25%;font-size:10em; font-weight:bold;  vertical-align:middle">{{trial}}/1</td>
-                </tr>
-            </table>
-            
-        </div>
-    </div>
-
-<div style="background:rgb(240, 240, 240);text-align:center; padding-top:40px; color:rgb(46,138,212) ;  ">
- 
-    <div style="position:absolute; right:30px; top:32%;" *ngIf="handgrip_stage==1">
-    <div (tap)="gotoStage2()" style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:160px ;  padding:10px">
-        NEXT
-        </div>
-    </div>
-
-    <div style="position:absolute; left:30px; bottom:5%;" *ngIf="handgrip_stage==2">
-            <div (tap)="skipSecond()" style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:160px ;  padding:10px">
-                SKIP
-                </div>
-            </div>
-
-<table style="width:80%; margin-left:10%; text-align:left;" id="testingTable">
-<tr>
-    <td colspan="2">
-        <div>
-            <span *ngIf=" handgrip_stage==0" style="font-size:7.5em; font-weight:bold;">Taking Blood Pressure value.</span>
-           <!--  <span *ngIf=" handgrip_stage==2" style="font-size:3.5em; font-weight:bold;">Please hold the grip for 5 mins.</span>-->
-           <span *ngIf=" handgrip_stage==3" style="font-size:4.5em; font-weight:bold;">Please release the handgrip.<br><br>Taking Blood Pressure value.</span>
-            <span *ngIf=" handgrip_stage==4" style="font-size:7.5em; font-weight:bold;">Finish</span>
-        </div>
-    </td>
-</tr>
-<tr *ngIf="handgrip_stage==0"> 
-        <td style="width:100%; text-align:left;" colspan="2">
-           </td>
- </tr>
-<!--
- <tr *ngIf="handgrip_stage==1"> 
-    <td style="width:100%; text-align:left;" colspan="2">
-        <div style="font-size:2em">
-        Blood Pressure Value: Sys {{reading4_up}} Dia {{reading4_down}}  &nbsp;&nbsp;&nbsp; Maximum Grip: {{grip_reading_max}} KG<BR><BR>
-          </div><div (tap)="redoTest()" style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:200px ;  padding:10px;">
-                   Redo
-           </div>
-    </td>
-  </tr>
--->
-<tr *ngIf="handgrip_stage==1"> 
-    <td style="width:100%; text-align:left;" colspan="2">
-        <div style="font-size:1em">
-        Blood Pressure Value: SYS 
-        <span *ngIf="reading4_up!=0">{{reading4_up}}</span>
-        <span *ngIf="reading4_up==0">ERR</span>
-         DIA <span *ngIf="reading4_down!=0">{{reading4_down}}</span>
-         <span *ngIf="reading4_down==0">ERR</span>
-          </div>
-          <div style="font-size:7em">Squeeze as hard<br>as possible.</div>
-          <div style="font-size:14em">{{grip_reading_max}} kg</div>
-    </td>
- </tr>
-
-<tr *ngIf="handgrip_stage==2">
-    <td colspan="2">
-<div style="font-size: 16em;">
-<span *ngIf="grip_reading < grip_reading_max * 0.3" style="color:salmon;">{{grip_reading}}</span>
-<span *ngIf="grip_reading >= grip_reading_max * 0.3" >{{grip_reading}}</span>/{{grip_reading_max}}<span style="font-size:0.5em">kg</span>
-</div>
-</td>
-</tr>
-<tr *ngIf="handgrip_stage==2"> 
-     <td style="width:40%; text-align:left;">
-         <span style="font-size:10em; font-weight:bold;">{{currentTime}}</span><span style="font-weight:bold;font-size:7.5em">s</span>
-    </td>
-    <td style="width:70%">
-            <progress-bar [progress]="loadProgress"></progress-bar>
-    </td>
-    </tr>
-    <tr *ngIf="handgrip_stage==3"> 
-            <td style="width:100%; text-align:left;">
-                </td>
-      </tr>
-      <tr *ngIf="handgrip_stage==4"> 
-            <td style="width:100%; text-align:left;">
-<div style=" font-size:3em">
-
-        <div style="font-size:1em">
-                1st Blood Pressure Value: SYS 
-                <span *ngIf="reading4_up!=0">{{reading4_up}}</span>
-                <span *ngIf="reading4_up==0">ERR</span>
-                 DIA <span *ngIf="reading4_down!=0">{{reading4_down}}</span>
-                 <span *ngIf="reading4_down==0">ERR</span>
-                  </div>
-                  <div style="font-size:1em">
-                        2nd Blood Pressure Value: SYS 
-                        <span *ngIf="reading4_up2!=0">{{reading4_up2}}</span>
-                        <span *ngIf="reading4_up2==0">ERR</span>
-                         DIA <span *ngIf="reading4_down2!=0">{{reading4_down2}}</span>
-                         <span *ngIf="reading4_down2==0">ERR</span>
-                          </div><BR>
-                        </div>
-                            <div (tap)="redoTest()" style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:200px ;  padding:10px">
-                                    Redo
-                                    </div>
-                                    &nbsp;&nbsp;
-                            <div (tap)="backTest3()" style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:150px ;  padding:10px">
-                                    Finish
-                                    </div>
-           </td>
-           </tr>        
-    </table>
-
-</div>
-
-<ion-fab right bottom>
-    <button ion-fab large color="white" style=" font-size:20px;box-shadow:0 0 40px #888" (click)="backTest3()">
-      <ion-icon name="close" style="zoom:2.5"></ion-icon>
-    </button>
-  </ion-fab>
-</ion-content>
+            <ion-content text-left no-bounce style="overflow:none;background:rgb(240, 240, 240)"> <div class="ext-box"
+                    style=" background:#fff;box-shadow: 0 15px 15px -15px #888; width:120%; margin-left:-10%;padding-left:7%; font-family:Calibri ; height:12%; z-index:99; position:relative">
+                     <div class="int-box" style="padding-left:5%"> <table border="0" style="width:90%"> <tr> <td
+                                    style="width: 50%; vertical-align:middle"><B
+                                        style="font-size:5em ; color:#444">Sustained<BR>Handgrip</B></td> <td
+                                    style="text-align:right;width:25%;font-size:3em; vertical-align:middle">trials<BR>completed</td>
+                                 <td style="text-align:right;width:25%;font-size:10em; font-weight:bold;  vertical-align:middle">
+                                    {{trial}}/1</td> </tr> </table>  </div> </div><div
+                    style="background:rgb(240, 240, 240);text-align:center; padding-top:40px; color:rgb(46,138,212) ;  ">  <div
+                        style="position:absolute; right:30px; top:32%;" *ngIf="handgrip_stage==1"> <div (tap)="gotoStage15()"
+                            style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:160px ;  padding:10px">
+                             NEXT </div> </div> <div style="position:absolute; right:30px; top:41%;"
+                        *ngIf="handgrip_stage==1"> <div (tap)="redoTest()"
+                            style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:160px ;  padding:10px">
+                             REDO </div> </div> <div style="position:absolute; right:30px; top:32%;"
+                        *ngIf="handgrip_stage==2"> <div (tap)="completeTest3()"
+                            style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:160px ;  padding:10px">
+                             COMPLETE </div> </div><div style="position:absolute; right:30px; top:32%;"
+                        *ngIf="handgrip_stage==15"> <div (tap)="gotoStage2()"
+                            style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:160px ;  padding:10px">
+                             NEXT </div> </div>
+                    <!-- <div style="position:absolute; left:30px; bottom:5%;" *ngIf="handgrip_stage==2">            <div (tap)="skipSecond()" style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:160px ;  padding:10px">                SKIP                </div>            </div>        -->
+                    <table style="width:80%; margin-left:10%; text-align:left;" id="testingTable"><tr> <td colspan="2"> <div>
+                                     <span *ngIf=" handgrip_stage==0" style="font-size:6.5em; font-weight:bold;"><BR>Baseline
+                                        BP<BR>Measuring...</span>
+                                    <!--  <span *ngIf=" handgrip_stage==2" style="font-size:3.5em; font-weight:bold;">Please hold the grip for 5 mins.</span>-->
+                                    <span *ngIf=" handgrip_stage==3" style="font-size:4.5em; font-weight:bold;">Please release the
+                                        handgrip.<br><br>Taking Blood Pressure value.</span> <span *ngIf=" handgrip_stage==4"
+                                        style="font-size:7.5em; font-weight:bold;">Finish</span> </div> </td></tr><tr
+                            *ngIf="handgrip_stage==0">  <td style="width:100%; text-align:left;" colspan="2"> </td> </tr>
+                        <tr *ngIf="handgrip_stage==1">  <td style="width:100%; text-align:left;" colspan="2"> <div
+                                    style="font-size:6em; padding-top:70px;"> Baseline BP<BR><input type="number" pattern="\d*"
+                                        style="color:#2e8ad4 ; height:10vh; width:40vw ;font-size:0.5em" maxlength="25"
+                                        placeholder="SYS" [(ngModel)]="reading4_up"><BR><input type="number" pattern="\d*"
+                                        style="color:#2e8ad4 ; height:10vh; width:40vw ;font-size:0.5em" maxlength="25"
+                                        placeholder="DIA" [(ngModel)]="reading4_down"> </div> </td> </tr> <tr
+                            *ngIf="handgrip_stage==15">  <td style="width:100%; text-align:left;" colspan="2"> <div
+                                    style="font-size:6.5em">Squeeze as hard<br>as possible.</div> <div style="font-size:16em">
+                                    {{grip_reading_max}}<font style="font-size: 0.4em">kg</font>
+                                </div> </td> </tr><tr *ngIf="handgrip_stage==2"> <td colspan="2"> <table cellspading=0
+                                    cellpadding=0 border=0 style="width:110%; margin-top:30px"><tr> <td style="width: 35%">
+                                            <div style="font-size: 14em;"> <span *ngIf="grip_reading < grip_reading_max * 0.3"
+                                                    style="color:salmon;">{{grip_reading}}</span> <span
+                                                    *ngIf="grip_reading >= grip_reading_max * 0.3">{{grip_reading}}</span><span
+                                                    style="font-size: 0.5em">kg</span> </div> </td> <td><b
+                                                style="font-size: 4em">BP</b><BR> <table cellspading=0 cellpadding=0 border=0
+                                                style="margin-top:10px; width:100%; font-size:2.75em"> <tr> <td
+                                                        style="width: 5%"></td> <td style="width: 15%">Base</td>
+                                                    <td style="width: 30%">{{reading4_up}}/{{reading4_down}}</td> <td
+                                                        style="width: 5%"><span *ngIf="BP_Trial_temp==2">●</span></td> <td
+                                                        style="width: 15%">3<sup>rd</sup></td>
+                                                    <td style="width: 30%"><input type="number" pattern="\d*"
+                                                            style="color:#2e8ad4 ; height:6vh; width:7vw ;font-size:0.9em; padding: 5px 0px 0px 0px;"
+                                                            maxlength="25" placeholder="SYS"
+                                                            [(ngModel)]="reading4_up_trial[2]">/<input type="number" pattern="\d*"
+                                                            style="color:#2e8ad4 ; height:6vh; width:7vw ;font-size:0.9em; padding: 5px 0px 0px 0px;"
+                                                            maxlength="25" placeholder="DIA" [(ngModel)]="reading4_down_trial[2]">
+                                                    </td>
+                                                </tr> <tr> <td style="width: 5%"><span *ngIf="BP_Trial_temp==0">●</span></td>
+                                                    <td style="width: 15%">1<sup>st</sup></td>
+                                                    <td style="width: 30%"><input type="number" pattern="\d*"
+                                                            style="color:#2e8ad4 ; height:6vh; width:7vw ;font-size:0.9em; padding: 5px 0px 0px 0px;"
+                                                            maxlength="25" placeholder="SYS"
+                                                            [(ngModel)]="reading4_up_trial[0]">/<input type="number" pattern="\d*"
+                                                            style="color:#2e8ad4 ; height:6vh; width:7vw ;font-size:0.9em; padding: 5px 0px 0px 0px;"
+                                                            maxlength="25" placeholder="DIA" [(ngModel)]="reading4_down_trial[0]">
+                                                    </td> <td style="width: 5%"><span *ngIf="BP_Trial_temp==3">●</span></td>
+                                                    <td style="width: 15%">4<sup>th</sup></td>
+                                                    <td style="width: 30%"><input type="number" pattern="\d*"
+                                                            style="color:#2e8ad4 ; height:6vh; width:7vw ;font-size:0.9em; padding: 5px 0px 0px 0px;"
+                                                            maxlength="25" placeholder="SYS"
+                                                            [(ngModel)]="reading4_up_trial[3]">/<input type="number" pattern="\d*"
+                                                            style="color:#2e8ad4 ; height:6vh; width:7vw ;font-size:0.9em; padding: 5px 0px 0px 0px;"
+                                                            maxlength="25" placeholder="DIA" [(ngModel)]="reading4_down_trial[3]">
+                                                    </td>
+                                                </tr> <tr> <td style="width: 5%"><span *ngIf="BP_Trial_temp==1">●</span></td>
+                                                    <td style="width: 15%">2<sup>nd</sup></td>
+                                                    <td style="width: 30%"><input type="number" pattern="\d*"
+                                                            style="color:#2e8ad4 ; height:6vh; width:7vw ;font-size:0.9em; padding: 5px 0px 0px 0px;"
+                                                            maxlength="25" placeholder="SYS"
+                                                            [(ngModel)]="reading4_up_trial[1]">/<input type="number" pattern="\d*"
+                                                            style="color:#2e8ad4 ; height:6vh; width:7vw ;font-size:0.9em; padding: 5px 0px 0px 0px;"
+                                                            maxlength="25" placeholder="DIA" [(ngModel)]="reading4_down_trial[1]">
+                                                    </td> <td style="width: 5%"><span *ngIf="BP_Trial_temp==4">●</span></td> <td
+                                                        style="width: 15%">5<sup>th</sup></td>
+                                                    <td style="width: 30%"><input type="number" pattern="\d*"
+                                                            style="color:#2e8ad4 ; height:6vh; width:7vw ;font-size:0.9em; padding: 5px 0px 0px 0px;"
+                                                            maxlength="25" placeholder="SYS"
+                                                            [(ngModel)]="reading4_up_trial[4]">/<input type="number" pattern="\d*"
+                                                            style="color:#2e8ad4 ; height:6vh; width:7vw ;font-size:0.9em; padding: 5px 0px 0px 0px;"
+                                                            maxlength="25" placeholder="DIA" [(ngModel)]="reading4_down_trial[4]">
+                                                    </td>
+                                                </tr> </table> </td></tr> </table></td></tr><tr
+                            *ngIf="handgrip_stage==2">  <td style="width:39%; text-align:left;"> <span
+                                    style="font-size:8em; font-weight:bold;">{{currentTimeTextM}}</span> <span
+                                    style="font-size:5em">m</span> <span
+                                    style="font-size:8em; font-weight:bold;">{{currentTimeTextS}}</span> <span
+                                    style="font-size:5em">s</span> </td> <td style="width:68%"> <progress-bar
+                                    [progress]="loadProgress"></progress-bar> </td> </tr> <tr *ngIf="handgrip_stage==3"> 
+                            <td style="width:100%; text-align:left;"> </td> </tr> <tr *ngIf="handgrip_stage==4">  <td
+                                style="width:100%; text-align:left;"> <table cellspading=0 cellpadding=0 border=0
+                                    style="margin-top:10px; width:100%; font-size:2.75em"> <tr> <td style="width: 20%">Base</td>
+                                        <td style="width: 30%">{{reading4_up}}/{{reading4_up}}</td> <td style="width: 20%">
+                                            3<sup>rd</sup></td>
+                                        <td style="width: 30%">{{reading4_up_trial[2]}}/{{reading4_down_trial[2]}}</td>
+                                    </tr> <tr> <td style="width: 20%">1<sup>st</sup></td>
+                                        <td style="width: 30%">{{reading4_up_trial[0]}}/{{reading4_down_trial[0]}}</td> <td
+                                            style="width: 20%">4<sup>th</sup></td>
+                                        <td style="width: 30%">{{reading4_up_trial[3]}}/{{reading4_down_trial[3]}}</td>
+                                    </tr> <tr> <td style="width: 20%">2<sup>nd</sup></td>
+                                        <td style="width: 30%">{{reading4_up_trial[1]}}/{{reading4_down_trial[1]}}</td> <td
+                                            style="width: 20%">5<sup>th</sup></td>
+                                        <td style="width: 30%">{{reading4_up_trial[4]}}/{{reading4_down_trial[4]}}</td>
+                                    </tr> </table> <BR> <div (tap)="redoTest()"
+                                    style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:150px ;  padding:10px">
+                                     Redo </div> &nbsp;&nbsp; <div (tap)="backTest3()"
+                                    style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:150px ;  padding:10px">
+                                     Finish </div> </td> </tr>  </table></div><ion-fab right bottom> <button
+                        ion-fab large color="white" style=" font-size:20px;box-shadow:0 0 40px #888" (click)="backTest3()">
+                        <ion-icon name="close" style="zoom:2.5"></ion-icon> </button> </ion-fab></ion-content>

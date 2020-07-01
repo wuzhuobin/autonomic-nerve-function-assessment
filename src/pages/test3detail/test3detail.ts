@@ -35,6 +35,7 @@ export class Test3DetailPage {
     public patient_id:any;
 
     public bp_readed : boolean = false; 
+    public bp_device_on : boolean = false; 
     public handgrip_stage :any= 0; 
 
     public reading4_status: any = 0;
@@ -67,7 +68,7 @@ export class Test3DetailPage {
 
     this.clickTestStartOrthostasis();
 
-   this.handgrip_stage = 0; 
+   this.handgrip_stage = 1; 
 
   }
   
@@ -145,7 +146,7 @@ export class Test3DetailPage {
      this.ble.isConnected('B2BA478A-1212-5501-3801-2153FC58CE65').then(
        ()=>{ 
          var daa = new Uint8Array(1);
-         daa[0] = 1;
+         daa[0] = 5;
          this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65','19b10000-e8f2-537e-4f6c-d104768a1223','19B10001-E8F2-537E-4F6C-D104768A1223',daa.buffer).then(data2=>{
            }).catch(error=>{
              console.log(error);
@@ -156,71 +157,11 @@ export class Test3DetailPage {
        }
      );
 
-     this.gettingBPTask =  setInterval(()=>{
-
-      this.ble.isConnected('B2BA478A-1212-5501-3801-2153FC58CE65').then( 
-        ()=>{ 
-
-          this.ble.read('B2BA478A-1212-5501-3801-2153FC58CE65','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1226').then(data2=>{
-            
-            this.reading4_status = (new Uint16Array(data2)[0]);
-  
-            if(!this.bp_readed){
-                  if(this.reading4_status==0){
-                    this.reading4_up = 0;
-                    this.reading4_down = 0;
-                  } else if(this.reading4_status == 1){
-                    this.reading4_up = 0;
-                    this.reading4_down = 0;
-                  } else {
                     
-                    this.bp_readed = true;
-
-                    this.ble.read('B2BA478A-1212-5501-3801-2153FC58CE65','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1224').then(dataUP=>{
-                      if(Math.round((new Uint16Array(dataUP)[0]) / 3)<300)
-                      this.reading4_up  = Math.round((new Uint16Array(dataUP)[0]) / 3);
-                      else
-                      this.reading4_up  = "0";
-                    }).catch(error=>{
-                    console.log(error);
-                    });
-  
-                    this.ble.read('B2BA478A-1212-5501-3801-2153FC58CE65','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1225').then(dataDOWN=>{
-                      if(Math.round((new Uint16Array(dataDOWN)[0]) / 3)<150)
-                      this.reading4_down  = Math.round((new Uint16Array(dataDOWN)[0]) / 3);
-                      else
-                      this.reading4_down  = "0";
-
-                    }).catch(error=>{
-                    console.log(error);
-                    });
-
-                    clearInterval(this.gettingBPTask);
-                    
-                    this.loadProgress = 100;
-                    this.currentTime = 300;
-                    this.handgrip_stage = 1;
-                    this.bp_readed = false;
-                    /*this.testSecondTask = setInterval(()=>{
-                      this.eachSecond();
-                    },1000);*/
-
-                    this.resetValue();
-  
-                  }
-  
-                 }
-           }).catch(error=>{
-             console.log(error);
-           });
-  
-  
-  
-            
-        },
-        ()=>{}
-      );
-     },1000);
+    this.loadProgress = 100;
+    this.currentTime = 300;
+    this.bp_readed = false;
+    this.resetValue();
 
   }
 
@@ -241,11 +182,27 @@ export class Test3DetailPage {
     },1000);
   }
 
+
+  completeTest3() {
+    this.handgrip_stage = 4;
+    this.ble.isConnected('B2BA478A-1212-5501-3801-2153FC58CE65').then(function () {
+      var daa = new Uint8Array(1);
+      daa[0] = 4;
+      this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65', '19b10000-e8f2-537e-4f6c-d104768a1223', '19B10001-E8F2-537E-4F6C-D104768A1223', daa.buffer).then(function (data2) {
+        console.log("power");
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }, function () { });
+    clearInterval(this.testSecondTask);
+  }
+
   gotoStage15() {
     this.handgrip_stage = 15;
   }
 
   takeReading(){
+    this.BP_Trial_temp = this.BP_Trial;
     this.resetValue();
     this.ble.isConnected('B2BA478A-1212-5501-3801-2153FC58CE65').then(
       ()=>{ 
@@ -258,66 +215,14 @@ export class Test3DetailPage {
 
       },
       ()=>{
-      }
-    );
+      });
 
-    this.gettingBPTask =  setInterval(()=>{
-
-      this.ble.isConnected('B2BA478A-1212-5501-3801-2153FC58CE65').then( 
-        ()=>{ 
-
-          this.ble.read('B2BA478A-1212-5501-3801-2153FC58CE65','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1226').then(data2=>{
-
-            this.reading4_status = (new Uint16Array(data2)[0]);
-            console.log("this.reading4_status", this.reading4_status, " BP readed", this.bp_readed);
-            if(!this.bp_readed){
-                  if(this.reading4_status==0){
-                    this.reading4_up_trial[this.BP_Trial] = 0;
-                    this.reading4_down_trial[this.BP_Trial] = 0;
-                  } else if(this.reading4_status == 1){
-                    this.reading4_up_trial[this.BP_Trial] = 0;
-                    this.reading4_down_trial[this.BP_Trial] = 0;
-                  } else {
-                    this.ble.read('B2BA478A-1212-5501-3801-2153FC58CE65','19B10000-E8F2-537E-4F6C-D104768A1223','19B10001-E8F2-537E-4F6C-D104768A1224').then(dataUP=>{
-                      //if(!this.bp_readed){
-                      if (Math.round((new Uint16Array(dataUP)[0]) / 3) < 300)
-                        this.reading4_up_trial[this.BP_Trial] = Math.round((new Uint16Array(dataUP)[0]) / 3);
-                      else
-                        this.reading4_up_trial[this.BP_Trial] = 0;
-                      //}
-                    }).catch(error => {
-                      console.log(error);
-                    });
-
-                    this.ble.read('B2BA478A-1212-5501-3801-2153FC58CE65', '19B10000-E8F2-537E-4F6C-D104768A1223', '19B10001-E8F2-537E-4F6C-D104768A1225').then(dataDOWN => {
-                      // if(!this.bp_readed){
-                      if (Math.round((new Uint16Array(dataDOWN)[0]) / 3) < 150)
-                        this.reading4_down_trial[this.BP_Trial] = Math.round((new Uint16Array(dataDOWN)[0]) / 3);
-                      else
-                        this.reading4_down_trial[this.BP_Trial] = 0;
-                      //}
-                    }).catch(error => {
-                      console.log(error);
-                    });
-                    if (this.reading4_down_trial[this.BP_Trial] != 0 && this.reading4_up_trial[this.BP_Trial] != 0) {
-                      this.bp_readed = true;
-                      clearInterval(this.gettingBPTask);
-                      this.BP_Trial++;
-                      if (this.BP_Trial >= 5) {
-                        this.handgrip_stage = 4;
-                        this.trial = 1;
-                      }
-                    }
-                  }
-                 }
-           }).catch(error=>{
-             console.log(error);
-           });
-  
-        },
-        ()=>{}
-      );
-     }, 300);
+    this.bp_readed = true;
+    clearInterval(this.gettingBPTask);
+    this.BP_Trial++;
+    if (this.BP_Trial >= 5) {
+      this.trial = 1;
+    }
   }
 
   redoTest(){
@@ -330,11 +235,11 @@ export class Test3DetailPage {
     this.currentTimeTextS = "0";
     this.result = [];
     this.trial = 0;
-    this.handgrip_stage = 0;
+    this.handgrip_stage = 1;
     this.currentTime = 20;
     this.loadProgress = 100;
     this.bp_readed = false;
-    this.reading4_status = 0;
+    this.reading4_status = 1;
     this.reading4_up = 0;
     this.reading4_down_trial = [0, 0, 0, 0, 0];
     this.reading4_down = 0;
@@ -342,7 +247,9 @@ export class Test3DetailPage {
     this.grip_reading_max  = 0;
     this.grip_reading = 0;
     this.resetValue();
-    this.clickTestStartOrthostasis();
+    this.powerSignal();
+    this.resetValue();
+    setTimeout(() => { this.clickTestStartOrthostasis(); }, 1000);        
   }
 
   eachSecond2() {
@@ -353,6 +260,8 @@ export class Test3DetailPage {
     if (this.currentTime == 245 || this.currentTime == 185 ||
       this.currentTime == 125 || this.currentTime == 65 || this.currentTime == 5) {
       this.bp_readed = false;
+      // Power off the BP device first
+      this.powerSignal();
       this.takeReading();
     }
     if (this.currentTime <= 0) {
@@ -389,5 +298,17 @@ export class Test3DetailPage {
      );
     }
 
+    
+    powerSignal() {
+        this.ble.isConnected('B2BA478A-1212-5501-3801-2153FC58CE65').then(function () {
+            var daa = new Uint8Array(1);
+            daa[0] = 3;
+            this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65', '19b10000-e8f2-537e-4f6c-d104768a1223', '19B10001-E8F2-537E-4F6C-D104768A1223', daa.buffer).then(function (data2) {
+                console.log("power");
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }, function () { });
+    }
 
 }
