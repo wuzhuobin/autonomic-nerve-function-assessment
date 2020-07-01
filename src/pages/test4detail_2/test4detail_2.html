@@ -1,9 +1,8 @@
 <ion-content text-left no-bounce style="overflow:none;background:rgb(240, 240, 240)">
     <div class="ext-box"
-        style=" background:#fff;box-shadow: 0 15px 15px -15px #888; width:120%; margin-left:-10%;padding-left:7%; font-family:\'Calibri\' ; height:12%; z-index:99; position:relative">
+        style=" background:#fff;box-shadow: 0 15px 15px -15px #888; width:120%; margin-left:-10%;padding-left:7%; font-family:'Calibri' ; height:12%; z-index:99; position:relative">
         <div class="int-box" style="padding-left:5%">
             <table border="0" style="width:90%">
-
                 <tr>
                     <td style="width: 50%; vertical-align:middle"><B style="font-size:5em ; color:#444">30:15 Ratio
                             &amp;<BR>Orthostasis</B> {{RRIReadng}} - {{currentBeatCount}}</td>
@@ -12,63 +11,47 @@
                         {{trial}}/1</td>
                 </tr>
             </table>
-
         </div>
     </div>
-
     <div style="background:rgb(240, 240, 240);text-align:center; padding-top:40px; color:rgb(46,138,212) ;  ">
-
         <div style="position:absolute; right:30px; top:32%;" *ngIf="orthostasis_stage==3">
             <div (tap)="completeTest4()"
                 style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:160px ;  padding:10px">
-                COMPLETE
-            </div>
+                COMPLETE </div>
         </div>
         <div style="position:absolute; right:30px; top:32%;" *ngIf="orthostasis_stage==0">
             <div (tap)="clickTestStartOrthostasis()"
                 style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:160px ;  padding:10px">
-                NEXT
-            </div>
+                NEXT </div>
         </div>
-
         <div style="position:absolute; right:30px; top:32%;" *ngIf="orthostasis_stage==2">
             <div (tap)="standup25()"
                 style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:160px ;  padding:10px">
-                NEXT
-            </div>
+                NEXT </div>
         </div>
-
-
         <div style="position:absolute; right:30px; top:39%;" *ngIf="orthostasis_stage==2">
             <div (tap)="redoTest2()"
                 style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:160px ;  padding:10px">
-                REDO
-            </div>
+                REDO </div>
         </div>
-
         <div style="position:absolute; right:30px; top:32%;" *ngIf="orthostasis_stage==25">
             <div (tap)="standup()"
                 style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:160px ;  padding:10px">
-                NEXT
-            </div>
+                NEXT </div>
         </div>
-
         <table style="width:80%; margin-left:10%; text-align:left;" border=0 id="testingTable">
             <tr>
                 <td colspan="2">
                     <div>
                         <div *ngIf=" orthostasis_stage==0" style="font-size:8.5em; padding-top:100px">Lay down<br>and
-                            rest.</div>
-                        <span *ngIf=" orthostasis_stage==1" style="font-size:7.5em; "><BR>Baseline
+                            rest.</div> <span *ngIf=" orthostasis_stage==1" style="font-size:7.5em; "><BR>Baseline
                             BP<BR>Measuring...</span>
                         <div *ngIf="orthostasis_stage==2" style="font-size:1em">
-                            <div style="font-size:6em; padding-top:70px;">
-                                Baseline BP<BR><input type="number" pattern="\d*"
-                                    style="color:#2e8ad4 ; height:10vh; width:40vw ;font-size:0.5em" maxlength="25"
-                                    placeholder="SYS" [(ngModel)]="reading4_up"><BR><input type="number" pattern="\d*"
-                                    style="color:#2e8ad4 ; height:10vh; width:40vw ;font-size:0.5em" maxlength="25"
-                                    placeholder="DIA" [(ngModel)]="reading4_down">
-                            </div>
+                            <div style="font-size:6em; padding-top:70px;"> Baseline BP<BR><input type="number"
+                                    pattern="\d*" style="color:#2e8ad4 ; height:10vh; width:40vw ;font-size:0.5em"
+                                    maxlength="25" placeholder="SYS" [(ngModel)]="reading4_up"><BR><input type="number"
+                                    pattern="\d*" style="color:#2e8ad4 ; height:10vh; width:40vw ;font-size:0.5em"
+                                    maxlength="25" placeholder="DIA" [(ngModel)]="reading4_down"> </div>
                         </div>
                         <div *ngIf="orthostasis_stage==25" style="font-size:8.5em; padding-top:130px ">Stand up.</div>
                         <span *ngIf=" orthostasis_stage==4" style="font-size:7.5em; ">Taking Blood Pressure
@@ -77,10 +60,8 @@
                 </td>
             </tr>
             <tr *ngIf=" orthostasis_stage==2">
-                <td style="width:100%; text-align:left;">
-                </td>
+                <td style="width:100%; text-align:left;"> </td>
             </tr>
-
             <tr *ngIf="orthostasis_stage==3">
                 <td style="width:100%; text-align:left;" colspan="2">
                     <table cellspading=0 cellpadding=0 border=0 style="margin-top:10px; width:110%; font-size:4em">
@@ -124,23 +105,18 @@
                     </table>
                 </td>
             </tr>
-
             <tr *ngIf="orthostasis_stage==3">
-                <td style="width:40%; text-align:left;">
-                    <span style="font-size:8em; font-weight:bold;">{{currentTimeTextM}}</span>
-                    <span style="font-size:5em">m</span>
-                    <span style="font-size:8em; font-weight:bold;">{{currentTimeTextS}}</span>
-                    <span style="font-size:5em">s</span>
-                </td>
+                <td style="width:40%; text-align:left;"> <span
+                        style="font-size:8em; font-weight:bold;">{{currentTimeTextM}}</span> <span
+                        style="font-size:5em">m</span> <span
+                        style="font-size:8em; font-weight:bold;">{{currentTimeTextS}}</span> <span
+                        style="font-size:5em">s</span> </td>
                 <td style="width:70%">
                     <progress-bar [progress]="loadProgress"></progress-bar>
                 </td>
             </tr>
-
-
             <tr *ngIf="orthostasis_stage==4">
-                <td style="width:100%; text-align:left;">
-                </td>
+                <td style="width:100%; text-align:left;"> </td>
             </tr>
             <tr *ngIf="orthostasis_stage==5">
                 <td style="width:100%; text-align:left; ">
@@ -163,29 +139,20 @@
                             <td style="width: 15%">3<sup>rd</sup></td>
                             <td style="width: 23%">{{reading4_up_trial[2]}}/{{reading4_down_trial[2]}}</td>
                         </tr>
-                    </table>
-
-                    <BR>
+                    </table><BR>
                     <div>
                         <div (tap)="redoTest()"
                             style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:150px ;  padding:10px">
-                            Redo
-                        </div>
-                        &nbsp;&nbsp;
-                        <div (tap)="backTest4()"
+                            Redo </div> &nbsp;&nbsp; <div (tap)="backTest4()"
                             style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:150px ;  padding:10px">
-                            Finish
-                        </div>
+                            Finish </div>
                     </div>
                 </td>
             </tr>
         </table>
-
     </div>
-
-    <ion-fab right bottom>
-        <button ion-fab large color="white" style=" font-size:20px;box-shadow:0 0 40px #888" (click)="backTest4()">
+    <ion-fab right bottom> <button ion-fab large color="white" style=" font-size:20px;box-shadow:0 0 40px #888"
+            (click)="backTest4()">
             <ion-icon name="close" style="zoom:2.5"></ion-icon>
-        </button>
-    </ion-fab>
+        </button> </ion-fab>
 </ion-content>
