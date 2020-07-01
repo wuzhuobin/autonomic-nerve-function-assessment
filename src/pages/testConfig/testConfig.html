@@ -1,142 +1,57 @@
-
-
-<ion-content text-left no-bounce>
-
-    <div class="ext-box" style=" background:#fff;box-shadow: 0 15px 15px -15px #888; width:120%; margin-left:-10%;padding-left:7%; font-family:'Calibri' ; height:12%; z-index:99; position:relative"> 
-        <div class="int-box" style="padding-left:5%">
-            <B style="font-size:4em ; color:#444">Hardware</B>
-        </div>
-    </div>
-
-<div style="background:rgb(240, 240, 240);text-align:center; height:88%;padding-top:40px; color:rgb(46,138,212) ;  ">
-  <BR>
-<div style="width:40% ;height:30%; padding:2%; border-radius:20px; display:inline-block; border:1px solid rgb(46,138,212); position:absolute; left:8%; top:20%;">
-<div style="color:#444; font-size:2em; text-align:left">Spirometer</div><BR>
-<div style="width:100%; text-align:center; font-size:2.5em">
-    <span *ngIf="hardware1ready" ><B style="font-size:2.5em">{{reading1}}</B> mmHG</span>
-    <span *ngIf="!hardware1ready" ><B style="font-size:2.5em">&nbsp;</B>Disconnected<B style="font-size:2.5em">&nbsp;</B></span>
-</div>
-</div>
-<div style="width:40% ;height:30%; padding:2%; border-radius:20px; display:inline-block; border:1px solid rgb(46,138,212); position:absolute; right:8%; top:20%;">
-    <div style="color:#444; font-size:2em; text-align:left">Dynamometer</div><BR>
-    <div style="width:100%; text-align:center; font-size:2.5em">
-        <span *ngIf="hardware2ready" ><B style="font-size:2.5em">{{reading2}}</B> kg</span>
-        <span *ngIf="!hardware2ready" ><B style="font-size:2.5em">&nbsp;</B>Disconnected<B style="font-size:2.5em">&nbsp;</B></span>
-       
-    </div>
- </div>
-
-  <div style="width:40% ;height:30%; padding:2%; border-radius:20px; display:inline-block; border:1px solid rgb(46,138,212); position:absolute; left:8%; top:55%;">
-      <div style="color:#444; font-size:2em; text-align:left">HR Monitor</div><BR>
-      <div style="width:100%; text-align:center; font-size:2em">
-          <table *ngIf="!calibrating3 && hardware3ready" style="width: 100%; text-align:center"><tr><td>
-              <ion-icon name="heart" style="zoom:2.0"></ion-icon><BR>
-          </td><td><B style="font-size:2.5em">{{reading3}}</B> RRI</td></tr>
-        </table>
-        <table *ngIf="calibrating3 && hardware3ready" style="width: 100%; text-align:center;"><tr><td>
-            <B style="font-size:2.5em">&nbsp;</B><span style="font-size:1.25em">Calibrating...</span><B style="font-size:2.5em">&nbsp;</B>
-        </td></tr>
-      </table>
-
-        <table *ngIf="!hardware3ready" style="width: 100%; text-align:center;"><tr><td>
-            <B style="font-size:2.5em">&nbsp;</B><span style="font-size:1.25em">Disconnected</span><B style="font-size:2.5em">&nbsp;</B>
-        </td></tr>
-      </table>
-
-  </div>
-      </div>
-
-        <div style="width:40% ;height:30%; padding:2%; border-radius:20px; display:inline-block; border:1px solid rgb(46,138,212); position:absolute; right:8%; top:55%;">
-            <div style="color:#444; font-size:2em; text-align:left">BR Monitor</div><BR>
-            <div style="width:100%; text-align:center; font-size:2em">
-              <table *ngIf="hardware4ready &&  reading4_status !=1 "style="width: 100%; text-align:center"><tr><td>
-                CONNECTED<BR>
-                  <div (tap)="clickStartBP()" style="font-size: 0.75em; font-family:'Calibril'; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:150px;  display:inline-block; padding:3px">
-                      TEST
-                      </div>
-              </td><td style="line-height: 2em">
-                  <B style="font-size:2.5em">{{reading4_up}}</B> SYS
-                  <BR>
-                    <B style="font-size:2.5em">{{reading4_down}}</B> DIA
-              </td></tr></table>
-              <table *ngIf="!hardware4ready" style="width: 100%; text-align:center;"><tr><td>
-                  <B style="font-size:2.5em">&nbsp;</B><span style="font-size:1.25em">Disconnected</span><B style="font-size:2.5em">&nbsp;</B>
-              </td></tr>
-            </table>
-            <table *ngIf="hardware4ready && reading4_status==1" style="width: 100%; text-align:center;"><tr><td>
-                <B style="font-size:2.5em">&nbsp;</B><span style="font-size:1.25em">Getting Result...</span><B style="font-size:2.5em">&nbsp;</B>
-            </td></tr>
-          </table>
-                </div>
-            </div>
-
-
-</div>
-
-<ion-fab right bottom>
-    <button ion-fab large color="white" style=" font-size:20px;box-shadow:0 0 40px #888" (click)="popThis()">
-      <ion-icon name="close" style="zoom:2.5"></ion-icon>
-    </button>
-  </ion-fab>
-</ion-content>
-
-
-<!--
-
-
-
-<ion-header  >
-    <ion-navbar color="sunshine" >
-      <ion-title >Config</ion-title>
-    </ion-navbar>
-</ion-header>
-  
-  
-
-<ion-content  text-left padding style="background:#D5E4C0;">
-
-     <B style="font-size:4em;">Hardware Monitor</B><BR><BR>
-
-<div style="display:inline-table; width:48vw; height:30vh; background:#D5E4C0; text-align:center">
-
-  <B style="font-size:3em">Breath Pressure Sensor</B><BR><BR>
-    <div style="color:#F00; font-size:2.5em" *ngIf="!hardware1ready" >Not Connected<BR>
-      <button ion-button color="sunshine" (click)="connectBreath()">Reconnect</button>
-    </div>
-    <div style="color:rgba(0, 255, 55, 0.548); font-size:3em" *ngIf="hardware1ready" >Connected</div>
-    <div style=" font-size:4em" *ngIf="hardware1ready" >{{reading1}}</div>
-
-</div>
-
-
-<div style="display:inline-table; width:48vw; height:30vh; background:#D5E4C0; text-align:center">
-
-  <B style="font-size:3em">Hand Grip Sensor</B><BR><BR>
-    <div style="color:#F00; font-size:2.5em" *ngIf="!hardware2ready" >Not Connected<BR>
-      <button ion-button color="sunshine" (click)="connectHandGrip()">Reconnect</button>
-    </div>
-    <div style="color:rgba(0, 255, 55, 0.548); font-size:3em" *ngIf="hardware2ready" >Connected</div>
-    <div style=" font-size:4em" *ngIf="hardware2ready" >{{reading2}}</div>
-    
-</div>
-<BR>
-<div style="display:inline-table; width:48vw; height:30vh; background:#D5E4C0; text-align:center">
-
-  <B style="font-size:3em">Blood Pressure</B><BR><BR>
-    <div style="color:#F00; font-size:2.5em" *ngIf="!hardware3ready" >Not Connected</div>
-    <div style="color:rgba(0, 255, 55, 0.548); font-size:2em" *ngIf="hardware3ready" >Connected</div>
-    <div style=" font-size:4em" *ngIf="hardware3ready" >{{reading1}}</div>
-    
-</div>
-
-<div style="display:inline-table; width:48vw; height:30vh; background:#D5E4C0; text-align:center">
-
-  <B style="font-size:3em">Heart Rate</B> <BR><BR>
-    <div style="color:#F00; font-size:2.5em" *ngIf="!hardware4ready" >Not Connected</div>
-    <div style="color:rgba(0, 255, 55, 0.548); font-size:2em" *ngIf="hardware4ready" >Connected</div>
-    <div style=" font-size:4em" *ngIf="hardware4ready" >{{reading1}}</div>
-    
-</div>
-
-</ion-content>
--->
+<ion-content text-left no-bounce> <div class="ext-box"
+    style=" background:#fff;box-shadow: 0 15px 15px -15px #888; width:120%; margin-left:-10%;padding-left:7%; font-family:'Calibri' ; height:12%; z-index:99; position:relative">
+     <div class="int-box" style="padding-left:5%"> <B style="font-size:4em ; color:#444">Hardware</B> </div>
+  </div><div
+    style="background:rgb(240, 240, 240);text-align:center; height:88%;padding-top:40px; color:rgb(46,138,212) ;  ">
+    <BR><div
+      style="width:40% ;height:30%; padding:2%; border-radius:20px; display:inline-block; border:1px solid rgb(46,138,212); position:absolute; left:8%; top:20%;">
+      <div style="color:#444; font-size:2em; text-align:left">Spirometer</div><BR><div
+        style="width:100%; text-align:center; font-size:2.5em"> <span *ngIf="hardware1ready"><B
+            style="font-size:2.5em">{{reading1}}</B> mmHG</span> <span *ngIf="!hardware1ready"><B
+            style="font-size:2.5em">&nbsp;</B>Disconnected<B style="font-size:2.5em">&nbsp;</B></span></div></div>
+    <div
+      style="width:40% ;height:30%; padding:2%; border-radius:20px; display:inline-block; border:1px solid rgb(46,138,212); position:absolute; right:8%; top:20%;">
+       <div style="color:#444; font-size:2em; text-align:left">Dynamometer</div><BR> <div
+        style="width:100%; text-align:center; font-size:2.5em"> <span *ngIf="hardware2ready"><B
+            style="font-size:2.5em">{{reading2}}</B> kg</span> <span *ngIf="!hardware2ready"><B
+            style="font-size:2.5em">&nbsp;</B>Disconnected<B style="font-size:2.5em">&nbsp;</B></span>  </div>
+    </div> <div
+      style="width:40% ;height:30%; padding:2%; border-radius:20px; display:inline-block; border:1px solid rgb(46,138,212); position:absolute; left:8%; top:55%;">
+       <div style="color:#444; font-size:2em; text-align:left">HR Monitor</div><BR> <div
+        style="width:100%; text-align:center; font-size:2em"> <table *ngIf="!calibrating3 && hardware3ready"
+          style="width: 100%; text-align:center">
+          <tr>
+            <td> <ion-icon name="heart" style="zoom:2.0"></ion-icon><BR> <div (tap)="clickCalibrate()"
+                style="font-size: 0.75em;font-family:'Calibril'; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:150px;  display:inline-block; padding:3px">
+                 CALIBRATE </div>  </td>
+            <td><B style="font-size:2.5em">{{reading3}}</B> RRI</td>
+          </tr>
+        </table> <table *ngIf="calibrating3 && hardware3ready" style="width: 100%; text-align:center;">
+          <tr>
+            <td> <B style="font-size:2.5em">&nbsp;</B><span style="font-size:1.25em">Calibrating...</span><B
+                style="font-size:2.5em">&nbsp;</B> </td>
+          </tr>
+        </table> <table *ngIf="!hardware3ready" style="width: 100%; text-align:center;">
+          <tr>
+            <td> <B style="font-size:2.5em">&nbsp;</B><span style="font-size:1.25em">Disconnected</span><B
+                style="font-size:2.5em">&nbsp;</B> </td>
+          </tr>
+        </table> </div> </div> <div
+      style="width:40% ;height:30%; padding:2%; border-radius:20px; display:inline-block; border:1px solid rgb(46,138,212); position:absolute; right:8%; top:55%;">
+       <div style="color:#444; font-size:2em; text-align:left">BR Monitor</div><BR> <div
+        style="width:100%; text-align:center; font-size:2em"> <table *ngIf="hardware4ready "
+          style="width: 100%; text-align:center">
+          <tr>
+            <td> CONNECTED<BR> <div (tap)="clickStartBP()"
+                style="font-size: 0.75em; font-family:'Calibril'; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:150px;  display:inline-block; padding:3px">
+                 TEST/CANCEL </div> </td>
+            <td style="line-height: 2em"> </td>
+          </tr>
+        </table> <table *ngIf="!hardware4ready" style="width: 100%; text-align:center;">
+          <tr>
+            <td> <B style="font-size:2.5em">&nbsp;</B><span style="font-size:1.25em">Disconnected</span><B
+                style="font-size:2.5em">&nbsp;</B> </td>
+          </tr>
+        </table> </div> </div></div><ion-fab right bottom> <button ion-fab large color="white"
+      style=" font-size:20px;box-shadow:0 0 40px #888" (click)="popThis()"> <ion-icon name="close" style="zoom:2.5">
+      </ion-icon> </button> </ion-fab></ion-content>

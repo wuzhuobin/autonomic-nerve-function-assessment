@@ -31,12 +31,14 @@ public reading4_down : any = 0;
 public reading4_status : any = 0;
 
 public bp_readed : boolean = false; 
+public bp_device_on : boolean = false; 
 
 public pulseCount : any;
 
 public calibrating3 : boolean;
 
 public backParent : any;
+public hardware3notify: boolean;
 
   constructor(public ble: BLE, public navCtrl: NavController, public navParams: NavParams) {
 
@@ -50,6 +52,7 @@ public backParent : any;
     },200);
 
     this.backParent = navParams.data.parent;
+    this.hardware3notify = false;
 
   }
 
@@ -83,9 +86,37 @@ public backParent : any;
           },error =>{
             //console.log(error);
             this.hardware3ready = false; 
+            this.hardware3notify = false;
           });
       }
 
+      // Start notification for the hr device
+      if (this.hardware3ready && !this.hardware3notify) {
+        this.ble.startNotification('F14956A6-16EC-88BA-1426-03749EBE87DE', '0x180D', '0x2A37').subscribe(function (data) {
+          let dataArray = new Uint8Array(data);
+          let hasHr = dataArray[0] & 0x01;
+          let hasRri = ((dataArray[0] & (0x01 << 4)) >> 4) & 0x01;
+
+          if (hasHr == 0) {
+            if (hasRri) {
+              let highByte = dataArray[3];
+              let lowByte = dataArray[2];
+              let rri = (highByte << 8) + lowByte;
+              this.reading3 = rri;
+            }
+          }
+          else if (hasHr == 1) {
+            if (hasRri) {
+              let highByte = dataArray[4];
+              let lowByte = dataArray[3];
+              let rri = (highByte << 8) + lowByte;
+              this.reading3 = rri;
+            }
+          }
+
+          this.hardware3notify = true;
+        });
+      }
       if(!this.hardware4ready){
         this.ble.connect('B2BA478A-1212-5501-3801-2153FC58CE65').subscribe(data => {
           this.hardware4ready = true; 
@@ -261,6 +292,7 @@ public backParent : any;
       },
       ()=>{ 
         this.hardware3ready = false; 
+        this.hardware3notify = false;
         this.calibrating3 = false;
       }
     );
@@ -292,8 +324,16 @@ public backParent : any;
        ()=>{ 
          this.hardware4ready = true; 
          var daa = new Uint8Array(1);
-         daa[0] = 1;
-         this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65','19b10000-e8f2-537e-4f6c-d104768a1223','19B10001-E8F2-537E-4F6C-D104768A1223',daa.buffer).then(data2=>{
+         if (!this.bp_device_on) {
+           daa[0] = 5;
+           this.bp_device_on = true;
+         }
+         else {
+           daa[0] = 4;
+           this.bp_device_on = false;
+         }
+         this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65', '19b10000-e8f2-537e-4f6c-d104768a1223', '19B10001-E8F2-537E-4F6C-D104768A1223', daa.buffer).then(data2 => {
+
            console.log(data2);
            }).catch(error=>{
              //console.log(error);
