@@ -136,6 +136,34 @@ export class HomePage {
     
   }
 
+  clickClearData() {
+    var alert = this.alertCtrl.create({
+      title: 'Do you want to clear all data?',
+      buttons: [
+        {
+          text: 'OK',
+          handler: function () {
+            this.sqlite.create({
+              name: 'recorder.db',
+              location: 'default'
+            }).then(function (db) {
+              this.datab = db;
+              this.datab.executeSql("Drop table patient_table", {}).then(function () {
+              });
+            });
+          }
+        }, {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: function (data) {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
   showAlert(){
     let alert = this.alertCtrl.create({
       title: 'Input Error',
@@ -144,7 +172,6 @@ export class HomePage {
     });
     alert.present();
   }
-
 
 }
 

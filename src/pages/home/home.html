@@ -1,26 +1,19 @@
-
-
 <ion-content text-center no-bounce>
-
-    <div class="ext-box" style=" background:#fff;width:120%; margin-left:-10%;box-shadow: 0 40px 40px -40px #888; height:83%; z-index:99; position:relative"> 
-        <div class="int-box">
-            <B style="font-size:4em ; font-weight:bold; color:#444">EWING'S BATTERY<BR>autonomic dysfunction<br>diagnosis</B>
-                <BR><BR><BR><BR><BR><BR><BR><BR><BR>
-        
-        </div>
+    <div class="ext-box"
+        style=" background:#fff;width:120%; margin-left:-10%;box-shadow: 0 40px 40px -40px #888; height:83%; z-index:99; position:relative">
+        <div class="int-box"> <B style="font-size:4em ; font-weight:bold; color:#444">EWING'S BATTERY<BR>autonomic
+                dysfunction<br>diagnosis</B> <BR><BR><BR><BR><BR><BR><BR><BR><BR> </div>
     </div>
-<div style="background-color:rgb(240, 240, 240);text-align:left;padding-left:6%; height:17%;padding-top:40px; color:rgb(46,138,212) ; ">
-    <div (tap)="showPrompt()" style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:150px ;  padding:10px">
-        START
-        </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <div (tap)="clickRecord()" style="font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:150px;  display:inline-block; padding:10px">
-            RECORD
-            </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-</div>
-
-<ion-fab right bottom>
-    <button ion-fab large color="white" style="box-shadow:0 0 40px #888" (click)="loadConfig()">
-      <img src="images/gear.png">
-    </button>
-  </ion-fab>
+    <div
+        style="background-color:rgb(240, 240, 240);text-align:left;padding-left:6%; height:17%;padding-top:40px; color:rgb(46,138,212) ; ">
+        <div (tap)="showPrompt()"
+            style="display:inline-block; font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:150px ;  padding:10px">
+            START </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <div (tap)="clickRecord()"
+            style="font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:150px;  display:inline-block; padding:10px">
+            RECORD </div> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<div (tap)="clickClearData()"
+            style="font-size: 1.5em; color:rgb(46,138,212);text-align:center; border:1px solid rgb(46,138,212); border-radius:75px; width:150px;  display:inline-block; padding:10px">
+            CLEAR DATA </div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+    <ion-fab right bottom> <button ion-fab large color="white" style="box-shadow:0 0 40px #888" (click)="loadConfig()">
+            <img src="images/gear.png"> </button> </ion-fab>
 </ion-content>
