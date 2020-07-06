@@ -142,11 +142,11 @@ export class HomePage {
       buttons: [
         {
           text: 'OK',
-          handler: function () {
+          handler: () => {
             this.sqlite.create({
               name: 'recorder.db',
               location: 'default'
-            }).then(function (db) {
+            }).then((db) => {
               this.datab = db;
               this.datab.executeSql("Drop table patient_table", {}).then(function () {
               });
