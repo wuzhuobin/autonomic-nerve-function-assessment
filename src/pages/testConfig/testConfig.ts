@@ -102,23 +102,47 @@ public hardware3notify: boolean;
           let dataArray = new Uint8Array(data);
           let hasHr = dataArray[0] & 0x01;
           let hasRri = ((dataArray[0] & (0x01 << 4)) >> 4) & 0x01;
+          let highByte = 0;
+          let lowByte = 0;
+          let rri = 0;
 
           if (hasHr == 0) {
             if (hasRri) {
-              let highByte = dataArray[3];
-              let lowByte = dataArray[2];
-              let rri = (highByte << 8) + lowByte;
+              highByte = dataArray[3];
+              lowByte = dataArray[2];
+              rri = (highByte << 8) + lowByte;
               this.reading3 = rri;
             }
           }
           else if (hasHr == 1) {
             if (hasRri) {
-              let highByte = dataArray[4];
-              let lowByte = dataArray[3];
-              let rri = (highByte << 8) + lowByte;
+              highByte = dataArray[4];
+              lowByte = dataArray[3];
+              rri = (highByte << 8) + lowByte;
               this.reading3 = rri;
             }
           }
+          console.log("//////////////////////////////////////////////////");
+          console.log("Notified.");
+          console.log("");
+          console.log("");
+          console.log("data:")
+          console.log(data);
+          console.log("dataArray:");
+          console.log(dataArray);
+          console.log("hasHr:");
+          console.log(hasHr);
+          console.log("hasRri:");
+          console.log(hasRri);
+          console.log("highByte: ");
+          console.log(highByte);
+          console.log("lowByte: ");
+          console.log(lowByte);
+          console.log("rri: ");
+          console.log(rri);
+          console.log("**NEW RRI**");
+          console.log(this.reading3);
+          console.log("//////////////////////////////////////////////////");
 
           this.hardware3notify = true;
         });
@@ -185,35 +209,41 @@ public hardware3notify: boolean;
         this.ble.read('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37').then(data2=>{
 
           this.reading3 = (new Uint16Array(data2)[0]);
+          console.log("//////////////////////////////////////////////////");
+          console.log("data2: ");
+          console.log(data2);
+          console.log("**OLD RRI**");
+          console.log(this.reading3);
+          console.log("//////////////////////////////////////////////////");
           }).catch(error=>{
             console.error("TestConfigPage#udpateAllHardwareValue");
             console.error("HR reading");
             console.error(error);
           });
           // getting calibration status from hardware
-          this.ble.read('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37').then(data2=>{
-            // console.log(new Uint8Array(data2)[0]);
-            if(new Uint8Array(data2)[0]==1){
-             this.calibrating3 = false;  
-            } else {
-              this.calibrating3 = true;  
-            }
+          // this.ble.read('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37').then(data2=>{
+          //   // console.log(new Uint8Array(data2)[0]);
+          //   if(new Uint8Array(data2)[0]==1){
+          //    this.calibrating3 = false;  
+          //   } else {
+          //     this.calibrating3 = true;  
+          //   }
 
-            }).catch(error=>{
-              console.error("TestConfigPage#udpateAllHardwareValue");
-              console.error("HR reading");
-              console.error(error);
-            });
+          //   }).catch(error=>{
+          //     console.error("TestConfigPage#udpateAllHardwareValue");
+          //     console.error("HR reading");
+          //     console.error(error);
+          //   });
 
 
           // getting pulseCount from hardware
-          this.ble.read('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37').then(data2=>{
-             this.pulseCount = (new Uint8Array(data2)[0]);
-            }).catch(error=>{
-              console.error("TestConfigPage#udpateAllHardwareValue");
-              console.error("HR reading");
-              console.error(error);
-            });
+          // this.ble.read('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37').then(data2=>{
+          //    this.pulseCount = (new Uint8Array(data2)[0]);
+          //   }).catch(error=>{
+          //     console.error("TestConfigPage#udpateAllHardwareValue");
+          //     console.error("HR reading");
+          //     console.error(error);
+          //   });
           
       },
       ()=>{ this.hardware3ready = false; }
