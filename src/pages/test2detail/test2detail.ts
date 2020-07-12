@@ -84,7 +84,7 @@ export class Test2DetailPage {
       
           this.datab.executeSql("UPDATE patient_table SET t2_1 = ? , t2_2 = ? , t2_3 = ? where id='"+val+"'", data)
               .then(() => {
-                console.log(data);
+                // console.log(data);
                 this.navCtrl.setRoot(Test2Page, {}, {animate : false, direction: 'forward'});
               });
 
@@ -204,17 +204,17 @@ this.countdownTask = setInterval(()=>{
     if(this.currentTime<=0){
 
       if(this.loop == 1){
-        console.log(this.inter01);
+        // console.log(this.inter01);
       } else if(this.loop == 2){
-        console.log(this.inter02);
+        // console.log(this.inter02);
       } else if(this.loop == 3){
-        console.log(this.inter03);
+        // console.log(this.inter03);
       } else if(this.loop == 4){
-        console.log(this.inter04);
+        // console.log(this.inter04);
       } else if(this.loop == 5){
-        console.log(this.inter05);
+        // console.log(this.inter05);
       } else if(this.loop == 6){
-        console.log(this.inter06);
+        // console.log(this.inter06);
       } 
 
       if(this.loop == 6){
@@ -301,7 +301,9 @@ this.countdownTask = setInterval(()=>{
           this.RRIReadng = (new Uint16Array(data2)[0]);
 
           }).catch(error=>{
-            console.log(error);
+            console.error("Test2DetailPage#checkAllHardware");
+            console.error("heartRateDevice reading");
+            console.error(error);
           });
 
       },
@@ -317,12 +319,13 @@ this.countdownTask = setInterval(()=>{
 
   connectHeartRate(){
     this.ble.scan([], 3).subscribe(device => {
-      console.log(JSON.stringify(device));
+      // console.log(JSON.stringify(device));
       
       this.ble.connect('F14956A6-16EC-88BA-1426-03749EBE87DE').subscribe(data => {
         this.heartRateDeviceConnected = true;
         },error =>{
-          console.log(error);
+          console.error("Test2DetailPage#connectHeartRate");
+          console.error(error);
 
         });
 

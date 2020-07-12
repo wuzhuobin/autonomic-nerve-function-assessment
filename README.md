@@ -5,7 +5,7 @@
 * old hr monitor device uuid in medical_20180702: 8AD5E630-8A2D-C628-1622-1A1F58EF6BA9  
 * new hr montior device uuid: 813A1F6C-0006-7DF0-7CE2-0F7AFF15630C  
 * bp monitor device uuid: B2BA478A-1212-5501-3801-2153FC58CE65  
-* Spiromoter device uuid: 3896CAC8-C2CD-C0CA-679D-9CDCC9E4FE78  
+* Spirometer device uuid: 3896CAC8-C2CD-C0CA-679D-9CDCC9E4FE78  
 * Dynamometer device uuid: 3C1FD496-0DEB-4713-662F-FAE7AE85F548  
 
 | HR monitor(Old) | BLE Service/Characteristic | UUID | Required/Useless for Corrent Measurement |

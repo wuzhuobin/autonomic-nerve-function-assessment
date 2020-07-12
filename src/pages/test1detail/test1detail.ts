@@ -67,7 +67,7 @@ export class Test1DetailPage {
 
 
       this.storage.get('id').then((val) => {
-        console.log(' id is', val);
+        // console.log(' id is', val);
         this.patient_id = val;
       });
 
@@ -105,19 +105,19 @@ export class Test1DetailPage {
         if(t1.length==0){
           this.datab.executeSql("UPDATE patient_table SET t1_1 = ? where id='"+this.patient_id+"';", dataSent)
           .then(() => {
-            console.log(data);
+            // console.log(data);
             this.navCtrl.setRoot(Test1Page, {}, {animate : false, direction: 'forward'});
           });
         } else if(t2.length==0){
           this.datab.executeSql("UPDATE patient_table SET t1_2 = ? where id='"+this.patient_id+"';", dataSent)
           .then(() => {
-            console.log(data);
+            // console.log(data);
             this.navCtrl.setRoot(Test1Page, {}, {animate : false, direction: 'forward'});
           });
         } else{
           this.datab.executeSql("UPDATE patient_table SET t1_3 = ? where id='"+this.patient_id+"';", dataSent)
           .then(() => {
-            console.log(data);
+            // console.log(data);
             this.navCtrl.setRoot(Test1Page, {}, {animate : false, direction: 'forward'});
           });
         } 
@@ -292,7 +292,9 @@ this.trial--;
             else
             this.under40 = false;
           }).catch(error=>{
-            console.log(error);
+            console.error("Test1DetailPage#checkAllHardware");
+            console.error("breathDevice reading");
+            console.error(error);
           });
 
       },
@@ -313,7 +315,9 @@ this.trial--;
           //this.RRIReadng = Math.round((new Uint16Array(data2)[0])/5) * 5;
           this.RRIReadng = (new Uint16Array(data2)[0]);
           }).catch(error=>{
-            console.log(error);
+            console.error("Test1DetailPage#checkAllHardWare");
+            console.error("heartRateDevice reading");
+            console.error(error);
           });
 
       },
@@ -331,11 +335,12 @@ this.trial--;
  
     this.ble.scan([], 3).subscribe(device => {
 
-      console.log(JSON.stringify(device));
+      // console.log(JSON.stringify(device));
         this.ble.connect('3896CAC8-C2CD-C0CA-679D-9CDCC9E4FE78').subscribe(data => {
           this.breathDeviceConnected  = true;
            },error =>{
-            console.log(error);
+            console.error("Test1DetailPage#connectBreath");
+            console.error(error);
           }); 
     });
 
@@ -343,12 +348,13 @@ this.trial--;
 
   connectHeartRate(){
     this.ble.scan([], 3).subscribe(device => {
-      console.log(JSON.stringify(device));
+      // console.log(JSON.stringify(device));
       
       this.ble.connect('F14956A6-16EC-88BA-1426-03749EBE87DE').subscribe(data => {
         this.heartRateDeviceConnected = true;
         },error =>{
-          console.log(error);
+          console.error("Test1DetailPage#connectHeartRate");
+          console.error(error);
 
         });
 

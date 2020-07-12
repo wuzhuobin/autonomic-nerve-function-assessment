@@ -66,7 +66,9 @@ public hardware3notify: boolean;
         this.ble.connect('3896CAC8-C2CD-C0CA-679D-9CDCC9E4FE78').subscribe(data => {
           this.hardware1ready = true; 
           },error =>{
-            //console.log(error);
+            console.error("TestConfigPage#checkAllHardware");
+            console.error("Spirometer connecting");
+            console.error(error);
             this.hardware1ready = false; 
           });
       }
@@ -75,7 +77,9 @@ public hardware3notify: boolean;
         this.ble.connect('3C1FD496-0DEB-4713-662F-FAE7AE85F548').subscribe(data => {
           this.hardware2ready = true; 
           },error =>{
-            //console.log(error);
+            console.error("TestConfigPage#TestAllHardware");
+            console.error("Dynamometer connecting");
+            console.error(error);
             this.hardware2ready = false; 
           });
       }
@@ -84,7 +88,9 @@ public hardware3notify: boolean;
         this.ble.connect('F14956A6-16EC-88BA-1426-03749EBE87DE').subscribe(data => {
           this.hardware3ready = true; 
           },error =>{
-            //console.log(error);
+            console.error("TestConfigPage#TestAllHardware");
+            console.error("HR connecting");
+            console.error(error);
             this.hardware3ready = false; 
             this.hardware3notify = false;
           });
@@ -121,7 +127,9 @@ public hardware3notify: boolean;
         this.ble.connect('B2BA478A-1212-5501-3801-2153FC58CE65').subscribe(data => {
           this.hardware4ready = true; 
           },error =>{
-            //console.log(error);
+            console.error("TestConfigPage#TestAllHardware");
+            console.error("BP connecting");
+            console.error(error);
             this.hardware4ready = false; 
           });
       }
@@ -143,7 +151,9 @@ public hardware3notify: boolean;
           
           this.reading1 = (new Uint8Array(data2)[0]).toString();
           }).catch(error=>{
-            //console.log(error);
+            console.error("TestConfigPage#updateAllHardwareValue");
+            console.error("Spirometer reading");
+            console.error(error);
           });
 
       },
@@ -157,7 +167,9 @@ public hardware3notify: boolean;
         this.ble.read('3C1FD496-0DEB-4713-662F-FAE7AE85F548','19b10000-e8f2-537e-4f6c-d104768a1220','19b10001-e8f2-537e-4f6c-d104768a1220').then(data2=>{
           this.reading2 = (new Uint8Array(data2)[0]);
           }).catch(error=>{
-            //console.log(error);
+            console.error("TestConfigPage#udpateAllHardwareValue");
+            console.error("Dynamometer reading");
+            console.error(error);
           });
 
       },
@@ -174,11 +186,13 @@ public hardware3notify: boolean;
 
           this.reading3 = (new Uint16Array(data2)[0]);
           }).catch(error=>{
-            ////console.log(error);
+            console.error("TestConfigPage#udpateAllHardwareValue");
+            console.error("HR reading");
+            console.error(error);
           });
           // getting calibration status from hardware
           this.ble.read('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37').then(data2=>{
-            console.log(new Uint8Array(data2)[0]);
+            // console.log(new Uint8Array(data2)[0]);
             if(new Uint8Array(data2)[0]==1){
              this.calibrating3 = false;  
             } else {
@@ -186,7 +200,9 @@ public hardware3notify: boolean;
             }
 
             }).catch(error=>{
-              ////console.log(error);
+              console.error("TestConfigPage#udpateAllHardwareValue");
+              console.error("HR reading");
+              console.error(error);
             });
 
 
@@ -194,7 +210,9 @@ public hardware3notify: boolean;
           this.ble.read('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37').then(data2=>{
              this.pulseCount = (new Uint8Array(data2)[0]);
             }).catch(error=>{
-              //console.log(error);
+              console.error("TestConfigPage#udpateAllHardwareValue");
+              console.error("HR reading");
+              console.error(error);
             });
           
       },
@@ -226,7 +244,9 @@ public hardware3notify: boolean;
                     else
                     this.reading4_up  = "ERR";
                   }).catch(error=>{
-                  //console.log(error);
+                    console.error("TestConfigPage#udpateAllHardwareValue");
+                    console.error("BP reading");
+                    console.error(error);
                   });
 
                   // getting BP data
@@ -236,7 +256,9 @@ public hardware3notify: boolean;
                     else
                     this.reading4_down  = "ERR";
                   }).catch(error=>{
-                  //console.log(error);
+                    console.error("TestConfigPage#udpateAllHardwareValue");
+                    console.error("BP reading");
+                    console.error(error);
                   });
 
                   this.bp_readed = true;
@@ -246,7 +268,9 @@ public hardware3notify: boolean;
 
                }
          }).catch(error=>{
-           //console.log(error);
+           console.error("TestConfigPage#udpateAllHardwareValue");
+           console.error("BP reading");
+           console.error(error);
          });
 
 
@@ -274,29 +298,29 @@ public hardware3notify: boolean;
    }
 
 
-   clickCalibrate(){
+  //  clickCalibrate(){
 
-   this.calibrating3 = true;
+  //  this.calibrating3 = true;
 
-    this.ble.isConnected('F14956A6-16EC-88BA-1426-03749EBE87DE').then(
-      ()=>{ 
-        this.hardware3ready = true; 
-        var daa = new Uint8Array(1);
-        daa[0] = 1;
-        this.ble.write('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37',daa.buffer).then(data2=>{
-         // console.log(data2);
-          }).catch(error=>{
-            //console.log(error);
-          });
+  //   this.ble.isConnected('F14956A6-16EC-88BA-1426-03749EBE87DE').then(
+  //     ()=>{ 
+  //       this.hardware3ready = true; 
+  //       var daa = new Uint8Array(1);
+  //       daa[0] = 1;
+  //       this.ble.write('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37',daa.buffer).then(data2=>{
+  //        // console.log(data2);
+  //         }).catch(error=>{
+  //           //console.log(error);
+  //         });
 
-      },
-      ()=>{ 
-        this.hardware3ready = false; 
-        this.hardware3notify = false;
-        this.calibrating3 = false;
-      }
-    );
-   }
+  //     },
+  //     ()=>{ 
+  //       this.hardware3ready = false; 
+  //       this.hardware3notify = false;
+  //       this.calibrating3 = false;
+  //     }
+  //   );
+  //  }
 
    resetValue(){
  
@@ -306,9 +330,11 @@ public hardware3notify: boolean;
          var daa = new Uint8Array(1);
          daa[0] = 2;
          this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65','19b10000-e8f2-537e-4f6c-d104768a1223','19B10001-E8F2-537E-4F6C-D104768A1223',daa.buffer).then(data2=>{
-           console.log(data2);
+          //  console.log(data2);
            }).catch(error=>{
-             //console.log(error);
+              console.error("TestConfig#resetValue");
+              console.error("BP writing");
+              console.error(error);
            });
  
        },
@@ -334,9 +360,10 @@ public hardware3notify: boolean;
          }
          this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65', '19b10000-e8f2-537e-4f6c-d104768a1223', '19B10001-E8F2-537E-4F6C-D104768A1223', daa.buffer).then(data2 => {
 
-           console.log(data2);
+          //  console.log(data2);
            }).catch(error=>{
-             //console.log(error);
+             console.error("TestConfig#clickStartBP");
+             console.error(error);
            });
  
        },

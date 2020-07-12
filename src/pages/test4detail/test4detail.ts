@@ -58,7 +58,7 @@ export class Test4DetailPage {
     constructor( private storage: Storage , private sqlite: SQLite ,public ble: BLE,public navCtrl: NavController, public navParams: NavParams) {
 
     this.storage.get('id').then((val) => {
-      console.log(' id is', val);
+      // console.log(' id is', val);
       this.patient_id = val;
     });
 
@@ -91,7 +91,7 @@ export class Test4DetailPage {
       let data = [JSON.stringify(this.result3015)]
         this.datab.executeSql("UPDATE patient_table SET t4_1 = ? where id='"+this.patient_id+"';", data)
           .then(() => {
-            console.log(data);
+            // console.log(data);
             this.navCtrl.setRoot(Test4DetailPage_2, {}, {animate : false, direction: 'forward'});
            });
 
@@ -116,7 +116,7 @@ export class Test4DetailPage {
       let data = [JSON.stringify(this.result3015)]
         this.datab.executeSql("UPDATE patient_table SET t4_1 = ? where id='"+this.patient_id+"';", data)
           .then(() => {
-            console.log(data);
+            // console.log(data);
             this.navCtrl.setRoot(Test4Page, {}, {animate : false, direction: 'forward'});
            });
 
@@ -126,13 +126,14 @@ export class Test4DetailPage {
 
   clickTestStart(){
 
-    var daa = new Uint8Array(1);
-    daa[0] = 2;
-    this.ble.write('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37',daa.buffer).then(data2=>{
-      console.log(data2);
-      }).catch(error=>{
-        console.log(error);
-      });
+    this.currentBeatCount = 0;
+    // var daa = new Uint8Array(1);
+    // daa[0] = 2;
+    // this.ble.write('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37',daa.buffer).then(data2=>{
+    //   console.log(data2);
+    //   }).catch(error=>{
+    //     console.log(error);
+    //   });
 
     this.showDeviceConnectTable = false;
     
@@ -174,13 +175,14 @@ export class Test4DetailPage {
     this.loadProgress = 100;
     this.stand = false;
 
-var daa = new Uint8Array(1);
-    daa[0] = 2;
-    this.ble.write('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37',daa.buffer).then(data2=>{
-      console.log(data2);
-      }).catch(error=>{
-        console.log(error);
-      });
+    this.currentBeatCount = 0;
+// var daa = new Uint8Array(1);
+//     daa[0] = 2;
+//     this.ble.write('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37',daa.buffer).then(data2=>{
+//       console.log(data2);
+//       }).catch(error=>{
+//         console.log(error);
+//       });
 
     this.showDeviceConnectTable = false;
     

@@ -98,7 +98,7 @@ export class Test4Page {
     this.datab = db;
 
     this.storage.get('id').then((val) => {
-      console.log(' id is', val);
+      // console.log(' id is', val);
       this.patient_id = val;
 
       this.datab.executeSql(`select * from patient_table where id='`+this.patient_id+`';`, {})
@@ -348,7 +348,9 @@ if(tempMin ==0)
             this.ble.connect('B2BA478A-1212-5501-3801-2153FC58CE65').subscribe(data => {
               this.BPready = true;
               },error =>{
-                console.log(error);
+                console.error("Test4Page#checkAllHardware");
+                console.error("BP conectting");
+                console.error(error);
               });
         
             });
@@ -366,7 +368,9 @@ if(tempMin ==0)
           this.ble.connect('F14956A6-16EC-88BA-1426-03749EBE87DE').subscribe(data => {
             this.HRready = true;
             },error =>{
-              console.log(error);
+              console.error("Test4Page#checkAllHardware");
+              console.error("Hr connecting");
+              console.error(error);
             });
       
           });

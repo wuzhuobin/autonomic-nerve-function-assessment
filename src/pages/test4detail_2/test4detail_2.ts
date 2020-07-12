@@ -126,18 +126,19 @@ export class Test4DetailPage_2 {
   standup(){
     this.RRI15 = 0;
     this.RRI30 = 0;
-    var daa = new Uint8Array(1);
-    daa[0] = 2;
-    this.ble.write('F14956A6-16EC-88BA-1426-03749EBE87DE', '180D', '2A37',daa.buffer).then(data2=>{
+    this.currentBeatCount = 0;
+    // var daa = new Uint8Array(1);
+    // daa[0] = 2;
+    // this.ble.write('F14956A6-16EC-88BA-1426-03749EBE87DE', '180D', '2A37',daa.buffer).then(data2=>{
       this.orthostasis_stage = 3;
 
       this.testSecondTask = setInterval(()=>{
         this.eachSecond();
       },1000);
 
-      }).catch(error=>{
-        console.log(error);
-    });
+    //   }).catch(error=>{
+    //     console.log(error);
+    // });
 
     this.saveDataTask = setInterval(()=>{
       this.readDatafor15and30();

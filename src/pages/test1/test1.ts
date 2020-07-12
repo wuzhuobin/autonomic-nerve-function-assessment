@@ -117,7 +117,7 @@ export class Test1Page {
               }
 
               this.storage.get('id').then((val) => {
-                console.log(' id is', val); 
+                // console.log(' id is', val); 
                 this.patient_id = val;
 
                 this.datab.executeSql(`select * from patient_table where id=`+this.patient_id+`;`, {})
@@ -358,7 +358,7 @@ export class Test1Page {
           }else {
             this.hide1 = true; 
           }
-          console.log("2:"+this.ratio2);
+          // console.log("2:"+this.ratio2);
   if(this.ratio2 > 0 ){
   
             this.lineChart2 = new Chart(this.lineCanvas2.nativeElement, {
@@ -408,7 +408,7 @@ export class Test1Page {
           this.hide2 = true; 
         }
   
-        console.log("3:"+this.ratio3);
+        // console.log("3:"+this.ratio3);
         if(this.ratio3 > 0){
           this.lineChart3 = new Chart(this.lineCanvas3.nativeElement, {
    
@@ -578,7 +578,8 @@ connectBreath(){
     this.ble.connect('3896CAC8-C2CD-C0CA-679D-9CDCC9E4FE78').subscribe(data => {
       this.Breathready = true; 
       },error =>{
-        console.log(error);
+        console.error("Test1Page#connectBreath");
+        console.error(error);
       });
 });
 }
@@ -588,7 +589,8 @@ connectHeartRate(){
     this.ble.connect('F14956A6-16EC-88BA-1426-03749EBE87DE').subscribe(data => {
       this.HRready = true; 
       },error =>{
-        console.log(error);
+        console.error("Test1Page#connectHeartRate");
+        console.error(error);
       });
 });
 }

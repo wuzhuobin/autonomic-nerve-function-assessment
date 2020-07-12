@@ -114,7 +114,7 @@ export class HomePage {
                           '[]','[]','[]','`+moment().format('YYYY-MM-DD HH:mm:ss')+`');`, {}).then((data2) => {
                        
                             this.storage.set('id', data2.insertId).then(sss=>{
-                              console.log("RECORD CREATED: "+data2.insertId+" "+formdata.name+" "+formdata.age+" "+moment().format('YYYY-MM-DD HH:mm:ss'));
+                              // console.log("RECORD CREATED: "+data2.insertId+" "+formdata.name+" "+formdata.age+" "+moment().format('YYYY-MM-DD HH:mm:ss'));
                               this.navCtrl.setRoot(Test1Page, {}, {animate : false, direction: 'forward'});
                             });
                            });
@@ -127,7 +127,7 @@ export class HomePage {
           text: 'Cancel',
           role: 'cancel',
           handler: data => {
-            console.log('Cancel clicked');
+            // console.log('Cancel clicked');
           }
         }
       ]
@@ -156,7 +156,7 @@ export class HomePage {
           text: 'Cancel',
           role: 'cancel',
           handler: function (data) {
-            console.log('Cancel clicked');
+            // console.log('Cancel clicked');
           }
         }
       ]

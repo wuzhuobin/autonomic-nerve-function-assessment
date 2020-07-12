@@ -53,7 +53,7 @@ export class Test3DetailPage {
     constructor( private storage: Storage , private sqlite: SQLite ,public ble: BLE,public navCtrl: NavController, public navParams: NavParams) {
 
     this.storage.get('id').then((val) => {
-      console.log(' id is', val);
+      // console.log(' id is', val);
       this.patient_id = val;
     });
 
@@ -82,7 +82,8 @@ export class Test3DetailPage {
               this.grip_reading_max = this.grip_reading;
             }
           }).catch(error=>{
-            console.log(error);
+            console.error("Test3DetailPage#getGripReading");
+            console.error(error);
           });
 
       },
@@ -120,14 +121,14 @@ export class Test3DetailPage {
       if (this.reading4_up == 0 || this.reading4_down == 0 || this.reading4_down_trial[0] == 0) {
         this.datab.executeSql("UPDATE patient_table SET t3_1 = '[]' where id='"+this.patient_id+"';", {})
           .then(() => {
-            console.log("update empty");
+            // console.log("update empty");
             this.navCtrl.setRoot(Test3Page, {}, {animate : false, direction: 'forward'});
            });
       } else {
         let data = [JSON.stringify(this.result)]
         this.datab.executeSql("UPDATE patient_table SET t3_1 = ? where id='"+this.patient_id+"';", data)
           .then(() => {
-            console.log("update");
+            // console.log("update");
             this.navCtrl.setRoot(Test3Page, {}, {animate : false, direction: 'forward'});
            });
       }
@@ -149,7 +150,9 @@ export class Test3DetailPage {
          daa[0] = 5;
          this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65','19b10000-e8f2-537e-4f6c-d104768a1223','19B10001-E8F2-537E-4F6C-D104768A1223',daa.buffer).then(data2=>{
            }).catch(error=>{
-             console.log(error);
+             console.error("Test3DetailPage#clickTestStartOrthostasis");
+             console.error("BP writing");
+             console.error(error);
            });
  
        },
@@ -189,9 +192,11 @@ export class Test3DetailPage {
       var daa = new Uint8Array(1);
       daa[0] = 4;
       this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65', '19b10000-e8f2-537e-4f6c-d104768a1223', '19B10001-E8F2-537E-4F6C-D104768A1223', daa.buffer).then(function (data2) {
-        console.log("power");
+        // console.log("power");
       }).catch(function (error) {
-        console.log(error);
+        console.error("Test3DetailPage#completeTest3");
+        console.error("BP writing");
+        console.error(error);
       });
     }, function () { });
     clearInterval(this.testSecondTask);
@@ -210,7 +215,9 @@ export class Test3DetailPage {
         daa[0] = 1;
         this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65','19b10000-e8f2-537e-4f6c-d104768a1223','19B10001-E8F2-537E-4F6C-D104768A1223',daa.buffer).then(data2=>{
           }).catch(error=>{
-            console.log(error);
+            console.error("Test3DetailPage#takeReading");
+            console.error("BP writing");
+            console.error(error);
           });
 
       },
@@ -288,9 +295,11 @@ export class Test3DetailPage {
          var daa = new Uint8Array(1);
          daa[0] = 2;
          this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65','19b10000-e8f2-537e-4f6c-d104768a1223','19B10001-E8F2-537E-4F6C-D104768A1223',daa.buffer).then(data2=>{
-           console.log("reset");
+          //  console.log("reset");
            }).catch(error=>{
-             console.log(error);
+             console.error("Test3DetailPage#resetValue");
+             console.error("Bp writing");
+             console.error(error);
            });
  
        },
@@ -304,9 +313,11 @@ export class Test3DetailPage {
             var daa = new Uint8Array(1);
             daa[0] = 3;
             this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65', '19b10000-e8f2-537e-4f6c-d104768a1223', '19B10001-E8F2-537E-4F6C-D104768A1223', daa.buffer).then(function (data2) {
-                console.log("power");
+                // console.log("power");
             }).catch(function (error) {
-                console.log(error);
+                console.error("Test3Detail#powerSignal");
+                console.error("BP writing");
+                console.error(error);
             });
         }, function () { });
     }

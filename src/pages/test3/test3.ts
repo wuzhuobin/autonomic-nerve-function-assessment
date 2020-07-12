@@ -98,7 +98,7 @@ export class Test3Page {
       this.datab = db;
 
       this.storage.get('id').then((val) => {
-        console.log(' id is', val);
+        // console.log(' id is', val);
         this.patient_id = val;
 
         this.datab.executeSql(`select * from patient_table where id='`+this.patient_id+`';`, {})
@@ -329,7 +329,9 @@ export class Test3Page {
                 this.ble.connect('B2BA478A-1212-5501-3801-2153FC58CE65').subscribe(data => {
                   this.BPready = true;
                   },error =>{
-                    console.log(error);
+                    console.error("Test3Page#checkAllHardware");
+                    console.error("BP connecting");
+                    console.error(error);
             
                   });
             
@@ -348,7 +350,9 @@ export class Test3Page {
                   this.ble.connect('3C1FD496-0DEB-4713-662F-FAE7AE85F548').subscribe(data => {
                     this.Gripready = true;
                     },error =>{
-                      console.log(error);
+                      console.error("Test3Page#checkAllHardware");
+                      console.error("Dynamometer connecting");
+                      console.error(error);
               
                     });
               

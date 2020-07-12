@@ -290,7 +290,7 @@ this.ratio3 = 0;
                   max = this.result3_1[9];
               if (this.result3_1[11] > max)
                   max = this.result3_1[11];
-              console.log(max, this.result3_1[1]);
+              // console.log(max, this.result3_1[1]);
               tem3 = max - this.result3_1[1];
           }
           else {
@@ -432,7 +432,7 @@ this.ratio3 = 0;
             BP_abnormal++;
           if (t5_f == 0)
             BP_abnormal++;
-          console.log(t1_f, t2_f, t3_f, t4_f, t5_f);
+          // console.log(t1_f, t2_f, t3_f, t4_f, t5_f);
           if (normal == 5 || (normal == 4 && borderline == 1)) {
             final_type = 1;
           }
@@ -486,7 +486,7 @@ this.ratio3 = 0;
   }
 
   showPatient(id) {
-    console.log(id);
+    // console.log(id);
     this.datab.executeSql(`select * from patient_table where id = ` + id + `;`, {})
       .then(data => {
     this.hide1 = false;
@@ -616,7 +616,7 @@ if(tempMin ==0)
      else { this.average_t2 = Math.round(temp / count) ;}
 
 
-     console.log(JSON.stringify(this.result_t2_0));
+    //  console.log(JSON.stringify(this.result_t2_0));
      this.result_t3_1 = JSON.parse(data.rows.item(0).t3_1);
 
      if(this.result_t3_1.length>0){
@@ -680,7 +680,7 @@ setTimeout(() => {
   this.slideew.slideTo(0,0);
   this.slideew.update();
 
-  console.log(this.ratio1,this.ratio2,this.ratio3);
+  // console.log(this.ratio1,this.ratio2,this.ratio3);
 
   if(this.ratio1 != 0 ){
     this.lineChart = new Chart(this.lineCanvas.nativeElement, {
@@ -979,7 +979,7 @@ searchAllRecord(){
             max = this.result3_1[9];
           if (this.result3_1[11] > max)
             max = this.result3_1[11];
-          console.log(max, this.result3_1[1]);
+          // console.log(max, this.result3_1[1]);
           tem3 = max - this.result3_1[1];
         }
         else{
@@ -1121,7 +1121,7 @@ searchAllRecord(){
           BP_abnormal++;
         if (t5_f == 0)
           BP_abnormal++;
-        console.log(t1_f, t2_f, t3_f, t4_f, t5_f);
+        // console.log(t1_f, t2_f, t3_f, t4_f, t5_f);
         if (normal == 5 || (normal == 4 && borderline == 1)) {
           final_type = 1;
         }

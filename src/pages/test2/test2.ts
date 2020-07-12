@@ -81,7 +81,7 @@ export class Test2Page {
       this.datab = db;
 
       this.storage.get('id').then((val) => {
-        console.log(' id is', val);
+        // console.log(' id is', val);
         this.patient_id = val;
 
         this.datab.executeSql(`select * from patient_table where id='`+this.patient_id+`';`, {})
@@ -312,12 +312,13 @@ checkAllHardware(){
 
 connectHeartRate(){
   this.ble.scan([], 3).subscribe(device => {
-    console.log(JSON.stringify(device));
+    // console.log(JSON.stringify(device));
     
     this.ble.connect('F14956A6-16EC-88BA-1426-03749EBE87DE').subscribe(data => {
       this.allDeviceReady = true;
       },error =>{
-        console.log(error);
+        console.error("Test2Page#connectHeartRate");
+        console.error(error);
 
       });
 
