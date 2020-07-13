@@ -357,7 +357,7 @@ if(tempMin ==0)
         }
       );
 
-    this.ble.isConnected('F14956A6-16EC-88BA-1426-03749EBE87DE').then(
+    this.ble.isConnected('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C').then(
       ()=>{ 
         this.HRready = true; 
       },
@@ -365,7 +365,7 @@ if(tempMin ==0)
 
         this.ble.scan([], 3).subscribe(device => {
               
-          this.ble.connect('F14956A6-16EC-88BA-1426-03749EBE87DE').subscribe(data => {
+          this.ble.connect('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C').subscribe(data => {
             this.HRready = true;
             },error =>{
               console.error("Test4Page#checkAllHardware");

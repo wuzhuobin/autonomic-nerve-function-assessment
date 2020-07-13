@@ -306,11 +306,11 @@ this.trial--;
       this.connectBreath();
     }
 
-    this.ble.isConnected('F14956A6-16EC-88BA-1426-03749EBE87DE').then(
+    this.ble.isConnected('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C').then(
       ()=>{ 
         this.heartRateDeviceConnected = true; 
 
-        this.ble.read('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37').then(data2=>{
+        this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
           
           //this.RRIReadng = Math.round((new Uint16Array(data2)[0])/5) * 5;
           this.RRIReadng = (new Uint16Array(data2)[0]);
@@ -350,7 +350,7 @@ this.trial--;
     this.ble.scan([], 3).subscribe(device => {
       // console.log(JSON.stringify(device));
       
-      this.ble.connect('F14956A6-16EC-88BA-1426-03749EBE87DE').subscribe(data => {
+      this.ble.connect('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C').subscribe(data => {
         this.heartRateDeviceConnected = true;
         },error =>{
           console.error("Test1DetailPage#connectHeartRate");

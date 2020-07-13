@@ -129,7 +129,7 @@ export class Test4DetailPage {
     this.currentBeatCount = 0;
     // var daa = new Uint8Array(1);
     // daa[0] = 2;
-    // this.ble.write('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37',daa.buffer).then(data2=>{
+    // this.ble.write('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37',daa.buffer).then(data2=>{
     //   console.log(data2);
     //   }).catch(error=>{
     //     console.log(error);
@@ -178,7 +178,7 @@ export class Test4DetailPage {
     this.currentBeatCount = 0;
 // var daa = new Uint8Array(1);
 //     daa[0] = 2;
-//     this.ble.write('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37',daa.buffer).then(data2=>{
+//     this.ble.write('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37',daa.buffer).then(data2=>{
 //       console.log(data2);
 //       }).catch(error=>{
 //         console.log(error);
@@ -261,11 +261,11 @@ export class Test4DetailPage {
 
   checkAllHardware(){
 
-    this.ble.isConnected('F14956A6-16EC-88BA-1426-03749EBE87DE').then(
+    this.ble.isConnected('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C').then(
       ()=>{ 
         this.heartRateDeviceConnected = true; 
 
-        this.ble.read('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37').then(data2=>{
+        this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
           
           if((new Uint16Array(data2)[0])>560 && (new Uint16Array(data2)[0])<1450)
           this.RRIReadng = (new Uint16Array(data2)[0]);
@@ -274,7 +274,7 @@ export class Test4DetailPage {
             console.log(error);
           });
 
-          this.ble.read('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37').then(data2=>{
+          this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
             this.currentBeatCount = (new Uint16Array(data2)[0]);
 
             }).catch(error=>{
@@ -296,7 +296,7 @@ export class Test4DetailPage {
     this.ble.scan([], 3).subscribe(device => {
       console.log(JSON.stringify(device));
       
-      this.ble.connect('F14956A6-16EC-88BA-1426-03749EBE87DE').subscribe(data => {
+      this.ble.connect('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C').subscribe(data => {
         this.heartRateDeviceConnected = true;
         },error =>{
           console.log(error);

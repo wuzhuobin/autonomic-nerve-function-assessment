@@ -85,7 +85,7 @@ public hardware3notify: boolean;
       }
 
       if(!this.hardware3ready){
-        this.ble.connect('F14956A6-16EC-88BA-1426-03749EBE87DE').subscribe(data => {
+        this.ble.connect('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C').subscribe(data => {
           this.hardware3ready = true; 
           },error =>{
             console.error("TestConfigPage#TestAllHardware");
@@ -98,7 +98,7 @@ public hardware3notify: boolean;
 
       // Start notification for the hr device
       if (this.hardware3ready && !this.hardware3notify) {
-        this.ble.startNotification('F14956A6-16EC-88BA-1426-03749EBE87DE', '0x180D', '0x2A37').subscribe(function (data) {
+        this.ble.startNotification('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C', '0x180D', '0x2A37').subscribe(function (data) {
           let dataArray = new Uint8Array(data);
           let hasHr = dataArray[0] & 0x01;
           let hasRri = ((dataArray[0] & (0x01 << 4)) >> 4) & 0x01;
@@ -202,26 +202,26 @@ public hardware3notify: boolean;
 
 
 
-    this.ble.isConnected('F14956A6-16EC-88BA-1426-03749EBE87DE').then( 
+    this.ble.isConnected('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C').then( 
       ()=>{ 
         this.hardware3ready = true; 
         // getting result from hardware
-        this.ble.read('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37').then(data2=>{
+        this.ble.read('813a1f6c-0006-7df0-7ce2-0f7aff15630c','180d','2a37').then(data2=>{
 
-          this.reading3 = (new Uint16Array(data2)[0]);
+          this.reading3 = (new uint16array(data2)[0]);
           console.log("//////////////////////////////////////////////////");
           console.log("data2: ");
           console.log(data2);
-          console.log("**OLD RRI**");
+          console.log("**old rri**");
           console.log(this.reading3);
           console.log("//////////////////////////////////////////////////");
           }).catch(error=>{
-            console.error("TestConfigPage#udpateAllHardwareValue");
-            console.error("HR reading");
+            console.error("testconfigpage#udpateallhardwarevalue");
+            console.error("hr reading");
             console.error(error);
           });
           // getting calibration status from hardware
-          // this.ble.read('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37').then(data2=>{
+          // this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
           //   // console.log(new Uint8Array(data2)[0]);
           //   if(new Uint8Array(data2)[0]==1){
           //    this.calibrating3 = false;  
@@ -237,7 +237,7 @@ public hardware3notify: boolean;
 
 
           // getting pulseCount from hardware
-          // this.ble.read('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37').then(data2=>{
+          // this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
           //    this.pulseCount = (new Uint8Array(data2)[0]);
           //   }).catch(error=>{
           //     console.error("TestConfigPage#udpateAllHardwareValue");
@@ -332,12 +332,12 @@ public hardware3notify: boolean;
 
   //  this.calibrating3 = true;
 
-  //   this.ble.isConnected('F14956A6-16EC-88BA-1426-03749EBE87DE').then(
+  //   this.ble.isConnected('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C').then(
   //     ()=>{ 
   //       this.hardware3ready = true; 
   //       var daa = new Uint8Array(1);
   //       daa[0] = 1;
-  //       this.ble.write('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37',daa.buffer).then(data2=>{
+  //       this.ble.write('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37',daa.buffer).then(data2=>{
   //        // console.log(data2);
   //         }).catch(error=>{
   //           //console.log(error);

@@ -129,7 +129,7 @@ export class Test4DetailPage_2 {
     this.currentBeatCount = 0;
     // var daa = new Uint8Array(1);
     // daa[0] = 2;
-    // this.ble.write('F14956A6-16EC-88BA-1426-03749EBE87DE', '180D', '2A37',daa.buffer).then(data2=>{
+    // this.ble.write('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C', '180D', '2A37',daa.buffer).then(data2=>{
       this.orthostasis_stage = 3;
 
       this.testSecondTask = setInterval(()=>{
@@ -314,10 +314,10 @@ export class Test4DetailPage_2 {
 
     getRRIvalue(){
 
-      this.ble.isConnected('F14956A6-16EC-88BA-1426-03749EBE87DE').then(
+      this.ble.isConnected('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C').then(
         ()=>{ 
   
-          this.ble.read('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37').then(data2=>{
+          this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
             
             if((new Uint16Array(data2)[0])>500 && (new Uint16Array(data2)[0])<1450)
             this.RRIReadng = (new Uint16Array(data2)[0]);
@@ -326,7 +326,7 @@ export class Test4DetailPage_2 {
               console.log(error);
             });
   
-            this.ble.read('F14956A6-16EC-88BA-1426-03749EBE87DE','180D','2A37').then(data2=>{
+            this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
               this.currentBeatCount = (new Uint16Array(data2)[0]);
   
               }).catch(error=>{
