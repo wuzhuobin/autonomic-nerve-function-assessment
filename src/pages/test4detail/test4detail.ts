@@ -212,7 +212,7 @@ export class Test4DetailPage {
 
   readDatafor15and30(){
 
-    console.log(( this.currentBeatCount - this.baseBeatCount));
+    // console.log(( this.currentBeatCount - this.baseBeatCount));
     if(this.stand && ( this.currentBeatCount - this.baseBeatCount) >= 15 && this.RRI15 == 0 ){
       this.RRI15 = this.RRIReadng;
     }
@@ -223,6 +223,15 @@ export class Test4DetailPage {
       this.showTestingTable = false;
       this.finishTaking();
     }
+    // console.log("Test4DetailPage#readDatafor15and30");
+    console.log("//////////////////////////////////////////////////");
+    console.log("this.currentBeatCount - this.baseBeatCount");
+    console.log(this.currentBeatCount - this.baseBeatCount);
+    console.log("RRI15");
+    console.log(this.RRI15)
+    console.log("RRI30");
+    console.log(this.RRI30);
+    console.log("//////////////////////////////////////////////////");
   }
 
   finishTaking (){
@@ -264,22 +273,71 @@ export class Test4DetailPage {
     this.ble.isConnected('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C').then(
       ()=>{ 
         this.heartRateDeviceConnected = true; 
+        this.ble.startNotification('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C', '0x180D', '0x2A37').subscribe(function (data) {
+          let dataArray = new Uint8Array(data);
+          let hasHr = dataArray[0] & 0x01;
+          let hasRri = ((dataArray[0] & (0x01 << 4)) >> 4) & 0x01;
+          let highByte = 0;
+          let lowByte = 0;
+          let rri = 0;
 
-        this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
+          if (hasHr == 0) {
+            if (hasRri) {
+              highByte = dataArray[3];
+              lowByte = dataArray[2];
+              rri = (highByte << 8) + lowByte;
+              this.RRIReadng = rri;
+            }
+          }
+          else if (hasHr == 1) {
+            if (hasRri) {
+              highByte = dataArray[4];
+              lowByte = dataArray[3];
+              rri = (highByte << 8) + lowByte;
+              this.RRIReadng = rri;
+            }
+          }
+          ++this.currentBeatCount;
+          console.log("//////////////////////////////////////////////////");
+          console.log("Notified.");
+          console.log("");
+          console.log("");
+          console.log("data:")
+          console.log(data);
+          console.log("dataArray:");
+          console.log(dataArray);
+          console.log("hasHr:");
+          console.log(hasHr);
+          console.log("hasRri:");
+          console.log(hasRri);
+          console.log("highByte: ");
+          console.log(highByte);
+          console.log("lowByte: ");
+          console.log(lowByte);
+          console.log("rri: ");
+          console.log(rri);
+          console.log("**NEW RRI**");
+          console.log(this.RRIReadng);
+          console.log("**PLUSE COUNT**");
+          console.log(this.currentBeatCount);
+          console.log("//////////////////////////////////////////////////");
+
+        });
+        // this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
           
-          if((new Uint16Array(data2)[0])>560 && (new Uint16Array(data2)[0])<1450)
-          this.RRIReadng = (new Uint16Array(data2)[0]);
+        //   if((new Uint16Array(data2)[0])>560 && (new Uint16Array(data2)[0])<1450)
+        //   this.RRIReadng = (new Uint16Array(data2)[0]);
 
-          }).catch(error=>{
-            console.log(error);
-          });
+        //   }).catch(error=>{
+        //     console.log(error);
+        //   });
 
-          this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
-            this.currentBeatCount = (new Uint16Array(data2)[0]);
+        //   this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
+        //     this.currentBeatCount = (new Uint16Array(data2)[0]);
 
-            }).catch(error=>{
-              console.log(error);
-            });
+        //     }).catch(error=>{
+        //       console.log(error);
+        //     });
 
       },
       ()=>{ this.heartRateDeviceConnected = false; 
@@ -294,12 +352,13 @@ export class Test4DetailPage {
 
   connectHeartRate(){
     this.ble.scan([], 3).subscribe(device => {
-      console.log(JSON.stringify(device));
+      // console.log(JSON.stringify(device));
       
       this.ble.connect('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C').subscribe(data => {
         this.heartRateDeviceConnected = true;
         },error =>{
-          console.log(error);
+          console.error("Test4DetailPage#connectHeartRate");
+          console.error(error);
 
         });
 
@@ -313,9 +372,11 @@ export class Test4DetailPage {
          var daa = new Uint8Array(1);
          daa[0] = 2;
          this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65','19b10000-e8f2-537e-4f6c-d104768a1223','19B10001-E8F2-537E-4F6C-D104768A1223',daa.buffer).then(data2=>{
-           console.log(data2);
+          //  console.log(data2);
            }).catch(error=>{
-             console.log(error);
+             console.error("Test4DetailPage#resetValue");
+             console.error("BP writing");
+             console.error(error);
            });
  
        },

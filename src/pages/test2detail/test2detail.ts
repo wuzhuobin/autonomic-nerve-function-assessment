@@ -295,16 +295,63 @@ this.countdownTask = setInterval(()=>{
       ()=>{ 
         this.heartRateDeviceConnected = true; 
 
-        this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
+        // this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
           
-          if((new Uint16Array(data2)[0])>560 && (new Uint16Array(data2)[0])<1450)
-          this.RRIReadng = (new Uint16Array(data2)[0]);
+        //   if((new Uint16Array(data2)[0])>560 && (new Uint16Array(data2)[0])<1450)
+        //   this.RRIReadng = (new Uint16Array(data2)[0]);
 
-          }).catch(error=>{
-            console.error("Test2DetailPage#checkAllHardware");
-            console.error("heartRateDevice reading");
-            console.error(error);
-          });
+        //   }).catch(error=>{
+        //     console.error("Test2DetailPage#checkAllHardware");
+        //     console.error("heartRateDevice reading");
+        //     console.error(error);
+        //   });
+        this.ble.startNotification('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C', '0x180D', '0x2A37').subscribe(function (data) {
+          let dataArray = new Uint8Array(data);
+          let hasHr = dataArray[0] & 0x01;
+          let hasRri = ((dataArray[0] & (0x01 << 4)) >> 4) & 0x01;
+          let highByte = 0;
+          let lowByte = 0;
+          let rri = 0;
+
+          if (hasHr == 0) {
+            if (hasRri) {
+              highByte = dataArray[3];
+              lowByte = dataArray[2];
+              rri = (highByte << 8) + lowByte;
+              this.RRIReadng = rri;
+            }
+          }
+          else if (hasHr == 1) {
+            if (hasRri) {
+              highByte = dataArray[4];
+              lowByte = dataArray[3];
+              rri = (highByte << 8) + lowByte;
+              this.RRIReadng = rri;
+            }
+          }
+          console.log("//////////////////////////////////////////////////");
+          console.log("Notified.");
+          console.log("");
+          console.log("");
+          console.log("data:")
+          console.log(data);
+          console.log("dataArray:");
+          console.log(dataArray);
+          console.log("hasHr:");
+          console.log(hasHr);
+          console.log("hasRri:");
+          console.log(hasRri);
+          console.log("highByte: ");
+          console.log(highByte);
+          console.log("lowByte: ");
+          console.log(lowByte);
+          console.log("rri: ");
+          console.log(rri);
+          console.log("**NEW RRI**");
+          console.log(this.RRIReadng);
+          console.log("//////////////////////////////////////////////////");
+
+        });
 
       },
       ()=>{ this.heartRateDeviceConnected = false; 

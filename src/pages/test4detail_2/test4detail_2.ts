@@ -77,7 +77,7 @@ export class Test4DetailPage_2 {
 
     this.gettingHRTask = setInterval(()=>{
       this.getRRIvalue();
-      console.log(this.RRI15,this.RRI30);
+      // console.log(this.RRI15,this.RRI30);
     },200);
 
   }
@@ -110,7 +110,7 @@ export class Test4DetailPage_2 {
           .then(() => {
                     this.datab.executeSql("UPDATE patient_table SET t4_1 = ? where id='"+this.patient_id+"';", data2)
                     .then(() => {
-                      console.log(data);
+                      // console.log(data);
                       this.navCtrl.setRoot(Test4Page, {}, {animate : false, direction: 'forward'});
                     });
            });
@@ -152,9 +152,11 @@ export class Test4DetailPage_2 {
       var daa = new Uint8Array(1);
       daa[0] = 1;
       this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65', '19b10000-e8f2-537e-4f6c-d104768a1223', '19B10001-E8F2-537E-4F6C-D104768A1223', daa.buffer).then((data2) => {
-        console.log(" reset");
+        // console.log(" reset");
       }).catch(function (error) {
-        console.log(error);
+        console.error("Test4Detail_2Page#takeReading");
+        console.error("BP writing");
+        console.error(error);
       });
     }, function () {
     });
@@ -182,6 +184,14 @@ export class Test4DetailPage_2 {
       
       clearInterval(this.saveDataTask);
     }
+    console.log("//////////////////////////////////////////////////");
+    console.log("this.currentBeatCount - this.baseBeatCount");
+    console.log(this.currentBeatCount - this.baseBeatCount);
+    console.log("RRI15");
+    console.log(this.RRI15)
+    console.log("RRI30");
+    console.log(this.RRI30);
+    console.log("//////////////////////////////////////////////////");
     
   }
 
@@ -198,7 +208,9 @@ export class Test4DetailPage_2 {
         this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65', '19b10000-e8f2-537e-4f6c-d104768a1223', '19B10001-E8F2-537E-4F6C-D104768A1223', daa.buffer).then(data2 => {
           //console.log(data2);
         }).catch(error => {
-          //console.log(error);
+          console.error("Test4Detail_2Page#clickTestStartOrthostasis");
+          console.error("BP writing");
+          console.error(error);
         });
 
       },
@@ -244,9 +256,11 @@ export class Test4DetailPage_2 {
       let daa: Uint8Array = new Uint8Array(1);
       daa[0] = 4;
       this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65', '19b10000-e8f2-537e-4f6c-d104768a1223', '19B10001-E8F2-537E-4F6C-D104768A1223', daa.buffer).then((data2) => {
-        console.log('power');
+        // console.log('power');
       }).catch(error => {
-        console.log(error)
+        console.error("Test4Detail_2Page#redoTest2");
+        console.error("BP writing");
+        console.error(error)
       });
 
     }, () => { });
@@ -269,7 +283,7 @@ export class Test4DetailPage_2 {
     this.currentTimeTextM = Math.floor(this.currentTime / 60);
     this.currentTimeTextS = (this.currentTime % 60);
     this.loadProgress = (this.currentTime / 180) * 100;
-    console.log("this.loadProgress", this.loadProgress);
+    // console.log("this.loadProgress", this.loadProgress);
     if (this.currentTime == 125 || this.currentTime == 65 ||
         this.currentTime == 5) {
         this.bp_readed = false;
@@ -289,9 +303,11 @@ export class Test4DetailPage_2 {
       var daa = new Uint8Array(1);
       daa[0] = 3;
       this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65', '19b10000-e8f2-537e-4f6c-d104768a1223', '19B10001-E8F2-537E-4F6C-D104768A1223', daa.buffer).then(function (data2) {
-        console.log("power");
+        // console.log("power");
       }).catch(function (error) {
-        console.log(error);
+        console.error("Test4Detail_2Page#powerSignal");
+        console.error("BP writing");
+        console.error(error);
       });
     }, function () { });
   }
@@ -304,7 +320,9 @@ export class Test4DetailPage_2 {
          this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65','19b10000-e8f2-537e-4f6c-d104768a1223','19B10001-E8F2-537E-4F6C-D104768A1223',daa.buffer).then(data2=>{
            //console.log(data2);
            }).catch(error=>{
-             //console.log(error);
+             console.error("Test4Detail_2Page#resetValue");
+             console.error("BP Writing");
+             console.error(error);
            });
  
        },
@@ -316,22 +334,71 @@ export class Test4DetailPage_2 {
 
       this.ble.isConnected('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C').then(
         ()=>{ 
-  
-          this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
+          this.ble.startNotification('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C', '0x180D', '0x2A37').subscribe(function (data) {
+          let dataArray = new Uint8Array(data);
+          let hasHr = dataArray[0] & 0x01;
+          let hasRri = ((dataArray[0] & (0x01 << 4)) >> 4) & 0x01;
+          let highByte = 0;
+          let lowByte = 0;
+          let rri = 0;
+
+          if (hasHr == 0) {
+            if (hasRri) {
+              highByte = dataArray[3];
+              lowByte = dataArray[2];
+              rri = (highByte << 8) + lowByte;
+              this.RRIReadng = rri;
+            }
+          }
+          else if (hasHr == 1) {
+            if (hasRri) {
+              highByte = dataArray[4];
+              lowByte = dataArray[3];
+              rri = (highByte << 8) + lowByte;
+              this.RRIReadng = rri;
+            }
+          }
+          ++this.currentBeatCount;
+          console.log("//////////////////////////////////////////////////");
+          console.log("Notified.");
+          console.log("");
+          console.log("");
+          console.log("data:")
+          console.log(data);
+          console.log("dataArray:");
+          console.log(dataArray);
+          console.log("hasHr:");
+          console.log(hasHr);
+          console.log("hasRri:");
+          console.log(hasRri);
+          console.log("highByte: ");
+          console.log(highByte);
+          console.log("lowByte: ");
+          console.log(lowByte);
+          console.log("rri: ");
+          console.log(rri);
+          console.log("**NEW RRI**");
+          console.log(this.RRIReadng);
+          console.log("PLUSE COUNT");
+          console.log(this.currentBeatCount);
+          console.log("//////////////////////////////////////////////////");
+
+        });
+          // this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
             
-            if((new Uint16Array(data2)[0])>500 && (new Uint16Array(data2)[0])<1450)
-            this.RRIReadng = (new Uint16Array(data2)[0]);
+          //   if((new Uint16Array(data2)[0])>500 && (new Uint16Array(data2)[0])<1450)
+          //   this.RRIReadng = (new Uint16Array(data2)[0]);
   
-            }).catch(error=>{
-              console.log(error);
-            });
+          //   }).catch(error=>{
+          //     console.log(error);
+          //   });
   
-            this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
-              this.currentBeatCount = (new Uint16Array(data2)[0]);
+          //   this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
+          //     this.currentBeatCount = (new Uint16Array(data2)[0]);
   
-              }).catch(error=>{
-                console.log(error);
-              });
+          //     }).catch(error=>{
+          //       console.log(error);
+          //     });
   
         },
         ()=>{ }
@@ -345,9 +412,11 @@ export class Test4DetailPage_2 {
             var daa = new Uint8Array(1);
             daa[0] = 4;
             this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65', '19b10000-e8f2-537e-4f6c-d104768a1223', '19B10001-E8F2-537E-4F6C-D104768A1223', daa.buffer).then(function (data2) {
-                console.log("power");
+                // console.log("power");
             }).catch(function (error) {
-                console.log(error);
+                console.error("Test4Detail_2Page#completeTest4");
+                console.error("BP writing")
+                console.error(error);
             });
         }, function () { });
         clearInterval(this.testSecondTask);        

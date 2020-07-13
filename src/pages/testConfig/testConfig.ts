@@ -206,20 +206,20 @@ public hardware3notify: boolean;
       ()=>{ 
         this.hardware3ready = true; 
         // getting result from hardware
-        this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
+        // this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
 
-          this.reading3 = (new Uint16Array(data2)[0]);
-          console.log("//////////////////////////////////////////////////");
-          console.log("data2: ");
-          console.log(data2);
-          console.log("**OLD RRI**");
-          console.log(this.reading3);
-          console.log("//////////////////////////////////////////////////");
-          }).catch(error=>{
-            console.error("TestConfigPage#udpateAllHardwareValue");
-            console.error("HR reading");
-            console.error(error);
-          });
+        //   this.reading3 = (new Uint16Array(data2)[0]);
+        //   console.log("//////////////////////////////////////////////////");
+        //   console.log("data2: ");
+        //   console.log(data2);
+        //   console.log("**OLD RRI**");
+        //   console.log(this.reading3);
+        //   console.log("//////////////////////////////////////////////////");
+        //   }).catch(error=>{
+        //     console.error("TestConfigPage#udpateAllHardwareValue");
+        //     console.error("HR reading");
+        //     console.error(error);
+        //   });
           // getting calibration status from hardware
           // this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
           //   // console.log(new Uint8Array(data2)[0]);
