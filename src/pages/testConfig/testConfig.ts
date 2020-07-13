@@ -206,18 +206,18 @@ public hardware3notify: boolean;
       ()=>{ 
         this.hardware3ready = true; 
         // getting result from hardware
-        this.ble.read('813a1f6c-0006-7df0-7ce2-0f7aff15630c','180d','2a37').then(data2=>{
+        this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
 
-          this.reading3 = (new uint16array(data2)[0]);
+          this.reading3 = (new Uint16Array(data2)[0]);
           console.log("//////////////////////////////////////////////////");
           console.log("data2: ");
           console.log(data2);
-          console.log("**old rri**");
+          console.log("**OLD RRI**");
           console.log(this.reading3);
           console.log("//////////////////////////////////////////////////");
           }).catch(error=>{
-            console.error("testconfigpage#udpateallhardwarevalue");
-            console.error("hr reading");
+            console.error("TestConfigPage#udpateAllHardwareValue");
+            console.error("HR reading");
             console.error(error);
           });
           // getting calibration status from hardware
