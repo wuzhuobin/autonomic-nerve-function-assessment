@@ -319,7 +319,7 @@ this.trial--;
         //     console.error("heartRateDevice reading");
         //     console.error(error);
         //   });
-        this.ble.startNotification('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C', '0x180D', '0x2A37').subscribe(function (data) {
+        this.ble.startNotification('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C', '0x180D', '0x2A37').subscribe( (data) => {
           let dataArray = new Uint8Array(data);
           let hasHr = dataArray[0] & 0x01;
           let hasRri = ((dataArray[0] & (0x01 << 4)) >> 4) & 0x01;

@@ -334,7 +334,7 @@ export class Test4DetailPage_2 {
 
       this.ble.isConnected('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C').then(
         ()=>{ 
-          this.ble.startNotification('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C', '0x180D', '0x2A37').subscribe(function (data) {
+          this.ble.startNotification('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C', '0x180D', '0x2A37').subscribe((data) => {
           let dataArray = new Uint8Array(data);
           let hasHr = dataArray[0] & 0x01;
           let hasRri = ((dataArray[0] & (0x01 << 4)) >> 4) & 0x01;
@@ -408,7 +408,7 @@ export class Test4DetailPage_2 {
   
     completeTest4() {
         this.orthostasis_stage = 5;
-        this.ble.isConnected('B2BA478A-1212-5501-3801-2153FC58CE65').then(function () {
+        this.ble.isConnected('B2BA478A-1212-5501-3801-2153FC58CE65').then(() => {
             var daa = new Uint8Array(1);
             daa[0] = 4;
             this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65', '19b10000-e8f2-537e-4f6c-d104768a1223', '19B10001-E8F2-537E-4F6C-D104768A1223', daa.buffer).then(function (data2) {

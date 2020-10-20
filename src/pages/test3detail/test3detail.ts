@@ -188,7 +188,7 @@ export class Test3DetailPage {
 
   completeTest3() {
     this.handgrip_stage = 4;
-    this.ble.isConnected('B2BA478A-1212-5501-3801-2153FC58CE65').then(function () {
+    this.ble.isConnected('B2BA478A-1212-5501-3801-2153FC58CE65').then( () => {
       var daa = new Uint8Array(1);
       daa[0] = 4;
       this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65', '19b10000-e8f2-537e-4f6c-d104768a1223', '19B10001-E8F2-537E-4F6C-D104768A1223', daa.buffer).then(function (data2) {
@@ -309,7 +309,7 @@ export class Test3DetailPage {
 
     
     powerSignal() {
-        this.ble.isConnected('B2BA478A-1212-5501-3801-2153FC58CE65').then(function () {
+        this.ble.isConnected('B2BA478A-1212-5501-3801-2153FC58CE65').then( () => {
             var daa = new Uint8Array(1);
             daa[0] = 3;
             this.ble.write('B2BA478A-1212-5501-3801-2153FC58CE65', '19b10000-e8f2-537e-4f6c-d104768a1223', '19B10001-E8F2-537E-4F6C-D104768A1223', daa.buffer).then(function (data2) {
