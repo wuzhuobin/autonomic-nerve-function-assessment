@@ -287,6 +287,7 @@ export class Test4DetailPage {
               lowByte = dataArray[2];
               rri = (highByte << 8) + lowByte;
               this.RRIReadng = rri;
+              this.currentBeatCount += Math.floor((dataArray.length - 2) / 2);
             }
           }
           else if (hasHr == 1) {
@@ -295,9 +296,9 @@ export class Test4DetailPage {
               lowByte = dataArray[3];
               rri = (highByte << 8) + lowByte;
               this.RRIReadng = rri;
+              this.currentBeatCount += Math.floor((dataArray.length - 2) / 2);
             }
           }
-          ++this.currentBeatCount;
           console.log("//////////////////////////////////////////////////");
           console.log("Notified.");
           console.log("");
