@@ -172,11 +172,11 @@ export class Test4DetailPage_2 {
 
     this.result3015 = [];
 
-    if ((this.currentBeatCount - this.baseBeatCount) == 15 && this.RRI15 == 0) {
+    if ((this.currentBeatCount - this.baseBeatCount) >= 15 && this.RRI15 == 0) {
       this.RRI15 = this.RRIReadng;
     }
 
-    if(( this.currentBeatCount - this.baseBeatCount) == 30 && this.RRI30 == 0 ){
+    if(( this.currentBeatCount - this.baseBeatCount) >= 30 && this.RRI30 == 0 ){
       this.RRI30 = this.RRIReadng;
       this.result3015[0] = this.RRI15;
       this.result3015[1] = this.RRI30;
