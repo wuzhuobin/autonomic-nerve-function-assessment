@@ -35,6 +35,7 @@ export class Test4DetailPage {
 
     public baseBeatCount = 0;
     public currentBeatCount = 0;
+    public rriStack: number[] = [];
 
     public RRI15 = 0;
     public RRI30 = 0;
@@ -127,6 +128,7 @@ export class Test4DetailPage {
   clickTestStart(){
 
     this.currentBeatCount = 0;
+    this.rriStack = [];
     // var daa = new Uint8Array(1);
     // daa[0] = 2;
     // this.ble.write('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37',daa.buffer).then(data2=>{
@@ -176,13 +178,7 @@ export class Test4DetailPage {
     this.stand = false;
 
     this.currentBeatCount = 0;
-// var daa = new Uint8Array(1);
-//     daa[0] = 2;
-//     this.ble.write('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37',daa.buffer).then(data2=>{
-//       console.log(data2);
-//       }).catch(error=>{
-//         console.log(error);
-//       });
+    this.rriStack = [];
 
     this.showDeviceConnectTable = false;
     
@@ -212,13 +208,12 @@ export class Test4DetailPage {
 
   readDatafor15and30(){
 
-    // console.log(( this.currentBeatCount - this.baseBeatCount));
     if(this.stand && ( this.currentBeatCount - this.baseBeatCount) >= 15 && this.RRI15 == 0 ){
-      this.RRI15 = this.RRIReadng;
+      this.RRI15 = this.rriStack[14];
     }
 
     if(this.stand && ( this.currentBeatCount - this.baseBeatCount) >= 30 && this.RRI30 == 0 ){
-      this.RRI30 = this.RRIReadng;
+      this.RRI30 = this.rriStack[29];
       this.showCountdownTable= false;
       this.showTestingTable = false;
       this.finishTaking();
@@ -263,6 +258,7 @@ export class Test4DetailPage {
         clearInterval(this.testSecondTask);
         this.stand = true;
         this.baseBeatCount = this.currentBeatCount;
+        this.rriStack = [];
 
       } 
   }
@@ -283,20 +279,26 @@ export class Test4DetailPage {
 
           if (hasHr == 0) {
             if (hasRri) {
-              highByte = dataArray[3];
-              lowByte = dataArray[2];
-              rri = (highByte << 8) + lowByte;
-              this.RRIReadng = rri;
-              this.currentBeatCount += Math.floor((dataArray.length - 2) / 2);
+              for (let index = 0; index < Math.floor((dataArray.length - 2) / 2); index++) {
+                highByte = dataArray[3 + index * 2];
+                lowByte = dataArray[2 + index * 2];
+                rri = (highByte << 8) + lowByte;
+                this.RRIReadng = rri;
+                this.rriStack.push(rri);
+                this.currentBeatCount++;
+              }
             }
           }
           else if (hasHr == 1) {
             if (hasRri) {
-              highByte = dataArray[4];
-              lowByte = dataArray[3];
-              rri = (highByte << 8) + lowByte;
-              this.RRIReadng = rri;
-              this.currentBeatCount += Math.floor((dataArray.length - 2) / 2);
+              for (let index = 0; index < Math.floor((dataArray.length - 2) / 2); index++) {
+                highByte = dataArray[4 + index * 2];
+                lowByte = dataArray[3 + index * 2];
+                rri = (highByte << 8) + lowByte;
+                this.RRIReadng = rri;
+                this.rriStack.push(rri);
+                this.currentBeatCount++;
+              }
             }
           }
           console.log("//////////////////////////////////////////////////");
@@ -321,24 +323,12 @@ export class Test4DetailPage {
           console.log(this.RRIReadng);
           console.log("**PLUSE COUNT**");
           console.log(this.currentBeatCount);
+          console.log("rriStack: ");
+          console.log(this.rriStack);
           console.log("//////////////////////////////////////////////////");
 
         });
-        // this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
-          
-        //   if((new Uint16Array(data2)[0])>560 && (new Uint16Array(data2)[0])<1450)
-        //   this.RRIReadng = (new Uint16Array(data2)[0]);
 
-        //   }).catch(error=>{
-        //     console.log(error);
-        //   });
-
-        //   this.ble.read('813A1F6C-0006-7DF0-7CE2-0F7AFF15630C','180D','2A37').then(data2=>{
-        //     this.currentBeatCount = (new Uint16Array(data2)[0]);
-
-        //     }).catch(error=>{
-        //       console.log(error);
-        //     });
 
       },
       ()=>{ this.heartRateDeviceConnected = false; 
