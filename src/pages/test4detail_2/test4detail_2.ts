@@ -344,55 +344,55 @@ export class Test4DetailPage_2 {
           let lowByte = 0;
           let rri = 0;
 
-          if (hasHr == 0) {
-            if (hasRri) {
-              for (let index = 0; index < Math.floor((dataArray.length - 2) / 2); index++) {
-                highByte = dataArray[3 + index * 2];
-                lowByte = dataArray[2 + index * 2];
-                rri = (highByte << 8) + lowByte;
-                this.RRIReadng = rri;
-                this.rriStack.push(rri);
-                this.currentBeatCount++;
-              }
-            }
-          }
-          else if (hasHr == 1) {
-            if (hasRri) {
-              for (let index = 0; index < Math.floor((dataArray.length - 2) / 2); index++) {
-                highByte = dataArray[4 + index * 2];
-                lowByte = dataArray[3 + index * 2];
-                rri = (highByte << 8) + lowByte;
-                this.RRIReadng = rri;
-                this.rriStack.push(rri);
-                this.currentBeatCount++;
-              }
-            }
-          }
-          console.log("//////////////////////////////////////////////////");
-          console.log("Notified.");
-          console.log("");
-          console.log("");
-          console.log("data:")
-          console.log(data);
-          console.log("dataArray:");
-          console.log(dataArray);
-          console.log("hasHr:");
-          console.log(hasHr);
-          console.log("hasRri:");
-          console.log(hasRri);
-          console.log("highByte: ");
-          console.log(highByte);
-          console.log("lowByte: ");
-          console.log(lowByte);
-          console.log("rri: ");
-          console.log(rri);
-          console.log("**NEW RRI**");
-          console.log(this.RRIReadng);
-          console.log("PLUSE COUNT");
-          console.log(this.currentBeatCount);
-          console.log("rriStack: ");
-          console.log(this.rriStack);
-          console.log("//////////////////////////////////////////////////");
+          // if (hasHr == 0) {
+          //   if (hasRri) {
+          //     for (let index = 0; index < Math.floor((dataArray.length - 2) / 2); index++) {
+          //       highByte = dataArray[3 + index * 2];
+          //       lowByte = dataArray[2 + index * 2];
+          //       rri = (highByte << 8) + lowByte;
+          //       this.RRIReadng = rri;
+          //       this.rriStack.push(rri);
+          //       this.currentBeatCount++;
+          //     }
+          //   }
+          // }
+          // else if (hasHr == 1) {
+          //   if (hasRri) {
+          //     for (let index = 0; index < Math.floor((dataArray.length - 2) / 2); index++) {
+          //       highByte = dataArray[4 + index * 2];
+          //       lowByte = dataArray[3 + index * 2];
+          //       rri = (highByte << 8) + lowByte;
+          //       this.RRIReadng = rri;
+          //       this.rriStack.push(rri);
+          //       this.currentBeatCount++;
+          //     }
+          //   }
+          // }
+          // console.log("//////////////////////////////////////////////////");
+          // console.log("Notified.");
+          // console.log("");
+          // console.log("");
+          // console.log("data:")
+          // console.log(data);
+          // console.log("dataArray:");
+          // console.log(dataArray);
+          // console.log("hasHr:");
+          // console.log(hasHr);
+          // console.log("hasRri:");
+          // console.log(hasRri);
+          // console.log("highByte: ");
+          // console.log(highByte);
+          // console.log("lowByte: ");
+          // console.log(lowByte);
+          // console.log("rri: ");
+          // console.log(rri);
+          // console.log("**NEW RRI**");
+          // console.log(this.RRIReadng);
+          // console.log("PLUSE COUNT");
+          // console.log(this.currentBeatCount);
+          // console.log("rriStack: ");
+          // console.log(this.rriStack);
+          // console.log("//////////////////////////////////////////////////");
 
         });
 

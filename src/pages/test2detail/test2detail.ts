@@ -313,43 +313,43 @@ this.countdownTask = setInterval(()=>{
           let lowByte = 0;
           let rri = 0;
 
-          if (hasHr == 0) {
-            if (hasRri) {
-              highByte = dataArray[3];
-              lowByte = dataArray[2];
-              rri = (highByte << 8) + lowByte;
-              this.RRIReadng = rri;
-            }
-          }
-          else if (hasHr == 1) {
-            if (hasRri) {
-              highByte = dataArray[4];
-              lowByte = dataArray[3];
-              rri = (highByte << 8) + lowByte;
-              this.RRIReadng = rri;
-            }
-          }
-          console.log("//////////////////////////////////////////////////");
-          console.log("Notified.");
-          console.log("");
-          console.log("");
-          console.log("data:")
-          console.log(data);
-          console.log("dataArray:");
-          console.log(dataArray);
-          console.log("hasHr:");
-          console.log(hasHr);
-          console.log("hasRri:");
-          console.log(hasRri);
-          console.log("highByte: ");
-          console.log(highByte);
-          console.log("lowByte: ");
-          console.log(lowByte);
-          console.log("rri: ");
-          console.log(rri);
-          console.log("**NEW RRI**");
-          console.log(this.RRIReadng);
-          console.log("//////////////////////////////////////////////////");
+          // if (hasHr == 0) {
+          //   if (hasRri) {
+          //     highByte = dataArray[3];
+          //     lowByte = dataArray[2];
+          //     rri = (highByte << 8) + lowByte;
+          //     this.RRIReadng = rri;
+          //   }
+          // }
+          // else if (hasHr == 1) {
+          //   if (hasRri) {
+          //     highByte = dataArray[4];
+          //     lowByte = dataArray[3];
+          //     rri = (highByte << 8) + lowByte;
+          //     this.RRIReadng = rri;
+          //   }
+          // }
+          // console.log("//////////////////////////////////////////////////");
+          // console.log("Notified.");
+          // console.log("");
+          // console.log("");
+          // console.log("data:")
+          // console.log(data);
+          // console.log("dataArray:");
+          // console.log(dataArray);
+          // console.log("hasHr:");
+          // console.log(hasHr);
+          // console.log("hasRri:");
+          // console.log(hasRri);
+          // console.log("highByte: ");
+          // console.log(highByte);
+          // console.log("lowByte: ");
+          // console.log(lowByte);
+          // console.log("rri: ");
+          // console.log(rri);
+          // console.log("**NEW RRI**");
+          // console.log(this.RRIReadng);
+          // console.log("//////////////////////////////////////////////////");
 
         });
 
